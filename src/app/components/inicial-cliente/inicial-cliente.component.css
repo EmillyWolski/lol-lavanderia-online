@@ -1,3 +1,4 @@
+/* Estilo para o corpo da página */
 body {
     background-color: #F5F6FA; 
     font-family: "Montserrat", sans-serif; 
@@ -105,48 +106,45 @@ nav {
 }
 
 .tabela-pedidos {
-    display: flex;
-    flex-direction: column;
-    background-color: #FFFFFF;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 .cabecalho-tabela {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
     background-color: #fff; 
-    padding: 10px;
     color: #2c3e50;
-    font-size: 14px;
     font-weight: bold;
     border-bottom: 1px solid #ccc;
 }
 
-.cabecalho-tabela div:nth-child(5) { /* Seleciona o quinto elemento (índice 4) que é a coluna "Total" */
-    margin-left: 48px; 
+.cabecalho-tabela th {
+    padding: 10px;
+    text-align: left; 
 }
 
 .linha-tabela {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    padding: 10px;
-    font-size: 12px;
+    background-color: #FFFFFF;
     border-bottom: 1px solid #f5f5f5;
 }
 
-.linha-tabela div:nth-child(4) {
-    color: #eef3f8;
-    border-radius: 4px;
-    padding: 5px 10px;
+.linha-tabela td {
+    padding: 10px;
+    text-align: left;
+    font-size: 12px;
+}
+
+.linha-tabela td:nth-child(4) {
+    text-align: center;
+    display: inline-block;
     background-color: #3498db;
-    align-self: center;
+    padding: 6px 8px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    margin-left: 15px;
+    margin-top: 8px;
 }
-
-.linha-tabela div:nth-child(5) { /* Seleciona o quinto elemento (índice 4) que é a coluna "Total" */
-    margin-left:50px; 
-}
-
 
 .btn-cancelar {
     background-color: #F0142F;
@@ -162,6 +160,3 @@ nav {
 .btn-cancelar:hover {
     background-color: #e4455b;
 }
-
-
-  
