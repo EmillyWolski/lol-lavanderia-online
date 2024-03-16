@@ -1,0 +1,167 @@
+body {
+    background-color: #F5F6FA; 
+    font-family: "Montserrat", sans-serif; 
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    margin: 0;
+}
+
+header {
+    width: 100%;
+    height: 76px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 4px 0px #15223214;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-image: url('../../../assets/imagens/logo.png');
+}
+
+.logo h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+}
+
+.usuario-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-image: url('../../../assets/imagens/usuario.png');
+}
+
+.usuario-info span {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+nav {
+    position: absolute;
+    left: 0;
+    top: 92px;
+    width: 15%;
+    height: calc(100% - 100px);
+    background-color: #FFFFFF; 
+    box-shadow: inset -1px 0px 0px #D7DBEC;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #2c3e50;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #3498db; 
+    color: #FFFFFF; 
+}
+
+.conteudo-principal {
+    flex: 1;
+    margin-left: 15%;
+    margin-top: -17px;
+    padding: 20px;
+}
+
+.titulo-pagina {
+    margin-bottom: 20px;
+    background-color: #FFFFFF; 
+    box-shadow: inset -1px 0px 0px #D7DBEC;
+    padding: 10px;
+    color: #2c3e50;
+}
+
+.tabela-pedidos {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+}
+
+.cabecalho-tabela {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    background-color: #fff; 
+    padding: 10px;
+    color: #2c3e50;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+}
+
+.cabecalho-tabela div:nth-child(5) { /* Seleciona o quinto elemento (índice 4) que é a coluna "Total" */
+    margin-left: 48px; 
+}
+
+.linha-tabela {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 10px;
+    font-size: 12px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.linha-tabela div:nth-child(4) {
+    color: #eef3f8;
+    border-radius: 4px;
+    padding: 5px 10px;
+    background-color: #3498db;
+    align-self: center;
+}
+
+.linha-tabela div:nth-child(5) { /* Seleciona o quinto elemento (índice 4) que é a coluna "Total" */
+    margin-left:50px; 
+}
+
+
+.btn-cancelar {
+    background-color: #F0142F;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 12px;
+}
+
+.btn-cancelar:hover {
+    background-color: #e4455b;
+}
+
+
+  
