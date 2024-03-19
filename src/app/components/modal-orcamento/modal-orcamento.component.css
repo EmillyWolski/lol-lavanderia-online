@@ -7,15 +7,17 @@
     transform: translate(-50%, -50%); /* Move o botão para o centro da tela */
 }
 
-.modal {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-}
-
 .modal-dialog {
-    max-width: 90%;
+    width: 30%; 
+    height: 30%; 
+    max-width: 90%; 
     margin: auto;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    position: fixed; 
+    inset: 50% 0; /* Posiciona o modal verticalmente na metade da tela */
+    transform: translate(0, -50%); /* Centraliza verticalmente */
 }
 
 .modal-body {
@@ -26,7 +28,6 @@
 .modal-footer {
     justify-content: center;
 }
-
 
 
 
