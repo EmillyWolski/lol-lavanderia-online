@@ -1,0 +1,33 @@
+.btn-custom {
+    background-color: #1E5EFF; 
+    color: white; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); /* Move o botão para o centro da tela */
+}
+
+.modal {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-dialog {
+    max-width: 90%;
+    margin: auto;
+}
+
+.modal-body {
+    text-align: center;
+    font-size: 18px;
+}
+
+.modal-footer {
+    justify-content: center;
+}
+
+
+
+
+
