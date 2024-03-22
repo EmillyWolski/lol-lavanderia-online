@@ -53,7 +53,7 @@ h2 {
 .usuario-info img {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 40%;
   margin-right: 10px;
   background-image: url("../../../assets/imagens/usuario.png");
 }
