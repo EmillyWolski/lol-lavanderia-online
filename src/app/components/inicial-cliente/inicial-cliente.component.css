@@ -15,7 +15,6 @@ header {
     width: 100%;
     height: 76px;
     background: #FFFFFF;
-    box-shadow: 0px 1px 4px 0px #15223214;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -105,6 +104,26 @@ nav {
     color: #2c3e50;
 }
 
+/* Estilo para o filtro de status */
+.titulo-filtro{
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+
+#filtro-status {
+    padding: 8px 12px;
+    font-size: 12px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    color: #2c3e50;
+    outline: none; 
+}
+
+
 .tabela-pedidos {
     width: 100%;
     border-collapse: collapse;
@@ -121,6 +140,7 @@ nav {
 .cabecalho-tabela th {
     padding: 10px;
     text-align: left; 
+    font-size: 14px;
 }
 
 .linha-tabela {
@@ -137,11 +157,11 @@ nav {
 .linha-tabela td:nth-child(4) {
     text-align: center;
     display: inline-block;
-    background-color: #3498db;
+    background-color:#FFE45F;
     padding: 6px 8px;
     border: none;
     border-radius: 4px;
-    color: #fff;
+    color: #af7012;
     margin-left: 15px;
     margin-top: 8px;
 }
