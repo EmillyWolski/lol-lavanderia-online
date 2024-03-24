@@ -32,7 +32,21 @@
   </nav>
   
   <div class="conteudo-principal">
-    <h2 class="titulo-pagina">Pedidos em Aberto</h2>
+
+    <div class="filtro-pedidos">
+      <h2 class="titulo-pagina">Pedidos em Aberto</h2>
+      <label for="filtro-status" class="titulo-filtro">Filtrar por status:</label>
+
+      <select id="filtro-status">
+        <option value="em_aberto">Em Aberto</option>
+        <option value="cancelado">Cancelado</option>
+        <option value="recolhido">Recolhido</option>
+        <option value="aguardando_pagamento">Aguardando Pagamento</option>
+        <option value="pago">Pago</option>
+        <option value="finalizado">Finalizado</option>
+      </select>
+
+    </div>
     
     <table class="tabela-pedidos">
 
@@ -82,3 +96,4 @@
 
 </body>
 </html>
+
