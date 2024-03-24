@@ -1,1 +1,97 @@
-<p>consultar-pedido works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOL - Consultar Pedido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./consultar-pedido.component.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+        <h1>Lavanderia LOL</h1>
+      </div>
+
+      <div class="usuario-info">
+        <img src="../../../assets/imagens/usuario.png" alt="Foto do usuário">
+        <span>Nome do Usuário</span>
+      </div>
+    </header>
+  </div>
+
+  <!-- Menu -->
+  <nav>
+    <a class="nav-item" href="#">Início</a>
+    <a class="nav-item" href="#">Pedidos</a>
+    <a class="nav-item" href="#">Consultar Pedido</a>
+    <a class="nav-item" href="#">Fazer pedido</a>
+  </nav>
+  
+  <!-- Conteúdo principal -->
+  <div class="conteudo-principal">
+    <h2 class="titulo-pagina">Consultar Pedido</h2>
+
+    <!-- Input para o código -->
+    <div class="box-busca">
+        <div class="input-wrapper">
+            <form (method="post" action="#")>
+                <input type="text" class="search-box-input" name="busca" placeholder="Digite o código">
+            </form>
+        </div>
+        <button class="search-box-button"><i class="search-box-icone icon icon-search"></i>Buscar</button>
+    </div>
+    
+    <!-- Tabela dos pedidos -->
+    <table class="itens-pedido">
+      <thead class="cabecalho-tabela">
+        <tr>
+          <th>Item</th>
+          <th>Quantidade</th>
+          <th>Preço</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- EXEMPLOS DO RESUMO DO PEDIDO -->
+        <tr class="linha-tabela">
+          <td>Camiseta</td>
+          <td class="quantidade-itens">2</td>
+          <td class="preco-itens">R$ 20,00</td>
+        </tr>
+        <tr class="linha-tabela">
+          <td>Calça</td>
+          <td class="quantidade-itens">3</td>
+          <td class="preco-itens">R$ 25,00</td>
+        </tr>
+        <tr class="linha-tabela">
+            <td>Moletom</td>
+            <td class="quantidade-itens">3</td>
+            <td class="preco-itens">R$ 40,00</td>
+          </tr>
+      </tbody>
+    </table>
+
+    <!-- TOTAIS E PRAZO -->
+    <table class="itens-pedido resumo">
+        <thead class="cabecalho-tabela">
+          <tr>
+            <th>Prazo previsto</th>
+            <th>Situação do pedido</th>
+            <th>Total do Pedido</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr class="linha-tabela resumo">
+            <td>02/04/2024</td>
+            <td class="situacao-pedido">Em aberto</td>
+            <td class="preco-itens">R$ 85,00</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</body>
+</html>
