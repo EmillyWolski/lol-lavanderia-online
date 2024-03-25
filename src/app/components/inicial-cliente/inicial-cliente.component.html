@@ -28,52 +28,72 @@
     <a class="nav-item" href="#">Início</a>
     <a class="nav-item" href="#">Pedidos</a>
     <a class="nav-item" href="#">Consultar Pedido</a>
-    <a class="nav-item" href="#">Fazer Pedido</a>
+    <a class="nav-item" href="#">Fazer pedido</a>
   </nav>
   
   <div class="conteudo-principal">
-    <h2 class="titulo-pagina">Pedidos em Aberto</h2>
-    
-    <div class="tabela-pedidos">
-      <div class="cabecalho-tabela">
-        <div>ID Pedido</div>
-        <div>Data</div>
-        <div>Nome do Cliente</div>
-        <div>Status do Pedido</div>
-        <div>Total</div>
-        <div>Ações</div>
-      </div>
 
-      <!-- EXEMPLOS -->
-      
-      <div class="linha-tabela">
-        <div>1234</div>
-        <div>15/03/2024</div>
-        <div>Marina Santos</div>
-        <div>Em Aberto</div>
-        <div>R$ 50,00</div>
-        <div><button class="btn-cancelar">Cancelar</button></div>
-      </div>
-      
-      <div class="linha-tabela">
-        <div>1235</div>
-        <div>15/03/2024</div>
-        <div>Marina Santos</div>
-        <div>Em Aberto</div>
-        <div>R$ 30,00</div>
-        <div><button class="btn-cancelar">Cancelar</button></div>
-      </div>
-      
-      <div class="linha-tabela">
-        <div>1236</div>
-        <div>15/03/2024</div>
-        <div>Marina Santos</div>
-        <div>Em Aberto</div>
-        <div>R$ 70,00</div>
-        <div><button class="btn-cancelar">Cancelar</button></div>
-      </div>
+    <div class="filtro-pedidos">
+      <h2 class="titulo-pagina">Pedidos em Aberto</h2>
+      <label for="filtro-status" class="titulo-filtro">Filtrar por status:</label>
+
+      <select id="filtro-status">
+        <option value="em_aberto">Em Aberto</option>
+        <option value="cancelado">Cancelado</option>
+        <option value="recolhido">Recolhido</option>
+        <option value="aguardando_pagamento">Aguardando Pagamento</option>
+        <option value="pago">Pago</option>
+        <option value="finalizado">Finalizado</option>
+      </select>
+
     </div>
+    
+    <table class="tabela-pedidos">
+
+      <thead class="cabecalho-tabela">
+        <tr>
+          <th>ID Pedido</th>
+          <th>Data</th>
+          <th>Nome do Cliente</th>
+          <th>Status do Pedido</th>
+          <th>Total</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- EXEMPLOS -->
+        <tr class="linha-tabela">
+          <td>1234</td>
+          <td>15/03/2024</td>
+          <td>Marina Santos</td>
+          <td>Em Aberto</td>
+          <td>R$ 50,00</td>
+          <td><button class="btn-cancelar">Cancelar</button></td>
+        </tr>
+
+        <tr class="linha-tabela">
+          <td>1235</td>
+          <td>15/03/2024</td>
+          <td>Marina Santos</td>
+          <td>Em Aberto</td>
+          <td>R$ 30,00</td>
+          <td><button class="btn-cancelar">Cancelar</button></td>
+        </tr>
+
+        <tr class="linha-tabela">
+          <td>1236</td>
+          <td>15/03/2024</td>
+          <td>Marina Santos</td>
+          <td>Em Aberto</td>
+          <td>R$ 70,00</td>
+          <td><button class="btn-cancelar">Cancelar</button></td>
+        </tr>
+      </tbody>
+
+    </table>
   </div>
 
 </body>
 </html>
+

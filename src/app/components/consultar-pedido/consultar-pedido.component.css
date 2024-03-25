@@ -15,6 +15,7 @@ header {
     width: 100%;
     height: 76px;
     background: #FFFFFF;
+    box-shadow: 0px 1px 4px 0px #15223214;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,7 +36,6 @@ h2 {
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
-    background-image: url('../../../assets/imagens/logo.png');
 }
 
 .logo h1 {
@@ -55,7 +55,6 @@ h2 {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-    background-image: url('../../../assets/imagens/usuario.png');
 }
 
 .usuario-info span {
@@ -86,7 +85,7 @@ nav {
 
 .nav-item:hover {
     background-color: #3498db; 
-    color: #FFFFFF;
+    color: #FFFFFF; 
 }
 
 .conteudo-principal {
@@ -104,30 +103,15 @@ nav {
     color: #2c3e50;
 }
 
-/* Estilo para o filtro de status */
-.titulo-filtro{
-    font-size: 14px;
-    margin-left: 5px;
-}
-
-
-#filtro-status {
-    padding: 8px 12px;
-    font-size: 12px; 
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    color: #2c3e50;
-    outline: none; 
-}
-
-
-.tabela-pedidos {
-    width: 100%;
+.itens-pedido {
+    margin-top: 20px;
+    width: 50%;
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+.resumo{
+    margin-top: 50px;
 }
 
 .cabecalho-tabela {
@@ -140,7 +124,6 @@ nav {
 .cabecalho-tabela th {
     padding: 10px;
     text-align: left; 
-    font-size: 14px;
 }
 
 .linha-tabela {
@@ -149,12 +132,12 @@ nav {
 }
 
 .linha-tabela td {
-    padding: 10px;
+    padding: 12px;
     text-align: left;
-    font-size: 12px;
+    font-size: 14px;
 }
 
-.linha-tabela td:nth-child(4) {
+.itens-pedido .resumo td:nth-child(2){
     text-align: center;
     display: inline-block;
     background-color:#FFE45F;
@@ -166,17 +149,40 @@ nav {
     margin-top: 8px;
 }
 
-.btn-cancelar {
-    background-color: #F0142F;
-    color: #fff;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 12px;
+
+
+/* CSS DA CAIXA DE BUSCA */
+.box-busca {
+    display: flex;
+    justify-content: left;
+    align-items: center; 
+    width: 50%;
+    height: 50%;
+    background-color: #ffffff;
 }
 
-.btn-cancelar:hover {
-    background-color: #e4455b;
+.input-wrapper {
+    display: flex; 
+    flex: 1; 
+}
+
+.search-box-input {
+    outline: 0;
+    font-size: 15px;
+    color: #000;
+    opacity: 0.6;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: transparent;
+}
+
+.search-box-button {
+    width: 45px;
+    height: 45px;
+    background-color: #3498db;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    width: 100px;
 }
