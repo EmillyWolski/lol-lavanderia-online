@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Lavagem</title>
+
+    <link rel="stylesheet" href="modal-funcionario-lavagem.component.css">
+</head>
+<body>
+    <!-- Botão para acionar o modal -->
+    <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        ConfirmarLavagem
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Confirmar a Lavagem</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza <b>que deseja confirmar </b> Lavagem?</p>
+                </div>
+                <div class="modal-footer">
+                    <!-- Botão para Confirmar a lavagem -->
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Confirmar</button>
+                    <!-- Botão para cancelar a lavagem -->
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
