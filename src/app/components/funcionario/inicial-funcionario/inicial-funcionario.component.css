@@ -35,7 +35,7 @@ h2 {
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
-    background-image: url('../../../assets/imagens/logo.png');
+    background-image: url('../../../../../assets/imagens/logo.png');
 }
 
 .logo h1 {
@@ -55,7 +55,7 @@ h2 {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-    background-image: url('../../../assets/imagens/usuario.png');
+    background-image: url('../../../../../assets/imagens/usuario.png');
 }
 
 .usuario-info span {
@@ -104,25 +104,22 @@ nav {
     color: #2c3e50;
 }
 
-/* Estilo para o filtro de status */
 .titulo-filtro{
-    font-size: 14px;
+    font-size: 16px;
     margin-left: 5px;
 }
 
-
-#filtro-status {
+#filtro {
     padding: 8px 12px;
     font-size: 12px; 
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-left: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     background-color: #fff;
     color: #2c3e50;
     outline: none; 
 }
-
 
 .tabela-pedidos {
     width: 100%;
@@ -154,29 +151,67 @@ nav {
     font-size: 12px;
 }
 
-.linha-tabela td:nth-child(4) {
-    text-align: center;
-    display: inline-block;
-    background-color:#FFE45F;
+.linha-tabela td.status {
     padding: 6px 8px;
-    border: none;
     border-radius: 4px;
-    color: #af7012;
-    margin-left: 15px;
-    margin-top: 8px;
+    display: inline-block;
+    width: 150px;
+    margin-top: 10px;
+    text-align: center; 
 }
 
-.btn-cancelar {
-    background-color: #F0142F;
-    color: #fff;
-    padding: 8px 12px;
+/* Estilo para os status dos pedidos */
+.linha-tabela td.em-aberto {
+    background-color: #f3df7d; 
+    color: #af7012;
+}
+
+.linha-tabela td.recolhido {
+    background-color: #D3D3D3; 
+    color: #333752;
+}
+
+.linha-tabela td.pago {
+    background-color: #ffb077; 
+    color: #EA6200;
+}
+
+.linha-tabela td.aguardando-pagamento {
+    background-color: #7399f7; 
+    color: #062574;
+}
+
+.linha-tabela td.finalizado {
+    background-color: #36d490; 
+    color: #FFFFFF;
+}
+
+.linha-tabela td.cancelado {
+    background-color: #ec7171; 
+    color: rgb(109, 6, 6);
+}
+
+
+/* Estilo para os botões de ação */
+.btn-recolher,
+.btn-lavar,
+.btn-finalizar,
+.btn-visualizar-pedido {
+    background-color: #3498db; 
+    color: #fff; 
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 12px;
+    width: 160px;
+    text-align: center; 
+    display: inline-block;
+    padding: 7px;
 }
 
-.btn-cancelar:hover {
-    background-color: #e4455b;
+.btn-recolher:hover,
+.btn-lavar:hover,
+.btn-finalizar:hover,
+.btn-visualizar-pedido:hover {
+    background-color: #166092;
 }
