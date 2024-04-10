@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LOL Lavanderia On-line - </title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./cadastro-funcionario.component.css">
+  <link rel="stylesheet" href="./editar-funcionario.component.css">
 </head>
 <body>
 
@@ -24,9 +24,9 @@
 </div>
 
   <nav class="menu">
-    <a class="nav-item" href="#">Início</a>
-    <a class="nav-item" href="#">Manutenção<br>Roupas</a>
-    <a class="nav-item" href="#">Manutenção<br>Funcionário</a>
+    <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+    <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+    <a [routerLink]="['/editar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
     <a class="nav-item" href="#">Relatórios</a>
   </nav>
   

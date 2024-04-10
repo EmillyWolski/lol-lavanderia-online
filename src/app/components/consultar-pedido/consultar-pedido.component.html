@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LOL - Consultar Pedido</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./consultar-pedido.component.css">
+  <link rel="stylesheet" href="consultar-pedido.component.css">
 </head>
 <body>
   <div class="container">
@@ -24,10 +24,9 @@
 
   <!-- Menu -->
   <nav>
-    <a class="nav-item" href="#">Início</a>
-    <a class="nav-item" href="#">Pedidos</a>
-    <a class="nav-item" href="#">Consultar Pedido</a>
-    <a class="nav-item" href="#">Fazer pedido</a>
+    <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
+    <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
+    <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
   </nav>
   
   <!-- Conteúdo principal -->
