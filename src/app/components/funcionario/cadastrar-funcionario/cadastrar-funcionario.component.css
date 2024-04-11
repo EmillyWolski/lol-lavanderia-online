@@ -1,0 +1,154 @@
+
+/* Estilo para o corpo da página */
+body {
+    background-color: #F5F6FA; 
+    font-family: "Montserrat", sans-serif; 
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    margin: 0;
+}
+
+.header-base {
+    width: 100%;
+    height: 76px;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-image: url('../../../../assets/imagens/logo.png');
+}
+
+.logo h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+}
+
+.usuario-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-image: url('../../../../assets/imagens/usuario.png');
+}
+
+.usuario-info span {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.menu {
+    position: absolute;
+    left: 0;
+    top: 92px;
+    width: 15%;
+    height: calc(100% - 100px);
+    background-color: #FFFFFF; 
+    box-shadow: inset -1px 0px 0px #D7DBEC;
+}
+
+.menu a{
+    font-size: 13px;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #2c3e50;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #3498db; 
+    color: #FFFFFF;
+}
+
+.conteudo-principal {
+    flex: 1;
+    margin-left: 15%; 
+    margin-top: -3px; /* Altura do cabeçalho */
+    margin-bottom: 8px; 
+    padding: 20px;
+    height: calc(100vh - 84px); /* 100% da altura da janela menos altura do cabeçalho e menu */
+}
+
+.cabecalho{
+    height: 45px;
+}
+
+.cabecalho .titulo-pagina{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.titulo-pagina {
+    margin-bottom: 20px;
+    background-color: #FFFFFF; 
+    box-shadow: inset -1px 0px 0px #D7DBEC;
+    padding: 10px;
+    color: #2c3e50;
+}
+
+
+/* Estilos do Formulário */
+.formulario-funcionario{
+    max-width: 400px; /* Tamanho máximo desejado para o formulário */
+}
+
+.form-control{
+    height: 28px;
+    font-size: 12px;
+}
+
+.form-label{
+    font-size: 12px;
+}
+
+#InputDataNascimento{
+    font-size: 10px;
+}
+
+.btn{
+    width: 48%;
+    height: 30px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+    box-sizing: border-box; 
+}
+
+.btn-danger{
+    margin-left: 14px;
+}

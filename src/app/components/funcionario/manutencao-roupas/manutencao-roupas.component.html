@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOL Lavanderia On-line</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="manutencao-roupas.component.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">
+        <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+        <h1>Lavanderia LOL</h1>
+        </div>
+    
+        <div class="usuario-info">
+        <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
+        <span>Nome do Usuário</span>
+        </div>
+    </header>
+</div>
+
+  <nav>
+    <a class="nav-item" href="#">Início</a>
+    <a class="nav-item" href="#">Manutenção roupas</a>
+    <a class="nav-item" href="#">Manutenção funcionários</a>
+    <a class="nav-item" href="#">Relatórios</a>
+  </nav>
+  
+  <div class="conteudo-principal">
+
+    <h2 class="titulo-pagina">Manutenção Roupas<button class="btn-adicionar">Adicionar peça</button></h2>
+    
+    <table class="tabela-roupas">
+      <thead class="cabecalho-tabela">
+        <tr>
+          <th>Nome</th>
+          <th>Prazo para lavagem (dias)</th>
+          <th>Preço (individual)</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- EXEMPLOS -->
+        <tr class="linha-tabela">
+            <td>Camiseta</td>
+            <td>2 dias</td>
+            <td>R$10,00</td>
+            <td>
+              <button class="btn-editar">Editar</button>
+              <button class="btn-excluir">Excluir</button>
+            </td>
+          </tr>
+
+          <tr class="linha-tabela">
+            <td>Calça</td>
+            <td>3 dias</td>
+            <td>R$10,00</td>
+            <td>
+              <button class="btn-editar">Editar</button>
+              <button class="btn-excluir">Excluir</button>
+            </td>
+          </tr>
+
+          <tr class="linha-tabela">
+            <td>Coberta</td>
+            <td>5 dias</td>
+            <td>R$40,00</td>
+            <td>
+              <button class="btn-editar">Editar</button>
+              <button class="btn-excluir">Excluir</button>
+            </td>
+          </tr>
+
+          <tr class="linha-tabela">
+            <td>Shorts/bermuda</td>
+            <td>2 dias</td>
+            <td>R$10,00</td>
+            <td>
+              <button class="btn-editar">Editar</button>
+              <button class="btn-excluir">Excluir</button>
+            </td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
