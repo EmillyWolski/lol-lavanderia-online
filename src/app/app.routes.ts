@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { AutocadastroComponent } from './components/autocadastro/autocadastro.component';
 import { InicialClienteComponent } from './components/inicial-cliente/inicial-cliente.component';
-import { ConsultarPedidoComponent } from './components/consultar-pedido';
+import { ConsultarPedidoComponent } from './components/consultar-pedido/consultar-pedido.component';
 import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.component';
 import { ModalOrcamentoComponent } from './components/modal-orcamento';
 import { ModalCancelarPedidoComponent } from './components/modal-cancelar-pedido';
