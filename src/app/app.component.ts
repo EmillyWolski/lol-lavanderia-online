@@ -9,6 +9,7 @@ import { ModalCancelarPedidoComponent } from './components/modal-cancelar-pedido
 import { ModalPagamentoComponent } from './components/modal-pagamento/modal-pagamento.component';
 import { CommonModule } from '@angular/common';
 import { ModalFiltroPeriodoComponent } from './components/modal-filtro-periodo/modal-filtro-periodo.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ import { ModalFiltroPeriodoComponent } from './components/modal-filtro-periodo/m
     ModalCancelarPedidoComponent,
     ModalPagamentoComponent,
     ModalFiltroPeriodoComponent,
+    ReactiveFormsModule
   ],
 })
 export class AppComponent {
