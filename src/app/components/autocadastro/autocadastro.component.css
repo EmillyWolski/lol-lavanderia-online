@@ -1,4 +1,4 @@
-.form-group {
+.mb-3 {
   font-family: "Montserrat", sans-serif;
   margin: 0;
   padding: 0;
@@ -38,6 +38,7 @@ label {
   margin-bottom: 12px;
   box-sizing: border-box;
   height: 30px;
+  font-size: 12px;
 }
 
 .btn {

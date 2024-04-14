@@ -53,6 +53,7 @@ a.btn {
   text-decoration: none; /* Remove sublinhado padrão de links */
   text-align: center;
   color: #fff;
+  font-size: 14px;
 }
 
 a.btn:hover {

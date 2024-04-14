@@ -54,11 +54,8 @@ import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorio
     ModalFuncionarioFinalizarPedidoComponent,
     ModalFuncionarioLavagemComponent,
     ModalFuncionarioRecolhimentoComponent,
-<<<<<<< HEAD
     ReactiveFormsModule,
-=======
     TelaRelatoriosComponent,
->>>>>>> emilly
   ],
 })
 export class AppComponent {
