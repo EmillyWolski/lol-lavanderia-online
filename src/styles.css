@@ -1,5 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* CSS GERAL DE BODY */
+
+.mb-3 {
+    font-family: "Montserrat", sans-serif;
+}
+
+.conteudo-principal{
+    font-family: "Montserrat", sans-serif;
+}
+
+nav{
+    font-family: "Montserrat", sans-serif;
+}
 
 /* CSS DOS MODAIS */
 .btn-custom {
@@ -9,7 +22,9 @@
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%); /* Move o botão para o centro da tela */
+    border-radius: 4px;
 }
+
 
 .modal-dialog {
     width: 30%; 
@@ -20,8 +35,8 @@
     justify-content: center; 
     align-items: center; 
     position: fixed; 
-    inset: 50% 0; /* Posiciona o modal verticalmente na metade da tela */
-    transform: translate(0, -50%); /* Centraliza verticalmente */
+    top: 25%; /* Posiciona o modal verticalmente na metade da tela */
+    transform: translate(-50%, -50%); /* Centraliza verticalmente */
 }
 
 .modal-body {
@@ -33,4 +48,14 @@
     justify-content: center;
 }
 
+
+/* CSS BOTÕES */
+a {
+    font-weight: normal; /* Remover negrito */
+    text-decoration: none; /* Remover sublinhado */
+}
+
+.btn {
+    font-size: 12px;
+}
 

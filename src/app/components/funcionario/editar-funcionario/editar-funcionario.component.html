@@ -1,65 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LOL Lavanderia On-line - </title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./editar-funcionario.component.css">
 </head>
-<body>
 
 <div class="md-3">
-    <header class="header-base">
-        <div class="logo">
-        <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
-        <h1>Lavanderia LOL</h1>
-        </div>
-    
-        <div class="usuario-info">
-        <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
-        <span>Nome do Usuário</span>
-        </div>
-    </header>
+  <header class="header-base">
+    <div class="logo">
+      <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+      <h1>Lavanderia LOL</h1>
+    </div>
+
+    <div class="usuario-info">
+      <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
+      <span>Nome do Usuário</span>
+    </div>
+  </header>
 </div>
 
-  <nav class="menu">
-    <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
-    <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
-    <a [routerLink]="['/editar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
-    <a class="nav-item" href="#">Relatórios</a>
-  </nav>
-  
-  <div class="conteudo-principal">
-    <div class="cabecalho">
-      <h2 class="titulo-pagina">Edição de Funcionário</h2>
-    </div>
-    
-    <form class="formulario-funcionario">
-        <div class="mb-3">
-            <label for="InputNome" class="form-label">Nome do Funcionário</label>
-            <input type="text" class="form-control" id="InputNome" required placeholder="João da Silva">
-          </div>
-        <div class="mb-3">
-          <label for="InputEmail" class="form-label">E-mail</label>
-          <input type="email" class="form-control" id="InputEmail" required placeholder="joao@gmail.com">
-        </div>
-        <div class="mb-3">
-            <label for="InputDataNascimento" class="form-label">Data Nascimento</label>
-            <input type="date" class="form-control" id="InputDataNascimento" required placeholder="05/11/1978">
-          </div>
-        <div class="mb-3">
-          <label for="InputPassword" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="InputPassword" pattern="[0-9]{8}" required placeholder="******">
-        </div>
-        <div class="mb-3">
-            <label for="InputPassword" class="form-label">Confirmar Senha</label>
-            <input type="password" class="form-control" id="InputPassword" required placeholder="******">
-          </div>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <button type="reset" class="btn btn-danger">Cancelar</button>
-      </form>
+<nav class="menu">
+  <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+  <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+  <a [routerLink]="['/editar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+</nav>
 
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Edição de Funcionário</h2>
   </div>
-</body>
-</html>
+
+  <form class="formulario-funcionario">
+    <div class="mb-3">
+      <label for="InputNome" class="form-label">Nome do Funcionário</label>
+      <input type="text" class="form-control" id="InputNome" required placeholder="João da Silva">
+    </div>
+    <div class="mb-3">
+      <label for="InputEmail" class="form-label">E-mail</label>
+      <input type="email" class="form-control" id="InputEmail" required placeholder="joao@gmail.com">
+    </div>
+    <div class="mb-3">
+      <label for="InputDataNascimento" class="form-label">Data Nascimento</label>
+      <input type="date" class="form-control" id="InputDataNascimento" required placeholder="05/11/1978">
+    </div>
+    <div class="mb-3">
+      <label for="InputPassword" class="form-label">Senha</label>
+      <input type="password" class="form-control" id="InputPassword" pattern="[0-9]{8}" required placeholder="******">
+    </div>
+    <div class="mb-3">
+      <label for="InputPassword" class="form-label">Confirmar Senha</label>
+      <input type="password" class="form-control" id="InputPassword" required placeholder="******">
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a [routerLink]="['/listar-funcionario']" class="btn btn-danger">Cancelar</a>
+  </form>
+
+</div>
