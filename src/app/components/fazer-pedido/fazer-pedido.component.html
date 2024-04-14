@@ -11,8 +11,8 @@
 
 <body>
 
-  <div class="container">
-    <header>
+  <div class="md-3">
+    <header class="header-base">
       <div class="logo">
         <img src="../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
         <h1>Lavanderia LOL</h1>
@@ -26,14 +26,15 @@
   </div>
 
   <nav>
-    <a class="nav-item" href="#">Início</a>
-    <a class="nav-item" href="#">Pedidos</a>
-    <a class="nav-item" href="#">Consultar Pedido</a>
-    <a class="nav-item" href="#">Fazer Pedido</a>
+    <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
+    <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
+    <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
   </nav>
 
   <div class="conteudo-principal">
-    <h2 class="titulo-pagina">Fazer pedido</h2>
+      <div class="cabecalho">
+        <h2 class="titulo-pagina">Fazer Pedidos</h2>
+      </div>
 
     <div class="tabela-pedidos">
       <!-- EXEMPLOS -->

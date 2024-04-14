@@ -2,13 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { AutocadastroService } from '../../services/autocadastro/autocadastro.service';
 import { Pessoa } from '../../shared/models/pessoa.model';
-import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-autocadastro',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, RouterLink],
   templateUrl: './autocadastro.component.html',
   styleUrl: './autocadastro.component.css'
 })

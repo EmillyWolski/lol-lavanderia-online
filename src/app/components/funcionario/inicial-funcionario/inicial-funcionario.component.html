@@ -9,8 +9,8 @@
 </head>
 <body>
 
-<div class="container">
-    <header>
+<div class="md-3">
+    <header class="header-base">
         <div class="logo">
         <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
         <h1>Lavanderia LOL</h1>
@@ -24,16 +24,17 @@
 </div>
 
   <nav>
-    <a class="nav-item" href="#">Início</a>
-    <a class="nav-item" href="#">Manutenção roupas</a>
-    <a class="nav-item" href="#">Manutenção funcionários</a>
+    <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+    <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+    <a [routerLink]="['/editar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
     <a class="nav-item" href="#">Relatórios</a>
   </nav>
   
   <div class="conteudo-principal">
-
     <div class="filtro">
-      <h2 class="titulo-pagina">Pedidos</h2>
+      <div class="cabecalho">
+        <h2 class="titulo-pagina">Pedidos</h2>
+      </div>
       <label for="filtro" class="titulo-filtro">Filtros:</label>
 
       <select id="filtro">
@@ -66,7 +67,7 @@
             <td class="status em-aberto">Em Aberto</td>
             <td>R$ 50,00</td>
             <td>
-              <button class="btn-recolher">Confirmar Recolhimento</button>
+              <button class="btn-recolher">Confirmar Rec.</button>
             </td>
           </tr>
           
@@ -118,7 +119,7 @@
             <td>1236</td>
             <td>25/03/2024</td>
             <td>José Silva</td>
-            <td class="status aguardando-pagamento">Aguardando pagamento</td>
+            <td class="status aguardando-pagamento">Aguardando pgto.</td>
             <td>R$ 73,00</td>
             <td>
               <button class="btn-visualizar-pedido">Visualizar pedido</button>
