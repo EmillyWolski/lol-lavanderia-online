@@ -9,19 +9,20 @@
 </head>
 
 <body>
+<div class="mb-3">
+  <div class="form-group">
+    <form id="loginForm" class="bg-white p-2 rounded-lg">
+      <h1>LOL Lavanderia On-line</h1>
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" class="form-control" required>
 
-  <form id="loginForm">
-    <h1>LOL Lavanderia On-line</h1>
-    <label for="email">E-mail:</label>
-    <input type="email" id="email" name="email" required>
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" class="form-control" required>
 
-    <label for="password">Senha:</label>
-    <input type="password" id="password" name="password" required>
-
-    <button type="submit">Login</button>
-    <button type="button" onclick="location.href='autocadastro.component.html';">Realizar Autocadastro</button>
-  </form>
-
+      <a [routerLink]="['/inicio-cliente']" class="btn" title="Login">Login</a>
+      <a [routerLink]="['/autocadastro']" class="btn" title="Autocadastro">Realizar Autocadastro</a>
+    </form>
+  </div>
+</div>
 </body>
-
 </html>

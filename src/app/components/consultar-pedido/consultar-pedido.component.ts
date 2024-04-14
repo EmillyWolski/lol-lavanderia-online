@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ConsultarPedidoService } from '../../services/consultar-pedido';
+import { CommonModule } from '@angular/common';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-consultar-pedido',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './consultar-pedido.component.html',
   styleUrl: './consultar-pedido.component.css'
 })

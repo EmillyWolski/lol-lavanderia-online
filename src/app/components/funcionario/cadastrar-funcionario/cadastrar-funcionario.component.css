@@ -1,3 +1,4 @@
+
 /* Estilo para o corpo da página */
 body {
     background-color: #F5F6FA; 
@@ -6,7 +7,7 @@ body {
     padding: 0;
 }
 
-.md-3 {
+.container {
     display: flex;
     margin: 0;
 }
@@ -35,7 +36,7 @@ h2 {
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
-    background-image: url('../../../assets/imagens/logo.png');
+    background-image: url('../../../../assets/imagens/logo.png');
 }
 
 .logo h1 {
@@ -55,7 +56,7 @@ h2 {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-    background-image: url('../../../assets/imagens/usuario.png');
+    background-image: url('../../../../assets/imagens/usuario.png');
 }
 
 .usuario-info span {
@@ -65,7 +66,7 @@ h2 {
     color: #2c3e50;
 }
 
-nav {
+.menu {
     position: absolute;
     left: 0;
     top: 92px;
@@ -75,9 +76,13 @@ nav {
     box-shadow: inset -1px 0px 0px #D7DBEC;
 }
 
+.menu a{
+    font-size: 13px;
+}
+
 .nav-item {
     padding: 15px 20px;
-    font-size: 13px;
+    font-size: 1rem;
     text-decoration: none;
     color: #2c3e50;
     display: block;
@@ -115,79 +120,35 @@ nav {
     color: #2c3e50;
 }
 
-/* Estilo para o filtro de status */
-.titulo-filtro{
+
+/* Estilos do Formulário */
+.formulario-funcionario{
+    max-width: 400px; /* Tamanho máximo desejado para o formulário */
+}
+
+.form-control{
+    height: 28px;
     font-size: 12px;
-    margin-left: 5px;
 }
 
-
-#filtro-status {
-    padding: 8px 12px;
-    font-size: 10px; 
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    color: #2c3e50;
-    outline: none; 
+.form-label{
+    font-size: 12px;
 }
 
-
-.tabela-pedidos {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
+#InputDataNascimento{
+    font-size: 10px;
 }
 
-.cabecalho-tabela {
-    background-color: #fff; 
-    color: #2c3e50;
-    font-weight: bold;
-    border-bottom: 1px solid #ccc;
-}
-
-.cabecalho-tabela th {
-    padding: 10px;
-    text-align: left; 
+.btn{
+    width: 48%;
+    height: 30px;
     font-size: 14px;
-}
-
-.linha-tabela {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #f5f5f5;
-}
-
-.linha-tabela td {
-    padding: 10px;
-    text-align: left;
-    font-size: 12px;
-}
-
-.linha-tabela td:nth-child(4) {
     text-align: center;
-    display: inline-block;
-    background-color:#FFE45F;
-    padding: 6px 8px;
-    border: none;
-    border-radius: 4px;
-    color: #af7012;
-    margin-left: 15px;
-    margin-top: 8px;
+    vertical-align: middle;
+    padding: 5px;
+    box-sizing: border-box; 
 }
 
-.btn-cancelar {
-    background-color: #F0142F;
-    color: #fff;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 12px;
-}
-
-.btn-cancelar:hover {
-    background-color: #e4455b;
+.btn-danger{
+    margin-left: 14px;
 }

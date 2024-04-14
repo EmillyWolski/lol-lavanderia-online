@@ -8,7 +8,7 @@ body {
   height: 100vh;
 }
 
-form {
+.well {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -26,27 +26,42 @@ h1 {
 
 label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 14px;
   color: #333;
+  height: 10px;
 }
 
-input {
+.form-control {
   width: 100%;
   padding: 8px;
   margin-bottom: 12px;
   box-sizing: border-box;
+  height: 30px;
 }
 
-button {
+.btn {
+  display: block; 
   background-color: #3498db;
-  color: #fff;
   padding: 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 8px;
+  text-decoration: none;
+  text-align: center;
+  color: #fff;
+  width: 258px; 
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
-button:hover {
+.btn:hover {
   background-color: #2980b9;
 }
+
+.alert-danger {
+  font-size: 10px;
+}
+
+
+
