@@ -1,93 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LOL Lavanderia On-line</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="manutencao-roupas.component.css">
 </head>
-<body>
 
 <div class="md-3">
-    <header class="header-base">
-        <div class="logo">
-        <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
-        <h1>Lavanderia LOL</h1>
-        </div>
-    
-        <div class="usuario-info">
-        <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
-        <span>Nome do Usuário</span>
-        </div>
-    </header>
+  <header class="header-base">
+    <div class="logo">
+      <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+      <h1>Lavanderia LOL</h1>
+    </div>
+
+    <div class="usuario-info">
+      <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
+      <span>Nome do Usuário</span>
+    </div>
+  </header>
 </div>
 
-  <nav>
-    <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
-    <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
-    <a [routerLink]="['/editar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
-    <a class="nav-item" href="#">Relatórios</a>
-  </nav>
-  
-  <div class="conteudo-principal">
-    <div class="cabecalho">
-      <h2 class="titulo-pagina">Manutenção Roupas<button class="btn-adicionar">Adicionar peça</button></h2>
-    </div>
-    
-    <table class="tabela-roupas">
-      <thead class="cabecalho-tabela">
-        <tr>
-          <th>Nome</th>
-          <th>Prazo para lavagem (dias)</th>
-          <th>Preço (individual)</th>
-        </tr>
-      </thead>
+<nav>
+  <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+  <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+  <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+</nav>
 
-      <tbody>
-        <!-- EXEMPLOS -->
-        <tr class="linha-tabela">
-            <td>Camiseta</td>
-            <td>2 dias</td>
-            <td>R$10,00</td>
-            <td>
-              <button class="btn-editar">Editar</button>
-              <button class="btn-excluir">Excluir</button>
-            </td>
-          </tr>
-
-          <tr class="linha-tabela">
-            <td>Calça</td>
-            <td>3 dias</td>
-            <td>R$10,00</td>
-            <td>
-              <button class="btn-editar">Editar</button>
-              <button class="btn-excluir">Excluir</button>
-            </td>
-          </tr>
-
-          <tr class="linha-tabela">
-            <td>Coberta</td>
-            <td>5 dias</td>
-            <td>R$40,00</td>
-            <td>
-              <button class="btn-editar">Editar</button>
-              <button class="btn-excluir">Excluir</button>
-            </td>
-          </tr>
-
-          <tr class="linha-tabela">
-            <td>Shorts/bermuda</td>
-            <td>2 dias</td>
-            <td>R$10,00</td>
-            <td>
-              <button class="btn-editar">Editar</button>
-              <button class="btn-excluir">Excluir</button>
-            </td>
-          </tr>
-
-      </tbody>
-    </table>
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Manutenção Roupas<button class="btn-adicionar">Adicionar peça</button></h2>
   </div>
-</body>
-</html>
+
+  <table class="tabela-roupas">
+    <thead class="cabecalho-tabela">
+      <tr>
+        <th>Nome</th>
+        <th>Prazo para lavagem (dias)</th>
+        <th>Preço (individual)</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- EXEMPLOS -->
+      <tr class="linha-tabela">
+        <td>Camiseta</td>
+        <td>2 dias</td>
+        <td>R$10,00</td>
+        <td>
+          <a [routerLink]="['/']" class="btn btn-editar">Editar</a> 
+          <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>Calça</td>
+        <td>3 dias</td>
+        <td>R$10,00</td>
+        <td>
+          <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
+          <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>Coberta</td>
+        <td>5 dias</td>
+        <td>R$40,00</td>
+        <td>
+          <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
+          <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>Shorts/bermuda</td>
+        <td>2 dias</td>
+        <td>R$10,00</td>
+        <td>
+          <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
+          <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

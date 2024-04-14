@@ -1,11 +1,5 @@
 
 /* Estilo para o corpo da página */
-body {
-    background-color: #F5F6FA; 
-    font-family: "Montserrat", sans-serif; 
-    margin: 0;
-    padding: 0;
-}
 
 .container {
     display: flex;

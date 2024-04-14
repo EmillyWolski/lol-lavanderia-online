@@ -1,12 +1,7 @@
 /* Estilo para o corpo da página */
-body {
-    background-color: #F5F6FA; 
-    font-family: "Montserrat", sans-serif; 
-    margin: 0;
-    padding: 0;
-}
 
-.container {
+.mb-3 {
+    font-family: "Montserrat", sans-serif;
     display: flex;
     margin: 0;
 }
@@ -72,11 +67,12 @@ nav {
     height: calc(100% - 100px);
     background-color: #FFFFFF; 
     box-shadow: inset -1px 0px 0px #D7DBEC;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .nav-item {
     padding: 15px 20px;
-    font-size: 14px;
+    font-size: 13px;
     text-decoration: none;
     color: #2c3e50;
     display: block;
@@ -89,13 +85,20 @@ nav {
 }
 
 .conteudo-principal {
+    font-family: "Montserrat", sans-serif;
     flex: 1;
     margin-left: 15%;
     margin-top: -17px;
     padding: 20px;
 }
 
-.titulo-pagina {
+.cabecalho{
+    height: 45px;
+}
+
+.cabecalho .titulo-pagina{
+    font-size: 14px;
+    font-weight: bold;
     margin-bottom: 20px;
     background-color: #FFFFFF; 
     box-shadow: inset -1px 0px 0px #D7DBEC;
@@ -108,6 +111,7 @@ nav {
     width: 50%;
     border-collapse: collapse;
     border-spacing: 0;
+    font-size: 12px;
 }
 
 .resumo{
@@ -116,6 +120,7 @@ nav {
 
 .cabecalho-tabela {
     background-color: #fff; 
+    font-size: 13px;
     color: #2c3e50;
     font-weight: bold;
     border-bottom: 1px solid #ccc;
@@ -132,9 +137,9 @@ nav {
 }
 
 .linha-tabela td {
-    padding: 12px;
+    padding: 10px;
     text-align: left;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .itens-pedido .resumo td:nth-child(2){
@@ -150,7 +155,6 @@ nav {
 }
 
 
-
 /* CSS DA CAIXA DE BUSCA */
 .box-busca {
     display: flex;
@@ -159,11 +163,19 @@ nav {
     width: 50%;
     height: 50%;
     background-color: #ffffff;
+    font-size: 13px;
 }
 
 .input-wrapper {
     display: flex; 
     flex: 1; 
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+}
+
+.input-wrapper .search-box-input{
+    font-size: 13px;
+    height: 30px;
 }
 
 .search-box-input {
@@ -178,11 +190,13 @@ nav {
 }
 
 .search-box-button {
-    width: 45px;
-    height: 45px;
+    height: 30px;
+    border-radius: 4px;
     background-color: #3498db;
     border: none;
     cursor: pointer;
     color: #fff;
     width: 100px;
+    margin-left: 4px;
 }
+
