@@ -1,135 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LOL Lavanderia On-line - </title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="inicial-funcionario.component.css">
+  <link rel="stylesheet" href="manutencao-pecas-roupa.component.css">
 </head>
 
-<body>
-
-  <div class="container">
-    <header>
-      <div class="logo">
-        <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
-        <h1>Lavanderia LOL</h1>
-      </div>
-
-      <div class="usuario-info">
-        <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
-        <span>Nome do Usuário</span>
-      </div>
-    </header>
-  </div>
-
-  <nav>
-    <a class="nav-item" href="#">Início</a>
-    <a class="nav-item" href="#">Manutenção roupas</a>
-    <a class="nav-item" href="#">Manutenção funcionários</a>
-    <a class="nav-item" href="#">Relatórios</a>
-  </nav>
-
-  <div class="conteudo-principal">
-
-    <div class="filtro">
-      <h2 class="titulo-pagina">Pedidos</h2>
-      <label for="filtro" class="titulo-filtro">Filtros:</label>
-
-      <select id="filtro">
-        <option value="" disabled selected hidden>Selecione uma opção</option>
-        <option value="em_aberto">Pedidos de hoje</option>
-        <option value="cancelado">Pedidos por período</option>
-        <option value="recolhido">Todos os pedidos</option>
-      </select>
+<div class="container">
+  <header>
+    <div class="logo">
+      <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+      <h1>Lavanderia LOL</h1>
     </div>
 
-    <table class="tabela-pedidos">
+    <div class="usuario-info">
+      <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
+      <span>Nome do Usuário</span>
+    </div>
+  </header>
+</div>
 
-      <thead class="cabecalho-tabela">
-        <tr>
-          <th>ID Pedido</th>
-          <th>Data</th>
-          <th>Nome do Cliente</th>
-          <th>Status do Pedido</th>
-          <th>Total</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
+<nav>
+  <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+  <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+  <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+</nav>
 
-      <tbody>
-        <!-- EXEMPLOS -->
-        <tr class="linha-tabela">
-          <td>1234</td>
-          <td>15/03/2024</td>
-          <td>Marina Santos</td>
-          <td class="status em-aberto">Em Aberto</td>
-          <td>R$ 50,00</td>
-          <td>
-            <button class="btn-recolher">Confirmar Recolhimento</button>
-          </td>
-        </tr>
+<div class="conteudo-principal">
 
-        <tr class="linha-tabela">
-          <td>1235</td>
-          <td>17/03/2024</td>
-          <td>Julia Marques</td>
-          <td class="status recolhido">Recolhido</td>
-          <td>R$ 30,00</td>
-          <td>
-            <button class="btn-lavar">Confirmar Lavagem</button>
-          </td>
-        </tr>
+  <div class="filtro">
+    <h2 class="titulo-pagina">Pedidos</h2>
+    <label for="filtro" class="titulo-filtro">Filtros:</label>
 
-        <tr class="linha-tabela">
-          <td>1236</td>
-          <td>17/03/2024</td>
-          <td>Francisco Morais</td>
-          <td class="status pago">Pago</td>
-          <td>R$ 56,00</td>
-          <td>
-            <button class="btn-finalizar">Finalizar Pedido</button>
-          </td>
-        </tr>
-
-        <tr class="linha-tabela">
-          <td>1236</td>
-          <td>19/03/2024</td>
-          <td>Ana Pires</td>
-          <td class="status finalizado">Finalizado</td>
-          <td>R$ 73,00</td>
-          <td>
-            <button class="btn-visualizar-pedido">Visualizar pedido</button>
-          </td>
-        </tr>
-
-        <tr class="linha-tabela">
-          <td>1236</td>
-          <td>22/03/2024</td>
-          <td>André Gouveia</td>
-          <td class="status cancelado">Cancelado</td>
-          <td>R$ 15,00</td>
-          <td>
-            <button class="btn-visualizar-pedido">Visualizar pedido</button>
-          </td>
-        </tr>
-
-        <tr class="linha-tabela">
-          <td>1236</td>
-          <td>25/03/2024</td>
-          <td>José Silva</td>
-          <td class="status aguardando-pagamento">Aguardando pagamento</td>
-          <td>R$ 73,00</td>
-          <td>
-            <button class="btn-visualizar-pedido">Visualizar pedido</button>
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
+    <select id="filtro">
+      <option value="" disabled selected hidden>Selecione uma opção</option>
+      <option value="em_aberto">Pedidos de hoje</option>
+      <option value="cancelado">Pedidos por período</option>
+      <option value="recolhido">Todos os pedidos</option>
+    </select>
   </div>
-</body>
 
-</html>
+  <table class="tabela-pedidos">
+
+    <thead class="cabecalho-tabela">
+      <tr>
+        <th>ID Pedido</th>
+        <th>Data</th>
+        <th>Nome do Cliente</th>
+        <th>Status do Pedido</th>
+        <th>Total</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- EXEMPLOS -->
+      <tr class="linha-tabela">
+        <td>1234</td>
+        <td>15/03/2024</td>
+        <td>Marina Santos</td>
+        <td class="status em-aberto">Em Aberto</td>
+        <td>R$ 50,00</td>
+        <td>
+          <button class="btn-recolher">Confirmar Recolhimento</button>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>1235</td>
+        <td>17/03/2024</td>
+        <td>Julia Marques</td>
+        <td class="status recolhido">Recolhido</td>
+        <td>R$ 30,00</td>
+        <td>
+          <button class="btn-lavar">Confirmar Lavagem</button>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>1236</td>
+        <td>17/03/2024</td>
+        <td>Francisco Morais</td>
+        <td class="status pago">Pago</td>
+        <td>R$ 56,00</td>
+        <td>
+          <button class="btn-finalizar">Finalizar Pedido</button>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>1236</td>
+        <td>19/03/2024</td>
+        <td>Ana Pires</td>
+        <td class="status finalizado">Finalizado</td>
+        <td>R$ 73,00</td>
+        <td>
+          <button class="btn-visualizar-pedido">Visualizar pedido</button>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>1236</td>
+        <td>22/03/2024</td>
+        <td>André Gouveia</td>
+        <td class="status cancelado">Cancelado</td>
+        <td>R$ 15,00</td>
+        <td>
+          <button class="btn-visualizar-pedido">Visualizar pedido</button>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>1236</td>
+        <td>25/03/2024</td>
+        <td>José Silva</td>
+        <td class="status aguardando-pagamento">Aguardando pagamento</td>
+        <td>R$ 73,00</td>
+        <td>
+          <button class="btn-visualizar-pedido">Visualizar pedido</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

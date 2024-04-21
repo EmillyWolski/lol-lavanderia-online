@@ -1,13 +1,11 @@
-body {
+
+.mb-3 {
+  display: flex;
+  margin: 0;
   background-color: #f5f6fa;
   font-family: "Montserrat", sans-serif;
   margin: 0;
   padding: 0;
-}
-
-.md-3 {
-  display: flex;
-  margin: 0;
 }
 
 .header-base {
@@ -21,7 +19,7 @@ body {
 }
 
 h2 {
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .logo {
@@ -81,6 +79,7 @@ nav {
   color: #2c3e50;
   display: block;
   transition: background-color 0.3s ease;
+  font-family: "Montserrat", sans-serif;
 }
 
 .nav-item:hover {
@@ -93,6 +92,7 @@ nav {
   margin-left: 15%;
   margin-top: -17px;
   padding: 20px;
+  font-family: "Montserrat", sans-serif;
 }
 
 .cabecalho{
@@ -103,6 +103,7 @@ nav {
 .cabecalho .titulo-pagina{
   font-size: 14px;
   font-weight: bold;
+  font-family: "Montserrat", sans-serif;
 }
 
 .titulo-pagina {
@@ -125,7 +126,7 @@ nav {
   grid-template-columns: 4fr 1fr 1fr 1fr;
   gap: 10px;
   padding: 15px 30px 15px 30px;
-  font-size: 12px;
+  font-size: 11px;
   border: 1px solid #f5f5f5;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -141,8 +142,9 @@ nav {
 .btn-editar {
   justify-self: end;
   font-family: "Montserrat", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   border: none;
+  border-radius: 4px;
   color: #ffff;
   background-color: #336dff;
   padding: 8px 50px;
@@ -153,8 +155,9 @@ nav {
 .btn-excluir {
   justify-self: end;
   font-family: "Montserrat", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   border: none;
+  border-radius: 4px;
   color: #ffff;
   background-color: #f0142f;
   padding: 8px 50px;
@@ -169,3 +172,24 @@ nav {
 .btn-excluir:hover {
   background-color: #e4455b;
 }
+  
+.btn-novo{
+  background-color: #06a561;
+  position: absolute;
+  top: 16%;
+  left: 71%; 
+  color: #fff; 
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 23%;
+  height: 30px;
+  font-size: 12px;
+  text-align: center; 
+  display: inline-block;
+  padding: 7px;
+  font-weight: normal; /* Remover negrito */
+  text-decoration: none; /* Remover sublinhado */
+}
+

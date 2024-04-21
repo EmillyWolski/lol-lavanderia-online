@@ -9,6 +9,8 @@ import { ModalCancelarPedidoComponent } from './components/modal-cancelar-pedido
 import { ModalPagamentoComponent } from './components/modal-pagamento/modal-pagamento.component';
 import { CommonModule } from '@angular/common';
 import { ModalFiltroPeriodoComponent } from './components/modal-filtro-periodo/modal-filtro-periodo.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
 import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.component';
 import { CadastrarFuncionarioComponent } from './components/funcionario/cadastrar-funcionario/cadastrar-funcionario.component';
 import { EditarFuncionarioComponent } from './components/funcionario/editar-funcionario/editar-funcionario.component';
@@ -52,6 +54,7 @@ import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorio
     ModalFuncionarioFinalizarPedidoComponent,
     ModalFuncionarioLavagemComponent,
     ModalFuncionarioRecolhimentoComponent,
+    ReactiveFormsModule,
     TelaRelatoriosComponent,
   ],
 })

@@ -14,6 +14,12 @@ import { ModalFuncionarioRecolhimentoComponent } from './components/funcionario/
 import { CadastrarFuncionarioComponent } from './components/funcionario/cadastrar-funcionario/cadastrar-funcionario.component';
 import { ManutencaoRoupasComponent } from './components/funcionario/manutencao-roupas/manutencao-roupas.component';
 import { EditarFuncionarioComponent } from './components/funcionario/editar-funcionario/editar-funcionario.component';
+import { ListarFuncionarioComponent } from './components/funcionario/listar-funcionario/listar-funcionario.component';
+import { ManutencaoPecasRoupaComponent } from './components/funcionario/manutencao-pecas-roupa/manutencao-pecas-roupa.component';
+import { ModalExcluirFuncComponent } from './components/funcionario/modal-excluir-func/modal-excluir-func.component';
+import { ModalFuncionarioExcluirPecaComponent } from './components/funcionario/modal-funcionario-excluir-peca/modal-funcionario-excluir-peca.component';
+import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorios/tela-relatorios.component';
+import { ModalFiltroPeriodoComponent } from './components/modal-filtro-periodo/modal-filtro-periodo.component';
 
 export const routes: Routes = [
     { path: '', 
@@ -70,6 +76,27 @@ export const routes: Routes = [
     },
     { path: 'editar-funcionario', 
         component: EditarFuncionarioComponent
+    },
+    { path: 'listar-funcionario', 
+        component: ListarFuncionarioComponent
+    },
+    { path: 'manutencao-pecas-roupas', 
+        component: ManutencaoPecasRoupaComponent
+    },
+    { path: 'manutencao-roupas', 
+        component: ManutencaoRoupasComponent
+    },
+    { path: 'excluir-funcionario', 
+        component: ModalExcluirFuncComponent
+    },
+    { path: 'excluir-peca', 
+        component: ModalFuncionarioExcluirPecaComponent
+    },
+    { path: 'relatorios', 
+        component: TelaRelatoriosComponent
+    },
+    { path: 'filtrar-periodo', 
+        component: ModalFiltroPeriodoComponent
     },
 
 ];
