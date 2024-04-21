@@ -59,3 +59,36 @@ a {
     font-size: 12px;
 }
 
+.btn-custom {
+    background-color: #06A561; 
+    color: white;
+}
+
+
+.btn-excluir{
+    background-color: #FF0000; 
+    color: #fff; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 80px;
+    text-align: center; 
+    display: inline-block;
+    padding: 7px;
+    text-decoration: none;
+}
+
+.btn-cancelar{
+    background-color: #3498db; 
+    color: #fff; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 80px;
+    text-align: center; 
+    display: inline-block;
+    padding: 7px;
+    text-decoration: none;
+}

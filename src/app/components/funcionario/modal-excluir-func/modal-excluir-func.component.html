@@ -9,7 +9,7 @@
 </head>
 <body>
     <!-- Botão para acionar o modal -->
-    <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-custom btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Excluir
     </button>
   
@@ -26,9 +26,9 @@
                 </div>
                 <div class="modal-footer">
                     <!-- Botão para Confirmar a exclusão -->
-                    <button type="button" class="btn-excluir" data-bs-dismiss="modal">Excluir</button>
+                    <a [routerLink]="['/listar-funcionario']"class="btn btn-success" data-bs-dismiss="modal">Excluir</a>
                     <!-- Botão para cancelar a exclusão -->
-                    <button type="button" class="btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <a [routerLink]="['/listar-funcionario']" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
                 </div>
             </div>
         </div>
