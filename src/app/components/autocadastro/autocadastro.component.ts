@@ -16,14 +16,32 @@ export class AutocadastroComponent {
   @ViewChild('autocadastroForm') autocadastroForm!: NgForm;
   pessoa: Pessoa = new Pessoa();
   pessoaCadastrada: Pessoa | null = null;
+  senhaGerada: string = "";
 
   constructor(private autocadastroService: AutocadastroService) {}
 
+  gerarSenhaAleatoria(): void {
+    const senha = Math.floor(1000 + Math.random() * 9000).toString();
+    this.senhaGerada = senha;
+  }
+
   inserir(): void {
     if (this.autocadastroForm.form.valid) {
+      // Gera a senha antes de inserir a pessoa
+      this.gerarSenhaAleatoria();
+      this.pessoa.senha = this.senhaGerada; // Define a senha na pessoa
+
       this.autocadastroService.inserir(this.pessoa);
       this.pessoaCadastrada = { ...this.pessoa }; // Armazena os detalhes da pessoa cadastrada
       this.pessoa = new Pessoa(); // Limpa o formulário
+      this.exibirAlerta();
     }
   }
+
+  exibirAlerta(): void {
+    if (this.senhaGerada) {
+      alert(`Senha gerada: ${this.senhaGerada}`);
+    }
+  }
+
 }

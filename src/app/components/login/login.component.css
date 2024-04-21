@@ -42,7 +42,7 @@ input {
   border-color: lightgray;
 }
 
-a.btn {
+.btn {
   display: inline-block; /* Garante que os elementos fiquem na mesma linha */
   background-color: #3498db;
   padding: 10px;

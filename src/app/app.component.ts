@@ -24,6 +24,7 @@ import { ListarFuncionarioComponent } from './components/funcionario/listar-func
 import { ManutencaoPecasRoupaComponent } from './components/funcionario/manutencao-pecas-roupa/manutencao-pecas-roupa.component';
 import { ModalExcluirFuncComponent } from './components/funcionario/modal-excluir-func/modal-excluir-func.component';
 import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorios/tela-relatorios.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -56,6 +57,7 @@ import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorio
     ModalFuncionarioRecolhimentoComponent,
     ReactiveFormsModule,
     TelaRelatoriosComponent,
+    FormsModule,
   ],
 })
 export class AppComponent {
