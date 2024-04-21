@@ -1,79 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LOL Lavanderia On-line - Pedidos em Aberto</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="fazer-pedido.component.css">
 </head>
 
-<body>
-
-  <div class="md-3">
-    <header class="header-base">
-      <div class="logo">
-        <img src="../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
-        <h1>Lavanderia LOL</h1>
-      </div>
-
-      <div class="usuario-info">
-        <img src="../../../assets/imagens/usuario.png" alt="Foto do usuário">
-        <span>Nome do Usuário</span>
-      </div>
-    </header>
-  </div>
-
-  <nav>
-    <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
-    <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
-    <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
-  </nav>
-
-  <div class="conteudo-principal">
-      <div class="cabecalho">
-        <h2 class="titulo-pagina">Fazer Pedidos</h2>
-      </div>
-
-    <div class="tabela-pedidos">
-      <!-- EXEMPLOS -->
-
-      <div class="linhapedido">
-        <div class="img_title">
-          <img src="../../../assets/imagens" alt="camiseta">
-          <h2 id="tile-linhapedido">Camiseta</h2>
-        </div>
-        <h2>Quantidade: 2</h2>
-        <button class="btn-editar">Editar</button>
-        <button class="btn-excluir">Excluir</button>
-      </div>
-
-      <div class="linhapedido">
-        <div class="img_title">
-          <img src="../../../assets/imagens" alt="camiseta">
-          <h2 id="tile-linhapedido">Camiseta</h2>
-        </div>
-        <h2>Quantidade: 2</h2>
-        <button class="btn-editar">Editar</button>
-        <button class="btn-excluir">Excluir</button>
-      </div>
-
-      <div class="linhapedido">
-        <div class="img_title">
-          <img src="../../../assets/imagens" alt="camiseta">
-          <h2 id="tile-linhapedido">Camiseta</h2>
-        </div>
-        <h2>Quantidade: 2</h2>
-        <button class="btn-editar">Editar</button>
-        <button class="btn-excluir">Excluir</button>
-      </div>
-
-
-
+<div class="md-3">
+  <header class="header-base">
+    <div class="logo">
+      <img src="../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+      <h1>Lavanderia LOL</h1>
     </div>
+
+    <div class="usuario-info">
+      <img src="../../../assets/imagens/usuario.png" alt="Foto do usuário">
+      <span>Nome do Usuário</span>
+    </div>
+  </header>
+</div>
+
+<nav>
+  <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
+  <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
+  <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
+</nav>
+
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Fazer Pedidos</h2>
+    <a [routerLink]="['/']" class="btn-novo">Novo pedido</a>
   </div>
 
-</body>
+  <div class="tabela-pedidos">
+    <!-- EXEMPLOS -->
 
-</html>
+    <div class="linhapedido">
+      <div class="img_title">
+        <i class="fa-solid fa-shirt" style="font-size: 20px; vertical-align: middle; color: gray"></i>
+        <h2 id="tile-linhapedido">Camiseta</h2>
+      </div>
+      <h2>Quantidade: 2</h2>
+      <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
+      <a [routerLink]="['/']" class="btn btn-excluir">Excluir</a>
+    </div>
+
+    <div class="linhapedido">
+      <div class="img_title">
+        <i class="fa-solid fa-shirt" style="font-size: 20px; vertical-align: middle; color: gray"></i>
+        <h2 id="tile-linhapedido">Camiseta</h2>
+      </div>
+      <h2>Quantidade: 2</h2>
+      <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
+      <a [routerLink]="['/']" class="btn btn-excluir">Excluir</a>
+    </div>
+
+    <div class="linhapedido">
+      <div class="img_title">
+        <i class="fa-solid fa-shirt" style="font-size: 20px; vertical-align: middle; color: gray"></i>
+        <h2 id="tile-linhapedido">Camiseta</h2>
+      </div>
+      <h2>Quantidade: 2</h2>
+      <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
+      <a [routerLink]="['/']" class="btn btn-excluir">Excluir</a>
+    </div>
+    
+  </div>
+</div>

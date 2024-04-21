@@ -20,6 +20,10 @@ import { ModalFuncionarioExcluirPecaComponent } from './components/funcionario/m
 import { ModalFuncionarioFinalizarPedidoComponent } from './components/funcionario/modal-funcionario-finalizar-pedido/modal-funcionario-finalizar-pedido.component';
 import { ModalFuncionarioLavagemComponent } from './components/funcionario/modal-funcionario-lavagem/modal-funcionario-lavagem.component';
 import { ModalFuncionarioRecolhimentoComponent } from './components/funcionario/modal-funcionario-recolhimento/modal-funcionario-recolhimento.component';
+import { ListarFuncionarioComponent } from './components/funcionario/listar-funcionario/listar-funcionario.component';
+import { ManutencaoPecasRoupaComponent } from './components/funcionario/manutencao-pecas-roupa/manutencao-pecas-roupa.component';
+import { ModalExcluirFuncComponent } from './components/funcionario/modal-excluir-func/modal-excluir-func.component';
+import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorios/tela-relatorios.component';
 
 @Component({
   selector: 'app-root',
@@ -33,21 +37,25 @@ import { ModalFuncionarioRecolhimentoComponent } from './components/funcionario/
     AutocadastroComponent,
     LoginComponent,
     InicialClienteComponent,
-    ModalOrcamentoComponent,
     ConsultarPedidoComponent,
+    FazerPedidoComponent,
+    ModalOrcamentoComponent,
     ModalCancelarPedidoComponent,
     ModalPagamentoComponent,
     ModalFiltroPeriodoComponent,
-    FazerPedidoComponent,
     CadastrarFuncionarioComponent,
     EditarFuncionarioComponent,
     InicialFuncionarioComponent,
+    ListarFuncionarioComponent,
+    ManutencaoPecasRoupaComponent,
     ManutencaoRoupasComponent,
+    ModalExcluirFuncComponent,
     ModalFuncionarioExcluirPecaComponent,
     ModalFuncionarioFinalizarPedidoComponent,
     ModalFuncionarioLavagemComponent,
     ModalFuncionarioRecolhimentoComponent,
     ReactiveFormsModule,
+    TelaRelatoriosComponent,
   ],
 })
 export class AppComponent {

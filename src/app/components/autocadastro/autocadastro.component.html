@@ -1,77 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LOL Lavanderia On-line - Autocadastro</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="autocadastro.component.css">
 </head>
 
-<body>
-  <div class="mb-3">
-    <div class="form-group">
-      <div class="well">
-        <form #autocadastroForm="ngForm">
-          <h1>Autocadastro LOL</h1>
-          <div class="form-group">
-            
-            <label for="cpf">CPF:</label>
-            <input type="text" class="form-control" id="cpf" name="cpf" [(ngModel)]="pessoa.cpf" #cpf="ngModel"
-              minlength="11" required>
-            <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
-              <div [hidden]="!cpf.errors['minlength']">
-                O CPF deve conter 11 dígitos numéricos.
-              </div>
+<div class="mb-3">
+  <div class="form-group">
+    <div class="well">
+      <form #autocadastroForm="ngForm">
+        <h1>Autocadastro LOL</h1>
+        <div class="form-group">
+
+          <label for="cpf">CPF:</label>
+          <input type="text" class="form-control" id="cpf" name="cpf" [(ngModel)]="pessoa.cpf" #cpf="ngModel"
+            minlength="11" required>
+          <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
+            <div [hidden]="!cpf.errors['minlength']">
+              O CPF deve conter 11 dígitos numéricos.
             </div>
           </div>
-  
-          <div class="form-group">
-            <label for="nome">Nome:</label>
-            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="pessoa.nome" #nome="ngModel"
-              minlength="3" required>
-            <div *ngIf="nome.errors && (nome.dirty || nome.touched)" class="alert alert-danger">
-              <div [hidden]="!nome.errors['minlength']">
-                O nome deve conter ao menos 3 caracteres.
-              </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="pessoa.nome" #nome="ngModel"
+            minlength="3" required>
+          <div *ngIf="nome.errors && (nome.dirty || nome.touched)" class="alert alert-danger">
+            <div [hidden]="!nome.errors['minlength']">
+              O nome deve conter ao menos 3 caracteres.
             </div>
           </div>
-  
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="text" class="form-control" id="email" name="email" [(ngModel)]="pessoa.email"
-              #email="ngModel" required>
-          </div>
-  
-          <div class="form-group">
-            <label for="endereco">Endereco:</label>
-            <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="pessoa.endereco"
-              #endereco="ngModel" required>
-          </div>
-  
-          <div class="form-group">
-            <label for="telefone">Telefone:</label>
-            <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="pessoa.telefone"
-              #telefone="ngModel" required>
-          </div>
-  
-          <div class="form-group">
-            <button type="button" class="btn btn-primary" (click)="inserir()"
-              [disabled]="!autocadastroForm.form.valid">
-              Autocadastro
-            </button>
-  
-            <a href="./login.component.html" class="btn btn-secondary">
-              Cancelar
-            </a>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="text" class="form-control" id="email" name="email" [(ngModel)]="pessoa.email" #email="ngModel"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="endereco">Endereço:</label>
+          <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="pessoa.endereco"
+            #endereco="ngModel" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telefone">Telefone:</label>
+          <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="pessoa.telefone"
+            #telefone="ngModel" required>
+        </div>
+
+        <div class="form-group">
+          <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!autocadastroForm.form.valid">
+            Autocadastro
+          </button>
+
+          <a [routerLink]="['/inicio/login']" href="./login.component.html" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </form>
     </div>
   </div>
 </body>
 
 </html>
-
 

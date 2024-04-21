@@ -1,105 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LOL Lavanderia On-line - </title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="listar-funcionario.component.css">
 </head>
-<body>
 
-<div class="container">
-    <header>
-        <div class="logo">
-        <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
-        <h1>Lavanderia LOL</h1>
-        </div>
-    
-        <div class="usuario-info">
-        <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
-        <span>Nome do Usuário</span>
-        </div>
-    </header>
+<div class="mb-3">
+  <header>
+    <div class="logo">
+      <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+      <h1>Lavanderia LOL</h1>
+    </div>
+
+    <div class="usuario-info">
+      <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
+      <span>Nome do Usuário</span>
+    </div>
+  </header>
 </div>
-  <nav>
-    <a class="nav-item" href="#">Início</a>
-    <a class="nav-item" href="#">Manutenção roupas</a>
-    <a class="nav-item" href="#">Manutenção funcionários</a>
-    <a class="nav-item" href="#">Relatórios</a>
-  </nav>
-  
-  <div class="conteudo-principal">
-    <h2 class="titulo-pagina">Listar Funcionários</h2>
-       
-    <table class="tabela-pedidos">
+<nav>
+  <a [routerLink]="['/inicio-funcionario']"class="nav-item">Início</a>
+  <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+  <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+</nav>
 
-      <thead class="cabecalho-tabela">
-        <tr>
-          <th>Nome</th>
-          <th>CPF</th>
-          <th>Email</th>
-          <th>Data Nascimento</th>
-          <th>               </th>
-          <button class="btn-novo">Novo Cadastro</button>
-          
-        </tr>
-      </thead>
-
-      <tbody>
-        <!-- EXEMPLOS -->
-        <tr class="linha-tabela">
-            <td>Luiza Martins</td>
-            <td>865.879.963-20</td>
-            <td>luizawe25@gmail.com</td>
-            <td>28/06/1986</td>
-            <td>
-                <button class="btn-alterar">Alterar</button>
-              <button class="btn-excluir">Excluir</button>
-            </td>
-          </tr>
-
-          <tr class="linha-tabela">
-            <td>Ezequiel Rodrigues</td>
-            <td>896.879.963-25</td>
-            <td>ezequielop@gmail.com</td>
-            <td>23/05/1986</td>
-            <td>
-                <button class="btn-alterar">Alterar</button>
-                <button class="btn-excluir">Excluir</button>
-
-            <tr class="linha-tabela">
-            <td>Maria da Penha</td>
-            <td>896.829.745-25</td>
-            <td>mariapenha@gmail.com</td>
-            <td>23/07/1968</td>
-            <td>
-                <button class="btn-alterar">Alterar</button>
-                <button class="btn-excluir">Excluir</button>
-
-            <tr class="linha-tabela">
-            <td>Lazaro Ramos</td>
-            <td>798.879.795-98</td>
-            <td>lazarmos@gmail.com</td>
-            <td>16/11/1996</td>
-            <td>
-                <button class="btn-alterar">Alterar</button>
-                <button class="btn-excluir">Excluir</button>
-
-            <tr class="linha-tabela">
-            <td>Paulo Guedes da luz</td>
-            <td>071.693.879-25</td>
-            <td>pauloluz@gmail.com</td>
-            <td>02/05/1992</td>
-            <td>
-                <button class="btn-alterar">Alterar</button>
-                <button class="btn-excluir">Excluir</button>
-             
-             <tr>
-
-             </tr>
-      </tbody>
-    </table>
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Manutenção Funcionários</h2>
   </div>
-</body>
-</html>
+
+  <table class="tabela-pedidos">
+
+    <thead class="cabecalho-tabela">
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Email</th>
+        <th>Data Nascimento</th>
+        <th> 
+          <a [routerLink]="['/cadastrar-funcionario']" class="btn-novo">Novo Cadastro</a>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- EXEMPLOS -->
+      <tr class="linha-tabela">
+        <td>Luiza Martins</td>
+        <td>865.879.963-20</td>
+        <td>Email</td>
+        <td>28/06/1986</td>
+        <td>
+          <a [routerLink]="['/editar-funcionario']" class="btn-alterar">Alterar</a>
+          <a [routerLink]="['/excluir-funcionario']" class="btn-excluir">Excluir</a>
+        </td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>Ezequiel Rodrigues</td>
+        <td>896.879.963-25</td>
+        <td>Email</td>
+        <td>23/05/1986</td>
+        <td>
+          <button class="btn-alterar">Alterar</button>
+          <button class="btn-excluir">Excluir</button>
+        </td>
+
+      <tr class="linha-tabela">
+        <td>Maria da Penha</td>
+        <td>896.829.745-25</td>
+        <td>Email</td>
+        <td>23/07/1968</td>
+        <td>
+          <button class="btn-alterar">Alterar</button>
+          <button class="btn-excluir">Excluir</button>
+        </td>
+
+      <tr class="linha-tabela">
+        <td>Lazaro Ramos</td>
+        <td>798.879.795-98</td>
+        <td>Email</td>
+        <td>16/11/1996</td>
+        <td>
+          <button class="btn-alterar">Alterar</button>
+          <button class="btn-excluir">Excluir</button>
+        </td>
+
+      <tr class="linha-tabela">
+        <td>Paulo Guedes da luz</td>
+        <td>071.693.879-25</td>
+        <td>Email</td>
+        <td>02/05/1992</td>
+        <td>
+          <button class="btn-alterar">Alterar</button>
+          <button class="btn-excluir">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

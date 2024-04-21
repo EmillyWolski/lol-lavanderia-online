@@ -1,99 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LOL Lavanderia On-line - Pedidos em Aberto</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="inicial-cliente.component.css">
 </head>
 
-<body>
-
-  <div class="md-3">
-    <header class="header-base">
-      <div class="logo">
-        <img src="../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
-        <h1>Lavanderia LOL</h1>
-      </div>
-
-      <div class="usuario-info">
-        <img src="../../../assets/imagens/usuario.png" alt="Foto do usuário">
-        <span>Nome do Usuário</span>
-      </div>
-    </header>
-  </div>
-
-  <nav>
-    <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
-    <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
-    <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
-  </nav>
-  
-  <div class="conteudo-principal">
-    <div class="filtro-pedidos">
-      <div class="cabecalho">
-        <h2 class="titulo-pagina">Pedidos</h2>
-      </div>
-      <label for="filtro-status" class="titulo-filtro">Filtrar por status:</label>
-
-      <select id="filtro-status">
-        <option value="em_aberto">Em Aberto</option>
-        <option value="cancelado">Cancelado</option>
-        <option value="recolhido">Recolhido</option>
-        <option value="aguardando_pagamento">Aguardando Pagamento</option>
-        <option value="pago">Pago</option>
-        <option value="finalizado">Finalizado</option>
-      </select>
-
+<div class="md-3">
+  <header class="header-base">
+    <div class="logo">
+      <img src="../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+      <h1>Lavanderia LOL</h1>
     </div>
-    
-    <table class="tabela-pedidos">
 
-      <thead class="cabecalho-tabela">
-        <tr>
-          <th>ID Pedido</th>
-          <th>Data</th>
-          <th>Nome do Cliente</th>
-          <th>Status do Pedido</th>
-          <th>Total</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
+    <div class="usuario-info">
+      <img src="../../../assets/imagens/usuario.png" alt="Foto do usuário">
+      <span>Nome do Usuário</span>
+    </div>
+  </header>
+</div>
 
-      <tbody>
-        <!-- EXEMPLOS -->
-        <tr class="linha-tabela">
-          <td>1234</td>
-          <td>15/03/2024</td>
-          <td>Marina Santos</td>
-          <td>Em Aberto</td>
-          <td>R$ 50,00</td>
-          <td><button class="btn-cancelar">Cancelar</button></td>
-        </tr>
+<nav>
+  <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
+  <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
+  <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
+</nav>
 
-        <tr class="linha-tabela">
-          <td>1235</td>
-          <td>15/03/2024</td>
-          <td>Marina Santos</td>
-          <td>Em Aberto</td>
-          <td>R$ 30,00</td>
-          <td><button class="btn-cancelar">Cancelar</button></td>
-        </tr>
+<div class="conteudo-principal">
+  <div class="filtro-pedidos">
+    <div class="cabecalho">
+      <h2 class="titulo-pagina">Pedidos</h2>
+    </div>
+    <label for="filtro-status" class="titulo-filtro">Filtrar por status:</label>
 
-        <tr class="linha-tabela">
-          <td>1236</td>
-          <td>15/03/2024</td>
-          <td>Marina Santos</td>
-          <td>Em Aberto</td>
-          <td>R$ 70,00</td>
-          <td><button class="btn-cancelar">Cancelar</button></td>
-        </tr>
-      </tbody>
+    <select id="filtro-status">
+      <option value="em_aberto">Em Aberto</option>
+      <option value="cancelado">Cancelado</option>
+      <option value="recolhido">Recolhido</option>
+      <option value="aguardando_pagamento">Aguardando Pagamento</option>
+      <option value="pago">Pago</option>
+      <option value="finalizado">Finalizado</option>
+    </select>
 
-    </table>
   </div>
 
-</body>
-</html>
+  <table class="tabela-pedidos">
 
+    <thead class="cabecalho-tabela">
+      <tr>
+        <th>ID Pedido</th>
+        <th>Data</th>
+        <th>Nome do Cliente</th>
+        <th>Status do Pedido</th>
+        <th>Total</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- EXEMPLOS -->
+      <tr class="linha-tabela">
+        <td>1234</td>
+        <td>15/03/2024</td>
+        <td>Marina Santos</td>
+        <td>Em Aberto</td>
+        <td>R$ 50,00</td>
+        <td><a [routerLink]="['/cancelar-pedido']" class="btn-cancelar">Cancelar</a></td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>1235</td>
+        <td>15/03/2024</td>
+        <td>Marina Santos</td>
+        <td>Em Aberto</td>
+        <td>R$ 30,00</td>
+        <td><a [routerLink]="['/cancelar-pedido']" class="btn-cancelar">Cancelar</a></td>
+      </tr>
+
+      <tr class="linha-tabela">
+        <td>1236</td>
+        <td>15/03/2024</td>
+        <td>Marina Santos</td>
+        <td>Em Aberto</td>
+        <td>R$ 70,00</td>
+        <td><a [routerLink]="['/cancelar-pedido']" class="btn-cancelar">Cancelar</a></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

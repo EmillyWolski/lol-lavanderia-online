@@ -96,29 +96,21 @@ nav {
     padding: 20px;
 }
 
+.cabecalho{
+    height: 45px;
+}
+
+.cabecalho .titulo-pagina{
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .titulo-pagina {
     margin-bottom: 20px;
     background-color: #FFFFFF; 
     box-shadow: inset -1px 0px 0px #D7DBEC;
     padding: 10px;
     color: #2c3e50;
-}
-
-.titulo-filtro{
-    font-size: 16px;
-    margin-left: 5px;
-}
-
-#filtro {
-    padding: 8px 12px;
-    font-size: 12px; 
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: 10px;
-    margin-bottom: 15px;
-    background-color: #fff;
-    color: #2c3e50;
-    outline: none; 
 }
 
 .tabela-pedidos {
@@ -193,28 +185,7 @@ nav {
 
 
 /* Estilo para os botões de ação */
-.btn-recolher,
-.btn-lavar,
-.btn-finalizar,
-.btn-visualizar-pedido {
-    background-color: #3498db; 
-    color: #fff; 
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 160px;
-    text-align: center; 
-    display: inline-block;
-    padding: 7px;
-}
 
-.btn-recolher:hover,
-.btn-lavar:hover,
-.btn-finalizar:hover,
-.btn-visualizar-pedido:hover {
-    background-color: #166092;
-}
 .btn-alterar{
     background-color: #3498db; 
     color: #fff; 
@@ -226,7 +197,10 @@ nav {
     text-align: center; 
     display: inline-block;
     padding: 7px;
+    font-weight: normal; /* Remover negrito */
+    text-decoration: none; /* Remover sublinhado */
 }
+
 .btn-excluir{
     background-color: #FF0000; 
     color: #fff; 
@@ -238,19 +212,28 @@ nav {
     text-align: center; 
     display: inline-block;
     padding: 7px;
+    margin-left: 3px;
+    font-weight: normal; /* Remover negrito */
+    text-decoration: none; /* Remover sublinhado */
 }
+
 .btn-novo{
-    background-color: #1eff00;
+    background-color: #06a561;
     position: absolute;
     top: 16%;
-    left: 80%; 
+    left: 76%; 
     color: #fff; 
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 120px;
+    width: 162px;
+    height: 30px;
+    font-size: 12px;
     text-align: center; 
     display: inline-block;
     padding: 7px;
+    font-weight: normal; /* Remover negrito */
+    text-decoration: none; /* Remover sublinhado */
 }
+
