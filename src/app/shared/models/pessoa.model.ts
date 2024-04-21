@@ -7,6 +7,7 @@ export class Pessoa {
         public email: string = "",
         public endereco: string = "",
         public telefone: number = 0,
+        public senha: string = "",
     ){
         
     }
