@@ -10,7 +10,7 @@
 <body>
     <!-- Botão para acionar o modal -->
     <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        FinalizarPedido
+        Finalizar Pedido
     </button>
   
     <!-- Modal -->
@@ -26,9 +26,9 @@
                 </div>
                 <div class="modal-footer">
                     <!-- Botão para Finaliar pedido -->
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Confirmar</button>
+                    <a [routerLink]="['/inicio-funcionario']" class="btn btn-success" data-bs-dismiss="modal">Confirmar</a>
                     <!-- Botão para cancelar o pedido -->
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <a [routerLink]="['/inicio-funcionario']" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
                 </div>
             </div>
         </div>

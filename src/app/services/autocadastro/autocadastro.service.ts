@@ -32,4 +32,6 @@ export class AutocadastroService {
 
     alert("Autocadastro concluído com sucesso!")
   }
+
+  
 }

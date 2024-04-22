@@ -61,7 +61,7 @@
         <td class="status em-aberto">Em Aberto</td>
         <td>R$ 50,00</td>
         <td>
-          <button class="btn-recolher">Confirmar Rec.</button>
+          <a [routerLink]="['/confirmar-recolhimento']" class="btn-recolher">Confirmar Rec.</a> 
         </td>
       </tr>
 
@@ -72,7 +72,7 @@
         <td class="status recolhido">Recolhido</td>
         <td>R$ 30,00</td>
         <td>
-          <button class="btn-lavar">Confirmar Lavagem</button>
+          <a [routerLink]="['/confirmar-lavagem']" class="btn-lavar">Confirmar Lavagem</a>
         </td>
       </tr>
 
@@ -83,7 +83,7 @@
         <td class="status pago">Pago</td>
         <td>R$ 56,00</td>
         <td>
-          <button class="btn-finalizar">Finalizar Pedido</button>
+          <a [routerLink]="['/finalizar-pedido']" class="btn-finalizar">Finalizar Pedido</a>
         </td>
       </tr>
 
@@ -94,7 +94,7 @@
         <td class="status finalizado">Finalizado</td>
         <td>R$ 73,00</td>
         <td>
-          <button class="btn-visualizar-pedido">Visualizar pedido</button>
+          <a [routerLink]="['/consultar-pedido']" class="btn-visualizar-pedido">Visualizar pedido</a>
         </td>
       </tr>
 
@@ -105,7 +105,7 @@
         <td class="status cancelado">Cancelado</td>
         <td>R$ 15,00</td>
         <td>
-          <button class="btn-visualizar-pedido">Visualizar pedido</button>
+          <a [routerLink]="['/consultar-pedido']" class="btn-visualizar-pedido">Visualizar pedido</a>
         </td>
       </tr>
 
@@ -116,7 +116,7 @@
         <td class="status aguardando-pagamento">Aguardando pgto.</td>
         <td>R$ 73,00</td>
         <td>
-          <button class="btn-visualizar-pedido">Visualizar pedido</button>
+          <a [routerLink]="['/consultar-pedido']" class="btn-visualizar-pedido">Visualizar pedido</a>
         </td>
       </tr>
 
