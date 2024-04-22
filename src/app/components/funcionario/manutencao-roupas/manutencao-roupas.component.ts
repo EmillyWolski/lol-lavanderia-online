@@ -12,7 +12,9 @@ import { Roupas } from '../../../shared/models/shared/models/roupas.model';
   styleUrl: './manutencao-roupas.component.css',
 })
 <<<<<<< HEAD
-export class ManutencaoRoupasComponent {}
+export class ManutencaoRoupasComponent {
+roupas: any;
+}
 =======
 
 export class ManutencaoRoupasComponent {

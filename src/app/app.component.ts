@@ -9,7 +9,6 @@ import { ModalCancelarPedidoComponent } from './components/modal-cancelar-pedido
 import { ModalPagamentoComponent } from './components/modal-pagamento/modal-pagamento.component';
 import { CommonModule } from '@angular/common';
 import { ModalFiltroPeriodoComponent } from './components/modal-filtro-periodo/modal-filtro-periodo.component';
-
 import { ReactiveFormsModule } from '@angular/forms';
 import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.component';
 import { CadastrarFuncionarioComponent } from './components/funcionario/cadastrar-funcionario/cadastrar-funcionario.component';
@@ -24,6 +23,8 @@ import { ListarFuncionarioComponent } from './components/funcionario/listar-func
 import { ModalExcluirFuncComponent } from './components/funcionario/modal-excluir-func/modal-excluir-func.component';
 import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorios/tela-relatorios.component';
 import { FormsModule } from '@angular/forms';
+import { CadastrarPecaRoupaComponent } from './components/funcionario/cadastrar-peca-roupa/cadastrar-peca-roupa.component';
+import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-roupa/editar-peca-roupa.component';
 
 @Component({
   selector: 'app-root',
@@ -56,6 +57,8 @@ import { FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     TelaRelatoriosComponent,
     FormsModule,
+    CadastrarPecaRoupaComponent,
+    EditarPecaRoupaComponent
   ],
 })
 export class AppComponent {
