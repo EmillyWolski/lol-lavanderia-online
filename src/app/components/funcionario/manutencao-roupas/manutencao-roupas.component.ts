@@ -7,8 +7,6 @@ import { RouterLink, RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule, RouterLink],
   templateUrl: './manutencao-roupas.component.html',
-  styleUrl: './manutencao-roupas.component.css'
+  styleUrl: './manutencao-roupas.component.css',
 })
-export class ManutencaoRoupasComponent {
-
-}
+export class ManutencaoRoupasComponent {}

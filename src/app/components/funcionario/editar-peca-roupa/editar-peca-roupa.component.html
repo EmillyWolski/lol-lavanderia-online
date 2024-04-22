@@ -1,0 +1,48 @@
+<head>
+  <link rel="stylesheet" href="editar-peca-roupa.component.css">
+</head>
+
+<div class="md-3">
+  <header class="header-base">
+    <div class="logo">
+      <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+      <h1>Lavanderia LOL</h1>
+    </div>
+
+    <div class="usuario-info">
+      <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
+      <span>Nome do Usuário</span>
+    </div>
+  </header>
+</div>
+
+<nav class="menu">
+  <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+  <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+  <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+</nav>
+
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Edição de Peça</h2>
+  </div>
+
+  <form class="formulario-funcionario">
+    <div class="mb-3">
+      <label for="InputNome" class="form-label">Nome da peça</label>
+      <input type="text" class="form-control" id="InputNome" required>
+    </div>
+    <div class="mb-3">
+      <label for="InputEmail" class="form-label">Prazo da lavagem em dias</label>
+      <input type="number" class="form-control" id="InputEmail" required>
+    </div>
+    <div class="mb-3">
+      <label for="InputDataNascimento" class="form-label">Preço por lavagem unitária</label>
+      <input type="number" class="form-control" id="InputDataNascimento" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-danger">Cancelar</a>
+  </form>
+
+</div>

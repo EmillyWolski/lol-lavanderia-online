@@ -25,7 +25,7 @@
 
 <div class="conteudo-principal">
   <div class="cabecalho">
-    <h2 class="titulo-pagina">Manutenção Roupas<button class="btn-adicionar">Adicionar peça</button></h2>
+    <h2 class="titulo-pagina">Manutenção Roupas<a [routerLink]="['cadastrar-peca-roupa']" class="btn-adicionar">Adicionar peça</a></h2>
   </div>
 
   <table class="tabela-roupas">
@@ -44,7 +44,7 @@
         <td>2 dias</td>
         <td>R$10,00</td>
         <td>
-          <a [routerLink]="['/']" class="btn btn-editar">Editar</a> 
+          <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
           <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
         </td>
       </tr>
