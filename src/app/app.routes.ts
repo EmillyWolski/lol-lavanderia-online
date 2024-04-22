@@ -15,7 +15,6 @@ import { CadastrarFuncionarioComponent } from './components/funcionario/cadastra
 import { ManutencaoRoupasComponent } from './components/funcionario/manutencao-roupas/manutencao-roupas.component';
 import { EditarFuncionarioComponent } from './components/funcionario/editar-funcionario/editar-funcionario.component';
 import { ListarFuncionarioComponent } from './components/funcionario/listar-funcionario/listar-funcionario.component';
-import { ManutencaoPecasRoupaComponent } from './components/funcionario/manutencao-pecas-roupa/manutencao-pecas-roupa.component';
 import { ModalExcluirFuncComponent } from './components/funcionario/modal-excluir-func/modal-excluir-func.component';
 import { ModalFuncionarioExcluirPecaComponent } from './components/funcionario/modal-funcionario-excluir-peca/modal-funcionario-excluir-peca.component';
 import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorios/tela-relatorios.component';
@@ -79,12 +78,6 @@ export const routes: Routes = [
     },
     { path: 'listar-funcionario', 
         component: ListarFuncionarioComponent
-    },
-    { path: 'manutencao-pecas-roupas', 
-        component: ManutencaoPecasRoupaComponent
-    },
-    { path: 'manutencao-roupas', 
-        component: ManutencaoRoupasComponent
     },
     { path: 'excluir-funcionario', 
         component: ModalExcluirFuncComponent

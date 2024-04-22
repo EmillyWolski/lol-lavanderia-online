@@ -21,7 +21,6 @@ import { ModalFuncionarioFinalizarPedidoComponent } from './components/funcionar
 import { ModalFuncionarioLavagemComponent } from './components/funcionario/modal-funcionario-lavagem/modal-funcionario-lavagem.component';
 import { ModalFuncionarioRecolhimentoComponent } from './components/funcionario/modal-funcionario-recolhimento/modal-funcionario-recolhimento.component';
 import { ListarFuncionarioComponent } from './components/funcionario/listar-funcionario/listar-funcionario.component';
-import { ManutencaoPecasRoupaComponent } from './components/funcionario/manutencao-pecas-roupa/manutencao-pecas-roupa.component';
 import { ModalExcluirFuncComponent } from './components/funcionario/modal-excluir-func/modal-excluir-func.component';
 import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorios/tela-relatorios.component';
 import { FormsModule } from '@angular/forms';
@@ -48,7 +47,6 @@ import { FormsModule } from '@angular/forms';
     EditarFuncionarioComponent,
     InicialFuncionarioComponent,
     ListarFuncionarioComponent,
-    ManutencaoPecasRoupaComponent,
     ManutencaoRoupasComponent,
     ModalExcluirFuncComponent,
     ModalFuncionarioExcluirPecaComponent,
