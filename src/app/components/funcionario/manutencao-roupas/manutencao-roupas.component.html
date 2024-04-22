@@ -25,60 +25,40 @@
 
 <div class="conteudo-principal">
   <div class="cabecalho">
-    <h2 class="titulo-pagina">Manutenção Roupas<button class="btn-adicionar">Adicionar peça</button></h2>
+    <h2 class="titulo-pagina">Manutenção Roupas</h2>
   </div>
 
-  <table class="tabela-roupas">
-    <thead class="cabecalho-tabela">
+  <table class="table table-striped table-hover">
+    <tbody class="cabecalho-tabela">
       <tr>
-        <th>Nome</th>
-        <th>Prazo para lavagem (dias)</th>
-        <th>Preço (individual)</th>
-      </tr>
-    </thead>
+        <th class="titulo-coluna">Nome</th>
+        <th class="titulo-coluna">Prazo para lavagem (dias)</th>
+        <th class="titulo-coluna">Preço (individual)</th>
 
-    <tbody>
-      <!-- EXEMPLOS -->
-      <tr class="linha-tabela">
-        <td>Camiseta</td>
-        <td>2 dias</td>
-        <td>R$10,00</td>
-        <td>
-          <a [routerLink]="['/']" class="btn btn-editar">Editar</a> 
-          <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
+        <th class="text-center">
+          <a href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
+            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
+          </a>
+        </th>
+      </tr>
+
+      <!-- LISTA DE ROUPAS -->
+      <tr *ngFor="let roupa of roupas">
+        <td class="info-roupa info-nome-roupa"> {{ roupa.nome }} </td>
+        <td class="info-roupa"> {{ roupa.prazo }} </td>
+        <td class="info-roupa"> {{ roupa.valor }} </td>
+
+        <td class="text-center" style="width: 300px">
+          <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info">
+            <i class="fa fa-edit" aria-hidden="true"></i> Editar
+          </a>
+
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger">
+            <i class="fa fa-times" aria-hidden="true"></i> Remover
+          </a>
         </td>
       </tr>
-
-      <tr class="linha-tabela">
-        <td>Calça</td>
-        <td>3 dias</td>
-        <td>R$10,00</td>
-        <td>
-          <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
-          <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
-        </td>
-      </tr>
-
-      <tr class="linha-tabela">
-        <td>Coberta</td>
-        <td>5 dias</td>
-        <td>R$40,00</td>
-        <td>
-          <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
-          <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
-        </td>
-      </tr>
-
-      <tr class="linha-tabela">
-        <td>Shorts/bermuda</td>
-        <td>2 dias</td>
-        <td>R$10,00</td>
-        <td>
-          <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
-          <a [routerLink]="['/excluir-peca']" class="btn btn-excluir">Excluir</a>
-        </td>
-      </tr>
-
     </tbody>
   </table>
+  <p *ngIf="roupas.length===0">Nenhuma roupa cadastrada.</p>
 </div>

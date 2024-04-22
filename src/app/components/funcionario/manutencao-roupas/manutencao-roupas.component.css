@@ -1,11 +1,4 @@
 /* Estilo para o corpo da página */
-body {
-    background-color: #F5F6FA; 
-    font-family: "Montserrat", sans-serif; 
-    margin: 0;
-    padding: 0;
-}
-
 .md-3 {
     display: flex;
     margin: 0;
@@ -71,7 +64,7 @@ nav {
     top: 92px;
     width: 15%;
     height: calc(100% - 100px);
-    background-color: #FFFFFF; 
+    background-color: #FFFFFF;
     box-shadow: inset -1px 0px 0px #D7DBEC;
 }
 
@@ -85,7 +78,7 @@ nav {
 }
 
 .nav-item:hover {
-    background-color: #3498db; 
+    background-color: #3498db;
     color: #FFFFFF;
 }
 
@@ -96,103 +89,65 @@ nav {
     padding: 20px;
 }
 
-.cabecalho{
+.cabecalho {
     height: 45px;
     margin-top: 14px;
     position: relative;
 }
 
-.cabecalho .titulo-pagina{
+.cabecalho .titulo-pagina {
     font-size: 14px;
     font-weight: bold;
 }
 
 .titulo-pagina {
     margin-bottom: 20px;
-    background-color: #FFFFFF; 
+    background-color: #FFFFFF;
     box-shadow: inset -1px 0px 0px #D7DBEC;
     padding: 10px;
     color: #2c3e50;
 }
 
-.tabela-roupas {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-.cabecalho-tabela th {
+.titulo-coluna {
     padding: 10px;
-    text-align: left; 
-    font-size: 14px;
+    text-align: left;
+    font-size: 13px;
     color: #2c3e50;
 }
 
-.linha-tabela {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #f5f5f5;
+.info-roupa {
+    padding: 10px;
+    font-size: 12px;
+    text-align: left;
 }
 
-.linha-tabela td {
-    padding: 10px;
-    text-align: left;
-    font-size: 12px;
+.info-nome-roupa {
+    max-width: 200px; /* Defina um tamanho máximo para evitar que o texto ocupe muito espaço */
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse o tamanho máximo */
+    text-overflow: ellipsis; /* Exibe reticências (...) para indicar que o texto foi cortado */
+    white-space: nowrap; /* Impede que o texto seja quebrado em várias linhas */
 }
+
+p {
+    font-size: 12px;
+    margin-left: 11px;
+}
+
 
 /* Estilo para os botões de ação */
-.btn-editar{
-    background-color: #3498db; 
-    color: #fff; 
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 160px;
-    text-align: center; 
-    padding: 7px;
-    margin-right: -85px;
+
+.btn {
+    margin-left: 3px;
     font-size: 12px;
-}
-
-.btn-excluir{
-    background-color: #F0142F; 
-    color: #fff; 
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 160px;
-    text-align: center; 
-    padding: 7px;
-    float: right;
-    font-size: 12px;
 }
 
-.btn-adicionar {
-    background-color: #3498db; 
-    color: #fff; 
+.btn-info {
+    background-color: #3498db;
+    color: #FFFFFF;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 160px;
-    text-align: center; 
-    padding: 7px;
-    position: absolute;
-    top: 40%;
-    transform: translateY(-50%); /* Ajustando o botão verticalmente para que fique centralizado */
-    right: 10px; 
-    font-size: 12px;
-
 }
 
-.btn-editar:hover{
-    background-color: #166092;
-}
-.btn-adicionar:hover{
-    background-color: #166092;
-}
-
-.btn-excluir:hover{
-    background-color: #f56374;
+.btn .btn-xs .btn-success{
+    right: 90%;
 }
