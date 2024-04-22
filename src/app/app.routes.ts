@@ -15,7 +15,6 @@ import { CadastrarFuncionarioComponent } from './components/funcionario/cadastra
 import { ManutencaoRoupasComponent } from './components/funcionario/manutencao-roupas/manutencao-roupas.component';
 import { EditarFuncionarioComponent } from './components/funcionario/editar-funcionario/editar-funcionario.component';
 import { ListarFuncionarioComponent } from './components/funcionario/listar-funcionario/listar-funcionario.component';
-import { ManutencaoPecasRoupaComponent } from './components/funcionario/manutencao-pecas-roupa/manutencao-pecas-roupa.component';
 import { ModalExcluirFuncComponent } from './components/funcionario/modal-excluir-func/modal-excluir-func.component';
 import { ModalFuncionarioExcluirPecaComponent } from './components/funcionario/modal-funcionario-excluir-peca/modal-funcionario-excluir-peca.component';
 import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorios/tela-relatorios.component';
@@ -24,6 +23,7 @@ import { CadastrarPecaRoupaComponent } from './components/funcionario/cadastrar-
 import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-roupa/editar-peca-roupa.component';
 
 export const routes: Routes = [
+<<<<<<< HEAD
   { path: '', redirectTo: 'inicio/login', pathMatch: 'full' },
   { path: 'inicio/login', component: LoginComponent },
   { path: 'inicio', redirectTo: 'inicio/login' },
@@ -64,3 +64,77 @@ export const routes: Routes = [
     component: EditarPecaRoupaComponent,
   },
 ];
+=======
+    { path: '', 
+        redirectTo: 'inicio/login',
+        pathMatch: 'full',
+    },
+    { path: 'inicio/login',
+        component: LoginComponent
+    },
+    { path: 'inicio',
+        redirectTo: 'inicio/login'
+    },
+    { path: 'autocadastro', 
+        component: AutocadastroComponent
+    },
+    { path: 'inicio-cliente',
+        component: InicialClienteComponent
+    },
+    { path: 'consultar-pedido', 
+        component: ConsultarPedidoComponent
+    },
+    { path: 'fazer-pedido',
+        component: FazerPedidoComponent
+    },
+    { path: 'orcamento', 
+        component: ModalOrcamentoComponent
+    },
+    { path: 'cancelar-pedido',
+        component: ModalCancelarPedidoComponent
+    },
+    { path: 'pagamento',
+        component: ModalPagamentoComponent
+    },
+    { path: 'inicio-funcionario',
+        component: InicialFuncionarioComponent 
+    },
+    { path: 'confirmar-lavagem',
+        component: ModalFuncionarioLavagemComponent
+    },
+    { path: 'confirmar-recolhimento',
+        component: ModalFuncionarioRecolhimentoComponent
+    },
+    { path: 'finalizar-pedido',
+        component: ModalFuncionarioFinalizarPedidoComponent
+    },
+    { path: 'cadastrar-funcionario', 
+        component: CadastrarFuncionarioComponent
+    },
+    { path: 'manutencao-roupas', 
+        component: ManutencaoRoupasComponent
+    },
+    { path: 'editar-funcionario', 
+        component: EditarFuncionarioComponent
+    },
+    { path: 'editar-funcionario', 
+        component: EditarFuncionarioComponent
+    },
+    { path: 'listar-funcionario', 
+        component: ListarFuncionarioComponent
+    },
+    { path: 'excluir-funcionario', 
+        component: ModalExcluirFuncComponent
+    },
+    { path: 'excluir-peca', 
+        component: ModalFuncionarioExcluirPecaComponent
+    },
+    { path: 'relatorios', 
+        component: TelaRelatoriosComponent
+    },
+    { path: 'filtrar-periodo', 
+        component: ModalFiltroPeriodoComponent
+    },
+
+];
+>>>>>>> emilly
