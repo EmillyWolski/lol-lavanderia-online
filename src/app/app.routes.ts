@@ -93,4 +93,10 @@ export const routes: Routes = [
     { path: 'filtrar-periodo', 
         component: ModalFiltroPeriodoComponent
     },
+    { path: 'cadastrar-peca-roupa', 
+        component: CadastrarPecaRoupaComponent
+    },
+    { path: 'editar-peca-roupa/:id', 
+        component: EditarPecaRoupaComponent
+    },
 ];

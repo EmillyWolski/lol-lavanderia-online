@@ -17,6 +17,7 @@
 
 h2 {
   font-size: 16px;
+  margin-left: -10px;
 }
 
 .logo {
@@ -115,6 +116,7 @@ h2 {
   color: #2c3e50;
 }
 
+
 /* Estilos do Formulário */
 .formulario-funcionario {
   max-width: 400px; /* Tamanho máximo desejado para o formulário */
@@ -145,4 +147,14 @@ h2 {
 
 .btn-danger {
   margin-left: 14px;
+}
+
+.alert{
+  font-size: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #dc3545;
+  background-color: #fff3f4;
 }

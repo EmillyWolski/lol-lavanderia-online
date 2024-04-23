@@ -11,11 +11,6 @@ import { Roupas } from '../../../shared/models/shared/models/roupas.model';
   templateUrl: './manutencao-roupas.component.html',
   styleUrl: './manutencao-roupas.component.css',
 })
-<<<<<<< HEAD
-export class ManutencaoRoupasComponent {
-roupas: any;
-}
-=======
 
 export class ManutencaoRoupasComponent {
 
@@ -28,16 +23,7 @@ export class ManutencaoRoupasComponent {
   }
 
   listarTodas(): Roupas[] {
-    // return this.roupaService.listarTodas();
-
-    return [
-      new Roupas(1, "Calça", 12, 1),
-      new Roupas(2, "Camisa", 15, 2),
-      new Roupas(3, "Camiseta", 8, 1),
-      new Roupas(4, "Meia", 5, 1),
-      new Roupas(5, "Roupa íntima", 10, 1)
-    ]
+    return this.roupaService.listarTodas();
   }
 
 }
->>>>>>> emilly

@@ -6,37 +6,40 @@
     font-family: "Montserrat", sans-serif;
 }
 
-.conteudo-principal{
+.conteudo-principal {
     font-family: "Montserrat", sans-serif;
 }
 
-nav{
+nav {
     font-family: "Montserrat", sans-serif;
 }
 
 /* CSS DOS MODAIS */
 .btn-custom {
-    background-color: #1E5EFF; 
-    color: white; 
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); /* Move o botão para o centro da tela */
+    background-color: #1E5EFF;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Move o botão para o centro da tela */
     border-radius: 4px;
 }
 
 
 .modal-dialog {
-    width: 30%; 
-    height: 30%; 
-    max-width: 90%; 
+    width: 30%;
+    height: 30%;
+    max-width: 90%;
     margin: auto;
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-    position: fixed; 
-    top: 25%; /* Posiciona o modal verticalmente na metade da tela */
-    transform: translate(-50%, -50%); /* Centraliza verticalmente */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 25%;
+    /* Posiciona o modal verticalmente na metade da tela */
+    transform: translate(-50%, -50%);
+    /* Centraliza verticalmente */
 }
 
 .modal-body {
@@ -51,8 +54,10 @@ nav{
 
 /* CSS BOTÕES */
 a {
-    font-weight: normal; /* Remover negrito */
-    text-decoration: none; /* Remover sublinhado */
+    font-weight: normal;
+    /* Remover negrito */
+    text-decoration: none;
+    /* Remover sublinhado */
 }
 
 .btn {
@@ -60,35 +65,45 @@ a {
 }
 
 .btn-custom {
-    background-color: #06A561; 
+    background-color: #06A561;
     color: white;
 }
 
 
-.btn-excluir{
-    background-color: #FF0000; 
-    color: #fff; 
+.btn-excluir {
+    background-color: #FF0000;
+    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 80px;
-    text-align: center; 
+    text-align: center;
     display: inline-block;
     padding: 7px;
     text-decoration: none;
 }
 
-.btn-cancelar{
-    background-color: #3498db; 
-    color: #fff; 
+.btn-cancelar {
+    background-color: #3498db;
+    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 80px;
-    text-align: center; 
+    text-align: center;
     display: inline-block;
     padding: 7px;
     text-decoration: none;
+}
+
+.alert {
+    font-size: 10px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    color: #dc3545;
+    background-color: #fff3f4;
 }
