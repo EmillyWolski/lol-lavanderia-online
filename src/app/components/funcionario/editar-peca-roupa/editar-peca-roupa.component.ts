@@ -4,11 +4,12 @@ import { Roupas } from '../../../shared/models/shared/models/roupas.model';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RoupasService } from '../../../services/roupas/roupas.service';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-editar-peca-roupa',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterModule, RouterLink, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './editar-peca-roupa.component.html',
   styleUrl: './editar-peca-roupa.component.css',
 })
@@ -38,14 +39,16 @@ export class EditarPecaRoupaComponent implements OnInit {
 
 
   atualizar(): void {
+
     // Verifica se o formulário é válido
     if (this.formRoupa.form.valid) {
 
       // Efetivamente atualiza a roupa
       this.roupaService.atualizar(this.roupa);
+      alert('Peça atualizada com sucesso!');
 
-      // Redireciona para /manutencao-roupa
-      this.router.navigate(['/editar-peca-roupa']);
+      // Redireciona para /manutencao-roupas
+      this.router.navigate(['/manutencao-roupas']);
     }
   }
 

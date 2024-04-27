@@ -52,7 +52,7 @@
     <div class="mb-3">
       <label for="InputValor" class="form-label">Preço por lavagem unitária</label>
       <input type="number" class="form-control" id="InputValor" name="InputValor"
-      [(ngModel)]="roupa.valor" #InputValor="ngModel" ngxMask="000.000.000,00" required>
+      [(ngModel)]="roupa.valor" #InputValor="ngModel" required>
     </div>
     <div *ngIf="InputValor.errors && (InputValor.dirty || InputValor.touched)" class="alert alert-danger">
       <div [hidden]="!InputValor.errors['required']"> Digite o preço por lavagem. </div>

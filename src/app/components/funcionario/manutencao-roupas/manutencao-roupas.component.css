@@ -115,17 +115,15 @@ nav {
     color: #2c3e50;
 }
 
+.cabecalho-tabela th {
+    width: 20%;
+    /* Define a largura desejada para cada coluna */
+}
+
 .info-roupa {
     padding: 10px;
     font-size: 12px;
     text-align: left;
-}
-
-.info-nome-roupa {
-    max-width: 200px; /* Defina um tamanho máximo para evitar que o texto ocupe muito espaço */
-    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse o tamanho máximo */
-    text-overflow: ellipsis; /* Exibe reticências (...) para indicar que o texto foi cortado */
-    white-space: nowrap; /* Impede que o texto seja quebrado em várias linhas */
 }
 
 p {
@@ -148,6 +146,6 @@ p {
     border: none;
 }
 
-.btn .btn-xs .btn-success{
+.btn .btn-xs .btn-success {
     right: 90%;
 }

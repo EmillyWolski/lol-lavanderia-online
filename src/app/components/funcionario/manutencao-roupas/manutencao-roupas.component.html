@@ -44,7 +44,7 @@
 
       <!-- LISTA DE ROUPAS -->
       <tr *ngFor="let roupa of roupas">
-        <td class="info-roupa info-nome-roupa"> {{ roupa.nome }} </td>
+        <td class="info-roupa"> {{ roupa.nome }} </td>
         <td class="info-roupa"> {{ roupa.prazo }} </td>
         <td class="info-roupa"> {{ roupa.valor }} </td>
 
@@ -53,7 +53,8 @@
             <i class="fa fa-edit" aria-hidden="true"></i> Editar
           </a>
 
-          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger">
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger"
+            (click)="remover($event, roupa)">
             <i class="fa fa-times" aria-hidden="true"></i> Remover
           </a>
         </td>
