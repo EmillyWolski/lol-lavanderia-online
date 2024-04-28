@@ -71,12 +71,10 @@ export const routes: Routes = [
     { path: 'manutencao-roupas', 
         component: ManutencaoRoupasComponent
     },
-    { path: 'editar-funcionario', 
+    { path: 'editar-funcionario/:id', 
         component: EditarFuncionarioComponent
     },
-    { path: 'editar-funcionario', 
-        component: EditarFuncionarioComponent
-    },
+
     { path: 'listar-funcionario', 
         component: ListarFuncionarioComponent
     },
