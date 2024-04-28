@@ -1,1 +1,59 @@
-<p>tela-relatorios works!</p>
+<head>
+    <link rel="stylesheet" href="tela-relatorios.component.css">
+  </head>
+  
+  <div class="md-3">
+    <header class="header-base">
+      <div class="logo">
+        <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+        <h1>Lavanderia LOL</h1>
+      </div>
+  
+      <div class="usuario-info">
+        <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
+        <span>Nome do Usuário</span>
+      </div>
+    </header>
+  </div>
+  
+  <nav>
+    <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+    <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+    <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+    <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+  </nav>
+  
+  <div class="conteudo-principal">
+    <div class="cabecalho">
+      <h2 class="titulo-pagina">Relatórios</h2>
+    </div>
+
+
+           <div class="container">
+            <div class="row section">
+                <div class="col-md-12">
+                    <br>
+             <h2>Download relatório de receitas</h2>
+             <div class="button-container">
+             <button class="btn btn-primary button">
+             <i class="fas fa-download"></i> Receitas
+                 </button>              
+                    </div>
+                </div>
+            </div>
+            <h2>Download relatório de clientes</h2>
+            <div class="button-container"></div>
+            <div class="button-container">
+                <button class="btn btn-primary button">
+                    <i class="fas fa-download"></i> Clientes
+                </button>
+
+            </div>
+                <h2>Download relatório de clientes</h2>
+                <div class="button-container"></div>
+                <div class="button-container">
+                    <button class="btn btn-primary button">
+                        <i class="fas fa-download"></i> Clientes Fiéis
+                    </button>
+            </div>
+
