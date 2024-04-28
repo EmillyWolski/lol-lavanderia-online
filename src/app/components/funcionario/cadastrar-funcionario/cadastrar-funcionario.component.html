@@ -28,29 +28,46 @@
     <h2 class="titulo-pagina">Cadastro de Funcionário</h2>
   </div>
 
-  <form class="formulario-funcionario">
-    <div class="mb-3">
-      <label for="InputNome" class="form-label">Nome Completo</label>
-      <input type="text" class="form-control" id="InputNome" required>
+  <form #formFuncionario="ngForm" class="formulario-funcionario">
+    <div class="mb-3 form-group">
+      <label for="nome" class="form-label">Nome Completo</label>
+      <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="funcionario.nome" #nome="ngModel" minlength="2"
+        required>
     </div>
-    <div class="mb-3">
-      <label for="InputEmail" class="form-label">E-mail</label>
-      <input type="email" class="form-control" id="InputEmail" required>
+    <div *ngIf="nome.errors && (nome.dirty || nome.touched)" class="alert alert-danger">
+      <div [hidden]="!nome.errors['minlength']"> O nome deve conter ao menos 2 caracteres. </div>
     </div>
-    <div class="mb-3">
-      <label for="InputDataNascimento" class="form-label">Data Nascimento</label>
-      <input type="date" class="form-control" id="InputDataNascimento" required>
-    </div>
-    <div class="mb-3">
-      <label for="InputPassword" class="form-label">Senha</label>
-      <input type="password" class="form-control" id="InputPassword" pattern="[0-9]{8}" required>
-    </div>
-    <div class="mb-3">
-      <label for="InputPassword" class="form-label">Confirmar Senha</label>
-      <input type="password" class="form-control" id="InputPassword" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Cadastrar</button>
-    <a [routerLink]="['/listar-funcionario']" class="btn btn-danger">Cancelar</a>
-  </form>
 
+    <div class="mb-3 form-group">
+      <label for="email" class="form-label">E-mail</label>
+      <input type="text" class="form-control" id="email" name="email" [(ngModel)]="funcionario.email" #email="ngModel" required>
+    </div>
+
+    <div class="mb-3 form-group">
+      <label for="dataNascimento" class="form-label">Data Nascimento</label>
+      <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" [(ngModel)]="funcionario.dataNascimento"
+        #dataNascimento="ngModel" required>
+    </div>
+    <div class="mb-3 form-group">
+      <label for="senha" class="form-label">Senha</label>
+      <input type="password" class="form-control" id="senha" name="senha" pattern="[0-9]{8}" [(ngModel)]="funcionario.senha"
+        #senha="ngModel" required>
+      <div *ngIf="senha?.invalid && (senha?.dirty || senha?.touched)" class="alert alert-danger">
+        <div *ngIf="senha?.errors?.['pattern']">Senha deve conter 8 dígitos numéricos.</div>
+      </div>
+    </div>
+    <div class="mb-3 form-group">
+      <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+      <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required [(ngModel)]="funcionario.confirmarSenha"
+        #confirmarSenha="ngModel">
+      <div *ngIf="confirmarSenha?.invalid && (confirmarSenha?.dirty || confirmarSenha?.touched)" class="alert alert-danger">
+        <div *ngIf="confirmarSenha?.errors?.['required']">Confirmação de senha é obrigatória.</div>
+        <div *ngIf="funcionario.senha !== confirmarSenha?.value">As senhas não coincidem.</div>
+      </div>
+    </div>    
+    
+    <button type="button" class="btn btn-primary" (click)="cadastrarFuncionario()" [disabled]="!formFuncionario.form.valid">Cadastrar</button>
+    <a [routerLink]="['/listar-funcionario']" class="btn btn-danger">Cancelar</a>
+
+  </form>
 </div>
