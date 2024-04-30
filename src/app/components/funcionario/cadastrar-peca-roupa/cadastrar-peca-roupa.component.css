@@ -91,12 +91,12 @@ h2 {
 .conteudo-principal {
   flex: 1;
   margin-left: 15%;
-  margin-top: -3px; /* Altura do cabeçalho */
+  margin-top: -3px;
+  /* Altura do cabeçalho */
   margin-bottom: 8px;
   padding: 20px;
-  height: calc(
-    100vh - 84px
-  ); /* 100% da altura da janela menos altura do cabeçalho e menu */
+  height: calc(100vh - 84px);
+  /* 100% da altura da janela menos altura do cabeçalho e menu */
 }
 
 .cabecalho {
@@ -119,7 +119,8 @@ h2 {
 
 /* Estilos do Formulário */
 .formulario-funcionario {
-  max-width: 400px; /* Tamanho máximo desejado para o formulário */
+  max-width: 400px;
+  /* Tamanho máximo desejado para o formulário */
 }
 
 .form-control {
@@ -149,7 +150,7 @@ h2 {
   margin-left: 14px;
 }
 
-.alert{
+.alert {
   font-size: 10px;
   height: 10px;
   display: flex;

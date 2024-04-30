@@ -138,13 +138,7 @@ p {
     font-size: 12px;
     border: 0;
     margin-top: -5%;
-    
-}
-
-.btn-info {
     background-color: #3498db;
-    color: #FFFFFF;
-    border: none;
 }
 
 .btn .btn-xs .btn-success {

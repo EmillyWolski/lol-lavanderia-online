@@ -123,6 +123,7 @@ h2 {
 .form-control {
   height: 28px;
   font-size: 12px;
+  text-align: left;
 }
 
 .form-label {

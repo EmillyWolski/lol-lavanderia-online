@@ -5,11 +5,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { RoupasService } from '../../../services/roupas/roupas.service';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { NgxCurrencyDirective } from "ngx-currency";
 
 @Component({
   selector: 'app-editar-peca-roupa',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, RouterLink, NgxMaskDirective, NgxMaskPipe],
+  imports: [CommonModule, FormsModule, RouterModule, RouterLink, NgxMaskDirective, NgxMaskPipe, NgxCurrencyDirective],
   templateUrl: './editar-peca-roupa.component.html',
   styleUrl: './editar-peca-roupa.component.css',
 })

@@ -46,7 +46,7 @@
       <tr *ngFor="let roupa of roupas">
         <td class="info-roupa"> {{ roupa.nome }} </td>
         <td class="info-roupa"> {{ roupa.prazo }} </td>
-        <td class="info-roupa"> {{ roupa.valor }} </td>
+        <td class="info-roupa"> {{ roupa.valor | currency:'BRL':'symbol':'1.2-2' }} </td>
 
         <td class="text-center" style="width: 300px">
           <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info" [routerLink]="['/editar-peca-roupa', roupa.id]">

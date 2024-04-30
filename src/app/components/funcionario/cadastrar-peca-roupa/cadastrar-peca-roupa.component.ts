@@ -5,11 +5,12 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Roupas } from '../../../shared/models/shared/models/roupas.model';
 import { RoupasService } from '../../../services/roupas/roupas.service';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { NgxCurrencyDirective } from "ngx-currency";
 
 @Component({
   selector: 'app-cadastrar-peca-roupa',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, FormsModule, NgxMaskDirective, NgxMaskPipe],
+  imports: [CommonModule, RouterModule, RouterLink, FormsModule, NgxMaskDirective, NgxMaskPipe, NgxCurrencyDirective],
   templateUrl: './cadastrar-peca-roupa.component.html',
   styleUrl: './cadastrar-peca-roupa.component.css',
 })

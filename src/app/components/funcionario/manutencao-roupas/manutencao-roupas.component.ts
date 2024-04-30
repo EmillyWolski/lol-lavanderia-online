@@ -4,11 +4,12 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { RoupasService } from '../../../services/roupas/roupas.service';
 import { Roupas } from '../../../shared/models/shared/models/roupas.model';
 import { NgxMaskPipe } from 'ngx-mask';
+import { NgxCurrencyDirective } from "ngx-currency";
 
 @Component({
   selector: 'app-manutencao-roupas',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, NgxMaskPipe],
+  imports: [CommonModule, RouterModule, RouterLink, NgxMaskPipe, NgxCurrencyDirective],
   templateUrl: './manutencao-roupas.component.html',
   styleUrl: './manutencao-roupas.component.css',
 })
