@@ -29,7 +29,7 @@ export class PessoaFuncionarioService {
     funcionarios.push(funcionario);
     // Armazena no LocalStorage
     localStorage[LS_CHAVE_FUNC] = JSON.stringify(funcionarios);
-    alert("Cadastro de funcionário() concluído com sucesso!")
+    alert("Cadastro de funcionário(a) concluído com sucesso!")
   }
 
   buscarPorId(id: number): PessoaFuncionario | undefined {

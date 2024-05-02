@@ -1,34 +1,51 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterModule } from '@angular/router';
-import { LoginService } from '../../services/login/login.service';
+import { CommonModule } from '@angular/common';
+import { Router,  RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from '../../services/login/login.service';
+import { LoginFuncionarioService } from '../../services/login/login-funcionario.service';
+import { Pessoa } from '../../shared/models/pessoa.model'; 
+import { PessoaFuncionario } from '../../shared/models/pessoa-funcionario.model'; 
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
   email: string = "";
   senha: string = "";
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private loginFuncionarioService: LoginFuncionarioService, private router: Router) {}
 
   fazerLogin(): void {
+    // Tentar fazer login como cliente
     this.loginService.login(this.email, this.senha).subscribe(
-      pessoa => {
-        if (pessoa) {
-          alert('Login efetuado com sucesso');
-          // Redirecionar para a tela inicial de cliente (você pode implementar isso)
+      (cliente: Pessoa | null) => {
+        if (cliente) {
+          alert('Login efetuado com sucesso!');
+          // Redirecionar para a tela inicial de cliente
           this.router.navigate(['/inicio-cliente']);
         } else {
-          alert('Credenciais incorretas');
+          // Se não conseguir fazer login como cliente, tentar fazer login como funcionário
+          this.loginFuncionarioService.login(this.email, this.senha).subscribe(
+            (funcionario: PessoaFuncionario | null) => {
+              if (funcionario) {
+                alert('Login efetuado com sucesso!');
+                // Redirecionar para a tela inicial de funcionário
+                this.router.navigate(['/inicio-funcionario']);
+              } else {
+                alert('Credenciais incorretas');
+              }
+            }
+          );
         }
       }
     );
   }
 }
+
+
