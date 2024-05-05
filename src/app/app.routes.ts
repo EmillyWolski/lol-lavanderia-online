@@ -21,80 +21,43 @@ import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorio
 import { ModalFiltroPeriodoComponent } from './components/modal-filtro-periodo/modal-filtro-periodo.component';
 import { CadastrarPecaRoupaComponent } from './components/funcionario/cadastrar-peca-roupa/cadastrar-peca-roupa.component';
 import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-roupa/editar-peca-roupa.component';
+import { InserirPedidoComponent } from './components/inserir-pedido/inserir-pedido.component';
 
 export const routes: Routes = [
-    { path: '', 
-        redirectTo: 'inicio/login',
-        pathMatch: 'full',
-    },
-    { path: 'inicio/login',
-        component: LoginComponent
-    },
-    { path: 'inicio',
-        redirectTo: 'inicio/login'
-    },
-    { path: 'autocadastro', 
-        component: AutocadastroComponent
-    },
-    { path: 'inicio-cliente',
-        component: InicialClienteComponent
-    },
-    { path: 'consultar-pedido', 
-        component: ConsultarPedidoComponent
-    },
-    { path: 'fazer-pedido',
-        component: FazerPedidoComponent
-    },
-    { path: 'orcamento', 
-        component: ModalOrcamentoComponent
-    },
-    { path: 'cancelar-pedido',
-        component: ModalCancelarPedidoComponent
-    },
-    { path: 'pagamento',
-        component: ModalPagamentoComponent
-    },
-    { path: 'inicio-funcionario',
-        component: InicialFuncionarioComponent 
-    },
-    { path: 'confirmar-lavagem',
-        component: ModalFuncionarioLavagemComponent
-    },
-    { path: 'confirmar-recolhimento',
-        component: ModalFuncionarioRecolhimentoComponent
-    },
-    { path: 'finalizar-pedido',
-        component: ModalFuncionarioFinalizarPedidoComponent
-    },
-    { path: 'cadastrar-funcionario', 
-        component: CadastrarFuncionarioComponent
-    },
-    { path: 'manutencao-roupas', 
-        component: ManutencaoRoupasComponent
-    },
-    { path: 'editar-funcionario/:id', 
-        component: EditarFuncionarioComponent
-    },
+  { path: '', redirectTo: 'inicio/login', pathMatch: 'full' },
+  { path: 'inicio/login', component: LoginComponent },
+  { path: 'inicio', redirectTo: 'inicio/login' },
+  { path: 'autocadastro', component: AutocadastroComponent },
+  { path: 'inicio-cliente', component: InicialClienteComponent },
+  { path: 'consultar-pedido', component: ConsultarPedidoComponent },
+  { path: 'fazer-pedido', component: FazerPedidoComponent },
+  { path: 'orcamento', component: ModalOrcamentoComponent },
+  { path: 'cancelar-pedido', component: ModalCancelarPedidoComponent },
+  { path: 'pagamento', component: ModalPagamentoComponent },
+  { path: 'inicio-funcionario', component: InicialFuncionarioComponent },
+  { path: 'confirmar-lavagem', component: ModalFuncionarioLavagemComponent },
+  {
+    path: 'confirmar-recolhimento',
+    component: ModalFuncionarioRecolhimentoComponent,
+  },
+  {
+    path: 'finalizar-pedido',
+    component: ModalFuncionarioFinalizarPedidoComponent,
+  },
+  { path: 'cadastrar-funcionario', component: CadastrarFuncionarioComponent },
+  { path: 'manutencao-roupas', component: ManutencaoRoupasComponent },
+  { path: 'editar-funcionario/:id', component: EditarFuncionarioComponent },
 
-    { path: 'listar-funcionario', 
-        component: ListarFuncionarioComponent
-    },
-    { path: 'excluir-funcionario', 
-        component: ModalExcluirFuncComponent
-    },
-    { path: 'excluir-peca', 
-        component: ModalFuncionarioExcluirPecaComponent
-    },
-    { path: 'relatorios', 
-        component: TelaRelatoriosComponent
-    },
-    { path: 'filtrar-periodo', 
-        component: ModalFiltroPeriodoComponent
-    },
-    { path: 'cadastrar-peca-roupa', 
-        component: CadastrarPecaRoupaComponent
-    },
-    { path: 'editar-peca-roupa/:id', 
-        component: EditarPecaRoupaComponent
-    },
+  { path: 'listar-funcionario', component: ListarFuncionarioComponent },
+  { path: 'excluir-funcionario', component: ModalExcluirFuncComponent },
+  { path: 'excluir-peca', component: ModalFuncionarioExcluirPecaComponent },
+  { path: 'relatorios', component: TelaRelatoriosComponent },
+  { path: 'filtrar-periodo', component: ModalFiltroPeriodoComponent },
+  { path: 'cadastrar-peca-roupa', component: CadastrarPecaRoupaComponent },
+  { path: 'editar-peca-roupa/:id', component: EditarPecaRoupaComponent },
+
+  {
+    path: 'fazer-pedido/inserir-pedido',
+    component: InserirPedidoComponent,
+  },
 ];

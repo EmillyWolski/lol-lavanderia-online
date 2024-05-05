@@ -25,41 +25,36 @@
 <div class="conteudo-principal">
   <div class="cabecalho">
     <h2 class="titulo-pagina">Fazer Pedidos</h2>
-    <a [routerLink]="['/']" class="btn-novo">Novo pedido</a>
   </div>
 
-  <div class="tabela-pedidos">
-    <!-- EXEMPLOS -->
+  <!-- Cabeçalho da tabela -->
+  <table class="table table-hover">
+    <tbody class="cabecalho-tabela">
+      <tr>
+        <th class="titulo-coluna">ID do pedido</th>
+        <th class="titulo-coluna">Data</th>
+        <th class="titulo-coluna">Nome do cliente</th>
+        <th class="titulo-coluna">Status do pedido</th>
+        <th class="titulo-coluna">Total</th>
 
-    <div class="linhapedido">
-      <div class="img_title">
-        <i class="fa-solid fa-shirt" style="font-size: 20px; vertical-align: middle; color: gray"></i>
-        <h2 id="tile-linhapedido">Camiseta</h2>
-      </div>
-      <h2>Quantidade: 2</h2>
-      <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
-      <a [routerLink]="['/']" class="btn btn-excluir">Excluir</a>
-    </div>
+        <th class="text-center">
+          <a [routerLink]="['inserir-pedido']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
+            <i class="fa fa-plus" aria-hidden="true"></i> Fazer novo pedido
+          </a>
+        </th>
+      </tr>
 
-    <div class="linhapedido">
-      <div class="img_title">
-        <i class="fa-solid fa-shirt" style="font-size: 20px; vertical-align: middle; color: gray"></i>
-        <h2 id="tile-linhapedido">Camiseta</h2>
-      </div>
-      <h2>Quantidade: 2</h2>
-      <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
-      <a [routerLink]="['/']" class="btn btn-excluir">Excluir</a>
-    </div>
+      <tr *ngFor="let pedido of pedidos">
+        <td class="info-pedido">{{pedido.idpedido}} </td>
+        <td class="info-pedido">{{pedido.datadopedido | date:'dd/MM/yyyy'}} </td>
+        <td class="info-pedido">{{pedido.nomecliente}} </td>
+        <td class="text-center" style="width: 300px">
 
-    <div class="linhapedido">
-      <div class="img_title">
-        <i class="fa-solid fa-shirt" style="font-size: 20px; vertical-align: middle; color: gray"></i>
-        <h2 id="tile-linhapedido">Camiseta</h2>
-      </div>
-      <h2>Quantidade: 2</h2>
-      <a [routerLink]="['/']" class="btn btn-editar">Editar</a>
-      <a [routerLink]="['/']" class="btn btn-excluir">Excluir</a>
-    </div>
-    
-  </div>
-</div>
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)">
+            <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="pedidos.length===0">Nenhum pedido realizado.</p>

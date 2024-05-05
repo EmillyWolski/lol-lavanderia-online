@@ -119,32 +119,3 @@ nav {
   width: 15%;
   /* Define a largura desejada para cada coluna */
 }
-
-.info-pedido {
-  padding: 10px;
-  font-size: 12px;
-  text-align: left;
-}
-
-p {
-  font-size: 12px;
-  margin-left: 11px;
-}
-
-/* Estilo para os botões de ação */
-
-.btn {
-  margin-left: 10px;
-  font-size: 12px;
-  border: none;
-}
-
-.btn-info {
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-}
-
-.btn .btn-xs .btn-success {
-  right: 90%;
-}
