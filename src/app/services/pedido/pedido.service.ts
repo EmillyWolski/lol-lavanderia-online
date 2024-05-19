@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Pedido } from '../../shared/models/pedido.model';
+import { PeçaRoupaQuantidade } from '../../shared/models/peça-roupa-quantidade.model';
 
 const LS_CHAVE_PEDIDO = 'pedido';
 
@@ -15,12 +16,28 @@ export class PedidoService {
     return pedido ? JSON.parse(pedido) : [];
   }
 
-  inserir(pedido: Pedido): void {
+  inserir(
+    pedido: Pedido,
+    arrayPedidosRoupas: PeçaRoupaQuantidade[],
+    valorpedido: number
+  ): void {
     //obtém uma lista completa de pedidos
     const pedidos = this.listarTodos();
 
     //seta um ID único, usamos Timestamp, quantidade de segundos desde 1970
     pedido.idpedido = new Date().getTime();
+
+    //atribui o array recebido ao pedido
+    pedido.arrayPedidosRoupas = arrayPedidosRoupas;
+
+    //atribui um nome de teste para o usuário
+    pedido.nomecliente = 'Teste';
+
+    //atribui o valor total do pedido recebido via parametro
+    pedido.valorpedido = valorpedido;
+
+    //Atribui o status inicial do pedido
+    pedido.statuspedido = 'PEDIDO EM ABERTO';
 
     //Adiciona no final da lista
     pedidos.push(pedido);

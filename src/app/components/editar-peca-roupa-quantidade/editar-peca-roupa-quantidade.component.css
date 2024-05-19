@@ -1,8 +1,4 @@
 /* Estilo para o corpo da página */
-.mb-3 {
-  display: flex;
-  margin: 0;
-}
 
 .header-base {
   width: 100%;
@@ -115,39 +111,41 @@ nav {
   color: #2c3e50;
 }
 
-.cabecalho-tabela th {
-  width: 40%;
-  /* Define a largura desejada para cada coluna */
+/* Estilos do Formulário */
+.formulario-peca-roupa {
+  max-width: 400px; /* Tamanho máximo desejado para o formulário */
 }
-
-.info-pedido {
-  padding: 10px;
+.form-control {
+  height: 36px;
+  font-size: 14px;
+}
+.form-label {
   font-size: 12px;
-  text-align: left;
 }
-
-p {
-  font-size: 12px;
-  margin-left: 11px;
-}
-
-/* Estilo para os botões de ação */
-
 .btn {
-  margin-left: 10px;
-  font-size: 12px;
-  border: none;
+  width: 48%;
+  height: 30px;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+  box-sizing: border-box;
 }
-
-.btn-info {
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
+.btn-danger {
+  margin-left: 14px;
 }
-
-.btn .btn-xs .btn-success {
-  right: 90%;
+.alert {
+  font-size: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #dc3545;
+  background-color: #fff3f4;
 }
-.info-pecaroupa {
+#salvar {
+  margin-right: 10px;
+}
+#titulolabel {
   font-size: 12px;
 }

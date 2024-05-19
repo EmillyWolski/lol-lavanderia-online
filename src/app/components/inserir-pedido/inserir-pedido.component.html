@@ -27,24 +27,37 @@
     <h2 class="titulo-pagina">Fazer Pedidos</h2>
   </div>
 
-  <div class="well">
-    <form #formPedido="ngForm">
-      <div class="form-group">
-        <label for="nome">Nome:</label>
-        <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="pedido.nomecliente" #nome="ngModel" minlength="2" required>
-        <div *ngIf="nome.errors &&(nome.dirty || nome.touched)" class="alert alert-danger">
-          <div [hidden]="!nome.errors['required']"> Digite o nome da pessoa. </div>
-          <div [hidden]="!nome.errors['minlength']"> O nome deve conter ao menos 2 caracteres. </div>
-        </div>
-      </div>
+  <!-- Cabeçalho da tabela -->
+  <table class="table table-hover">
+    <tbody class="cabecalho-tabela">
+      <tr>
+        <th class="titulo-coluna">Nome da peça</th>
+        <th class="titulo-coluna">quantidade</th>
+        <th class="titulo-coluna">Opções</th>
+      </tr>
+      <tr *ngFor="let pecaroupa of pecasroupas" class="align-middle">
+        <td class="info-pecaroupa"> {{pecaroupa.pecaroupa.nome}} </td>
+        <td class="info-pecaroupa">{{pecaroupa.quantidade}} </td>
+        <td class="text-center">
+          <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info" [routerLink]="['/editar-peca-roupa-quantidade', pecaroupa.id]">
+            <i class="fa fa-edit" aria-hidden="true"></i> Editar
+          </a>
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pecaroupa)">
+            <i class="fa fa-times" aria-hidden="true"></i> Remover
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="pecasroupas.length===0">Nenhuma peça foi adicionada.</p>
 
-      <div class="form-group">
-        <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formPedido.form.valid">
-          <i class="fa fa-save" aria-hidden="true"></i> Salvar
-        </button>
-        <a class="btn btn-secondary" [routerLink]="['/fazer-pedido']">
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
-        </a>
-      </div>
-    </form>
+
+
+  <div>
+    <a [routerLink]="['/formulario-peca-roupa']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
+      <i class="fa fa-plus" aria-hidden="true"></i> Adicionar item
+    </a>
+    <a href="#" title="Novo" alt="Novo" class="btn btn-primary" (click)="inserir($event)" *ngIf="pecasroupas.length !== 0" disabled>
+      <i class="fa fa-save" aria-hidden="true"></i> Concluir pedido
+    </a>
   </div>

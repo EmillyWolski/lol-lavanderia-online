@@ -38,7 +38,7 @@
         <th class="titulo-coluna">Total</th>
 
         <th class="text-center">
-          <a [routerLink]="['inserir-pedido']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
+          <a [routerLink]="['/inserir-pedido']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
             <i class="fa fa-plus" aria-hidden="true"></i> Fazer novo pedido
           </a>
         </th>
@@ -48,6 +48,8 @@
         <td class="info-pedido">{{pedido.idpedido}} </td>
         <td class="info-pedido">{{pedido.datadopedido | date:'dd/MM/yyyy'}} </td>
         <td class="info-pedido">{{pedido.nomecliente}} </td>
+        <td class="info-pedido">{{pedido.statuspedido}} </td>
+        <td class="info-pedido">{{pedido.valorpedido}} </td>
         <td class="text-center" style="width: 300px">
 
           <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)">

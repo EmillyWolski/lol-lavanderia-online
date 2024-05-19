@@ -22,6 +22,9 @@ import { ModalFiltroPeriodoComponent } from './components/modal-filtro-periodo/m
 import { CadastrarPecaRoupaComponent } from './components/funcionario/cadastrar-peca-roupa/cadastrar-peca-roupa.component';
 import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-roupa/editar-peca-roupa.component';
 import { InserirPedidoComponent } from './components/inserir-pedido/inserir-pedido.component';
+import { Component } from '@angular/core';
+import { FormularioPecaRoupaComponent } from './components/formulario-peca-roupa/formulario-peca-roupa.component';
+import { EditarPecaRoupaQuantidadeComponent } from './components/editar-peca-roupa-quantidade/editar-peca-roupa-quantidade.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio/login', pathMatch: 'full' },
@@ -57,7 +60,15 @@ export const routes: Routes = [
   { path: 'editar-peca-roupa/:id', component: EditarPecaRoupaComponent },
 
   {
-    path: 'fazer-pedido/inserir-pedido',
+    path: 'inserir-pedido',
     component: InserirPedidoComponent,
+  },
+  {
+    path: 'formulario-peca-roupa',
+    component: FormularioPecaRoupaComponent,
+  },
+  {
+    path: 'editar-peca-roupa-quantidade/:id',
+    component: EditarPecaRoupaQuantidadeComponent,
   },
 ];
