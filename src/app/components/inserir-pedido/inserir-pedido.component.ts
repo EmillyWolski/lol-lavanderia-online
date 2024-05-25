@@ -3,7 +3,7 @@ import { RouterLink, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PecaRoupaQntService } from '../../services/peca-roupa-qnt.service';
 import { PeçaRoupaQuantidade } from '../../shared/models/peça-roupa-quantidade.model';
-import { Roupas } from '../../shared/models/shared/models/roupas.model';
+import { Roupas } from '../../shared/models/roupas.model';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PedidoService } from '../../services/pedido/pedido.service';
 
