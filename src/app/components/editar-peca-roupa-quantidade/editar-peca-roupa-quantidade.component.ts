@@ -7,11 +7,12 @@ import {
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { PeçaRoupaQuantidade } from '../../shared/models/peça-roupa-quantidade.model';
+import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
 import { PecaRoupaQntService } from '../../services/peca-roupa-qnt.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Roupas } from '../../shared/models/shared/models/roupas.model';
 import { RoupasService } from '../../services/roupas/roupas.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-editar-peca-roupa-quantidade',
@@ -25,9 +26,11 @@ import { RoupasService } from '../../services/roupas/roupas.service';
   ],
   templateUrl: './editar-peca-roupa-quantidade.component.html',
   styleUrl: './editar-peca-roupa-quantidade.component.css',
+  schemas: [NO_ERRORS_SCHEMA],
 })
+
 export class EditarPecaRoupaQuantidadeComponent implements OnInit {
-  pecaroupaqnt: PeçaRoupaQuantidade = new PeçaRoupaQuantidade();
+  pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade();
   @ViewChild('formEditarPecaRoupaQnt') formEditarPecaRoupaQnt!: NgForm;
   //manter as peças de roupas no combo
   roupas: Roupas[] = [];

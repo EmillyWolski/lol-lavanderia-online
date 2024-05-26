@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PecaRoupaQntService } from '../../services/peca-roupa-qnt.service';
-import { PeçaRoupaQuantidade } from '../../shared/models/peça-roupa-quantidade.model';
+import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
 import { Roupas } from '../../shared/models/shared/models/roupas.model';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PedidoService } from '../../services/pedido/pedido.service';
@@ -15,7 +15,7 @@ import { PedidoService } from '../../services/pedido/pedido.service';
   styleUrl: './inserir-pedido.component.css',
 })
 export class InserirPedidoComponent implements OnInit {
-  pecasroupas: PeçaRoupaQuantidade[] = [];
+  pecasroupas: PecaRoupaQuantidade[] = [];
   pedido: Pedido = new Pedido();
 
   constructor(
@@ -27,11 +27,11 @@ export class InserirPedidoComponent implements OnInit {
   ngOnInit(): void {
     this.pecasroupas = this.listarTodos();
   }
-  listarTodos(): PeçaRoupaQuantidade[] {
+  listarTodos(): PecaRoupaQuantidade[] {
     return this.pecaroupaService.listarTodos();
   }
 
-  remover($event: any, pecaroupa: PeçaRoupaQuantidade): void {
+  remover($event: any, pecaroupa: PecaRoupaQuantidade): void {
     $event.preventDefault();
     if (
       confirm(

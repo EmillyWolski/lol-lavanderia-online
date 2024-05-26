@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PeçaRoupaQuantidade } from '../shared/models/peça-roupa-quantidade.model';
+import { PecaRoupaQuantidade } from '../shared/models/peca-roupa-quantidade.model';
 
 const LS_CHAVE_PECAROUPAQNT = 'pecaroupaqnt';
 
@@ -8,12 +8,12 @@ const LS_CHAVE_PECAROUPAQNT = 'pecaroupaqnt';
 })
 export class PecaRoupaQntService {
   constructor() {}
-  listarTodos(): PeçaRoupaQuantidade[] {
+  listarTodos(): PecaRoupaQuantidade[] {
     const pecasroupas = localStorage[LS_CHAVE_PECAROUPAQNT];
     return pecasroupas ? JSON.parse(pecasroupas) : [];
   }
 
-  inserir(pecaroupa: PeçaRoupaQuantidade): void {
+  inserir(pecaroupa: PecaRoupaQuantidade): void {
     const pecasroupas = this.listarTodos();
     pecaroupa.id = new Date().getTime();
     pecasroupas.push(pecaroupa);
@@ -21,13 +21,13 @@ export class PecaRoupaQntService {
     localStorage[LS_CHAVE_PECAROUPAQNT] = JSON.stringify(pecasroupas);
   }
 
-  buscarPorId(id: number): PeçaRoupaQuantidade | undefined {
+  buscarPorId(id: number): PecaRoupaQuantidade | undefined {
     const pecasroupas = this.listarTodos();
 
     return pecasroupas.find((pecaroupa) => pecaroupa.id === id);
   }
 
-  atualizar(pecaroupa: PeçaRoupaQuantidade): void {
+  atualizar(pecaroupa: PecaRoupaQuantidade): void {
     const pecasroupas = this.listarTodos();
     pecasroupas.forEach((obj, index, objs) => {
       if (pecaroupa.id === obj.id) {

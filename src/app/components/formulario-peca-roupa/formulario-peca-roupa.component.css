@@ -122,6 +122,11 @@ nav {
 #titulolabel {
   font-size: 12px;
 }
+
+body > app-root > div > app-formulario-peca-roupa > div.conteudo-principal > div.well > form > div:nth-child(1) > ng-select{
+  font-size: 10px;
+}
+
 .btn {
   width: 48%;
   height: 30px;

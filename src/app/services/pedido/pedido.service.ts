@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Pedido } from '../../shared/models/pedido.model';
-import { PeçaRoupaQuantidade } from '../../shared/models/peça-roupa-quantidade.model';
+import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
 
 const LS_CHAVE_PEDIDO = 'pedido';
 
@@ -18,7 +18,7 @@ export class PedidoService {
 
   inserir(
     pedido: Pedido,
-    arrayPedidosRoupas: PeçaRoupaQuantidade[],
+    arrayPedidosRoupas: PecaRoupaQuantidade[],
     valorpedido: number
   ): void {
     //obtém uma lista completa de pedidos

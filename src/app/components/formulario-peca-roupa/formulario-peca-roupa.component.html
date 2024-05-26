@@ -31,7 +31,7 @@
     <form #formPecaRoupa="ngForm" class="formulario-peca-roupa">
       <div class="mb-3 form-group">
         <label for="nome" id="titulolabel">Peça de roupa:</label>
-        <ng-select name="pecaroupa" [items]="roupas" bindLabel="nome" [(ngModel)]="pecaroupaqnt.pecaroupa" placeholder="Selecione uma Peça"></ng-select>
+        <ng-select class="itemComboBox" name="pecaroupa" [items]="roupas" bindLabel="nome" [(ngModel)]="pecaroupaqnt.pecaroupa" placeholder="Selecione uma Peça"></ng-select>
       </div>
       <div class="mb-3 form-group">
         <label for="quantidade" id="titulolabel">Quantidade de peças:</label>

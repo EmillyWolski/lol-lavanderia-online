@@ -1,4 +1,4 @@
-import { PeçaRoupaQuantidade } from './peça-roupa-quantidade.model';
+import { PecaRoupaQuantidade } from './peca-roupa-quantidade.model';
 
 export class Pedido {
   constructor(
@@ -6,7 +6,7 @@ export class Pedido {
     public datadopedido: Date = new Date(),
     public nomecliente: string = '',
     public statuspedido: string = '',
-    public arrayPedidosRoupas: PeçaRoupaQuantidade[] = [],
+    public arrayPedidosRoupas: PecaRoupaQuantidade[] = [],
     public valorpedido: number = 0
   ) {}
 }
