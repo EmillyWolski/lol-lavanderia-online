@@ -11,7 +11,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
 import { PecaRoupaQntService } from '../../services/peca-roupa-qnt.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { Roupas } from '../../shared/models/shared/models/roupas.model';
+import { Roupas } from '../../shared/models/roupas.model';
 import { RoupasService } from '../../services/roupas/roupas.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
