@@ -1,12 +1,5 @@
 /* Estilo para o corpo da página */
-body {
-    background-color: #F5F6FA; 
-    font-family: "Montserrat", sans-serif; 
-    margin: 0;
-    padding: 0;
-}
-
-.md-3 {
+.mb-3 {
     display: flex;
     margin: 0;
 }
@@ -14,7 +7,7 @@ body {
 .header-base {
     width: 100%;
     height: 76px;
-    background: #FFFFFF;
+    background: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,7 +15,7 @@ body {
 }
 
 h2 {
-    font-size: 16px;
+    font-size: 12px;
 }
 
 .logo {
@@ -35,11 +28,11 @@ h2 {
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
-    background-image: url('../../../assets/imagens/logo.png');
+    background-image: url("../../../assets/imagens/logo.png");
 }
 
 .logo h1 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 700;
     font-size: 24px;
     color: #2c3e50;
@@ -55,11 +48,11 @@ h2 {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-    background-image: url('../../../assets/imagens/usuario.png');
+    background-image: url("../../../assets/imagens/usuario.png");
 }
 
 .usuario-info span {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 400;
     font-size: 14px;
     color: #2c3e50;
@@ -71,12 +64,11 @@ nav {
     top: 92px;
     width: 15%;
     height: calc(100% - 100px);
-    background-color: #FFFFFF; 
-    box-shadow: inset -1px 0px 0px #D7DBEC;
+    background-color: #ffffff;
+    box-shadow: inset -1px 0px 0px #d7dbec;
 }
 
 .nav-item {
-    font-family: "Montserrat", sans-serif;
     padding: 15px 20px;
     font-size: 13px;
     text-decoration: none;
@@ -86,112 +78,144 @@ nav {
 }
 
 .nav-item:hover {
-    background-color: #3498db; 
-    color: #FFFFFF;
+    background-color: #3498db;
+    color: #ffffff;
 }
 
 .conteudo-principal {
-    font-family: "Montserrat", sans-serif;
     flex: 1;
-    margin-left: 15%; 
-    margin-top: -3px; /* Altura do cabeçalho */
-    margin-bottom: 8px; 
+    margin-left: 15%;
+    margin-top: -18px;
     padding: 20px;
-    height: calc(100vh - 84px); /* 100% da altura da janela menos altura do cabeçalho e menu */
 }
 
-.cabecalho{
+.cabecalho {
     height: 45px;
+    margin-top: 14px;
+    position: relative;
 }
 
-.cabecalho .titulo-pagina{
+.cabecalho .titulo-pagina {
     font-size: 14px;
     font-weight: bold;
 }
 
 .titulo-pagina {
     margin-bottom: 20px;
-    background-color: #FFFFFF; 
-    box-shadow: inset -1px 0px 0px #D7DBEC;
+    background-color: #ffffff;
+    box-shadow: inset -1px 0px 0px #d7dbec;
     padding: 10px;
     color: #2c3e50;
 }
 
-/* Estilo para o filtro de status */
-.titulo-filtro{
-    font-size: 12px;
-    margin-left: 5px;
-}
-
-
-#filtro-status {
-    padding: 8px 12px;
-    font-size: 10px; 
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
+.titulo-coluna {
+    padding: 10px;
+    text-align: left;
+    font-size: 13px;
     color: #2c3e50;
-    outline: none; 
-}
-
-
-.tabela-pedidos {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-.cabecalho-tabela {
-    background-color: #fff; 
-    color: #2c3e50;
-    font-weight: bold;
-    border-bottom: 1px solid #ccc;
 }
 
 .cabecalho-tabela th {
-    padding: 10px;
-    text-align: left; 
-    font-size: 14px;
+    width: 15%;
+    /* Define a largura desejada para cada coluna */
 }
 
-.linha-tabela {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #f5f5f5;
-}
-
-.linha-tabela td {
+.info-pedido {
     padding: 10px;
-    text-align: left;
     font-size: 12px;
+    text-align: left;
 }
 
-.linha-tabela td:nth-child(4) {
-    text-align: center;
-    display: inline-block;
-    background-color:#FFE45F;
-    padding: 6px 8px;
-    border: none;
+p {
+    font-size: 12px;
+    margin-left: 11px;
+}
+
+
+/* Estilo para os status e filtro */
+
+.titulo-filtro {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+#filtro-status {
+    padding: 8px 12px;
+    font-size: 10px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    color: #af7012;
-    margin-left: 15px;
-    margin-top: 8px;
+    margin-left: 12px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    color: #2c3e50;
+    outline: none;
+}
+
+.status-em-aberto {
+    color: #FFD700;
+    font-weight: bold;
+}
+
+.status-cancelado {
+    color: red;
+    font-weight: bold;
+}
+
+.status-recolhido {
+    color: gray;
+    font-weight: bold;
+}
+
+.status-aguardando-pagamento {
+    color: #166092;
+    font-weight: bold;
+}
+
+.status-pago {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-finalizado {
+    color: #198754;
+    font-weight: bold;
+}
+
+
+/* Estilo para os botões de ação */
+
+.btn {
+    font-size: 12px;
+    border: none;
+    margin-right: 10px;
 }
 
 .btn-cancelar {
     background-color: #F0142F;
     color: #fff;
-    padding: 8px 12px;
+    padding: 8px 8px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 12px;
-    font-weight: normal; /* Remover negrito */
-    text-decoration: none; /* Remover sublinhado */
+    font-weight: normal;
+    /* Remover negrito */
+    text-decoration: none;
+    /* Remover sublinhado */
 }
 
 .btn-cancelar:hover {
     background-color: #e4455b;
+}
+
+.disabled-link {
+    pointer-events: none;
+    /* Desabilita eventos de clique */
+    color: rgb(179, 177, 177);
+    /* Altera a cor do texto para indicar que está desabilitado */
+    text-decoration: none;
+    /* Remove sublinhado */
+    cursor: default;
+    /* Altera o cursor */
 }

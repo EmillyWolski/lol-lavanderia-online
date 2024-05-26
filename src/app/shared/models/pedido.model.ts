@@ -1,6 +1,8 @@
 import { PecaRoupaQuantidade } from './peca-roupa-quantidade.model';
 
 export class Pedido {
+  cancelamentoRealizado: boolean = false;
+  pagamentoRealizado: boolean = false;
   constructor(
     public idpedido: number = 0,
     public datadopedido: Date = new Date(),

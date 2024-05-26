@@ -11,6 +11,7 @@ import { Pedido } from '../../shared/models/pedido.model';
   templateUrl: './fazer-pedido.component.html',
   styleUrl: './fazer-pedido.component.css',
 })
+
 export class FazerPedidoComponent implements OnInit {
   pedidos: Pedido[] = [];
 
@@ -19,6 +20,7 @@ export class FazerPedidoComponent implements OnInit {
   ngOnInit(): void {
     this.pedidos = this.listarTodos();
   }
+  
   listarTodos(): Pedido[] {
     return this.pedidoService.listarTodos();
   }
@@ -26,8 +28,16 @@ export class FazerPedidoComponent implements OnInit {
   remover($event: any, pedido: Pedido): void {
     $event.preventDefault();
     if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}`)) {
+      // Alterar o status do pedido para "CANCELADO"
+      pedido.statuspedido = 'CANCELADO';
+      pedido.cancelamentoRealizado = true; // Define a propriedade como true após o cancelamento
+
       this.pedidoService.remover(pedido.idpedido!);
-      this.pedidos = this.listarTodos();
+      alert(`O pedido ${pedido.idpedido} foi cancelado.`);
+
+      // Atualizar o pedido no serviço
+      this.pedidoService.atualizar(pedido);
+
     }
   }
 }

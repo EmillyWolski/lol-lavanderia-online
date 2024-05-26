@@ -2,16 +2,15 @@
   <link rel="stylesheet" href="inicial-funcionario.component.css">
 </head>
 
-
 <div class="md-3">
   <header class="header-base">
     <div class="logo">
-      <img src="../../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
+      <img src="../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
       <h1>Lavanderia LOL</h1>
     </div>
 
     <div class="usuario-info">
-      <img src="../../../../assets/imagens/usuario.png" alt="Foto do usuário">
+      <img src="../../../assets/imagens/usuario.png" alt="Foto do usuário">
       <span>Nome do Usuário</span>
     </div>
   </header>
@@ -25,101 +24,74 @@
 </nav>
 
 <div class="conteudo-principal">
-  <div class="filtro">
-    <div class="cabecalho">
-      <h2 class="titulo-pagina">Pedidos</h2>
-    </div>
-    <label for="filtro" class="titulo-filtro">Filtros:</label>
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Visualização de Pedidos</h2>
+  </div>
 
-    <select id="filtro">
-      <option value="" disabled selected hidden>Selecione uma opção</option>
-      <option value="em_aberto">Pedidos de hoje</option>
-      <option value="cancelado">Pedidos por período</option>
-      <option value="recolhido">Todos os pedidos</option>
+  <!-- Filtro de pedidos -->
+  <div class="filtro-pedidos">
+    <label for="filtro-status" class="titulo-filtro">Filtrar por status:</label>
+    <select id="filtro-status" [(ngModel)]="filtroStatus" (change)="filtrarPedidos()">
+      <option value="todos">Todos</option>
+      <option value="em_aberto">Em Aberto</option>
+      <option value="cancelado">Cancelado</option>
+      <option value="rejeitado">Rejeitado</option>
+      <option value="recolhido">Recolhido</option>
+      <option value="aguardando_pagamento">Aguardando Pagamento</option>
+      <option value="pago">Pago</option>
+      <option value="finalizado">Finalizado</option>
     </select>
   </div>
 
-  <table class="tabela-pedidos">
-
-    <thead class="cabecalho-tabela">
+  <!-- Tabela de pedidos -->
+  <table class="table table-hover">
+    <tbody class="cabecalho-tabela">
       <tr>
-        <th>ID Pedido</th>
-        <th>Data</th>
-        <th>Nome do Cliente</th>
-        <th>Status do Pedido</th>
-        <th>Total</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <!-- EXEMPLOS -->
-      <tr class="linha-tabela">
-        <td>1234</td>
-        <td>15/03/2024</td>
-        <td>Marina Santos</td>
-        <td class="status em-aberto">Em Aberto</td>
-        <td>R$ 50,00</td>
-        <td>
-          <a [routerLink]="['/confirmar-recolhimento']" class="btn-recolher">Confirmar Rec.</a> 
-        </td>
+        <th class="titulo-coluna">ID do pedido</th>
+        <th class="titulo-coluna">Data</th>
+        <th class="titulo-coluna">Nome do cliente</th>
+        <th class="titulo-coluna">Status do pedido</th>
+        <th class="titulo-coluna">Total</th>
       </tr>
 
-      <tr class="linha-tabela">
-        <td>1235</td>
-        <td>17/03/2024</td>
-        <td>Julia Marques</td>
-        <td class="status recolhido">Recolhido</td>
-        <td>R$ 30,00</td>
-        <td>
-          <a [routerLink]="['/confirmar-lavagem']" class="btn-lavar">Confirmar Lavagem</a>
-        </td>
-      </tr>
+      <tr *ngFor="let pedido of pedidosFiltrados">
 
-      <tr class="linha-tabela">
-        <td>1236</td>
-        <td>17/03/2024</td>
-        <td>Francisco Morais</td>
-        <td class="status pago">Pago</td>
-        <td>R$ 56,00</td>
-        <td>
-          <a [routerLink]="['/finalizar-pedido']" class="btn-finalizar">Finalizar Pedido</a>
-        </td>
-      </tr>
+        <td class="info-pedido">{{pedido.idpedido}}</td>
+        <td class="info-pedido">{{pedido.datadopedido | date:'dd/MM/yyyy'}}</td>
+        <td class="info-pedido">{{pedido.nomecliente}}</td>
+        <td class="info-pedido" [ngClass]="getStatusClass(pedido.statuspedido)">{{pedido.statuspedido}}</td>
+        <td class="info-pedido">{{pedido.valorpedido | currency:'BRL':'symbol':'1.2-2'}}</td>
 
-      <tr class="linha-tabela">
-        <td>1236</td>
-        <td>19/03/2024</td>
-        <td>Ana Pires</td>
-        <td class="status finalizado">Finalizado</td>
-        <td>R$ 73,00</td>
-        <td>
-          <a [routerLink]="['/consultar-pedido']" class="btn-visualizar-pedido">Visualizar pedido</a>
-        </td>
-      </tr>
+        <td class="text-center">
 
-      <tr class="linha-tabela">
-        <td>1236</td>
-        <td>22/03/2024</td>
-        <td>André Gouveia</td>
-        <td class="status cancelado">Cancelado</td>
-        <td>R$ 15,00</td>
-        <td>
-          <a [routerLink]="['/consultar-pedido']" class="btn-visualizar-pedido">Visualizar pedido</a>
-        </td>
-      </tr>
+          <!-- Botão/link para recolher o pedido -->
+          <ng-container *ngIf="pedido.statuspedido === 'EM ABERTO'">
+            <a href="#" title="Recolher" alt="Recolher" class="btn btn-xs btn-recolher"
+              (click)="recolherPedido($event, pedido)">
+              <i class="fas fa-archive" aria-hidden="true"></i> Recolher
+            </a>
+          </ng-container>
 
-      <tr class="linha-tabela">
-        <td>1236</td>
-        <td>25/03/2024</td>
-        <td>José Silva</td>
-        <td class="status aguardando-pagamento">Aguardando pgto.</td>
-        <td>R$ 73,00</td>
-        <td>
-          <a [routerLink]="['/consultar-pedido']" class="btn-visualizar-pedido">Visualizar pedido</a>
+          <!-- Botão/link para lavar o pedido -->
+          <ng-container *ngIf="pedido.statuspedido === 'RECOLHIDO'">
+            <a href="#" title="Lavar" alt="Lavar" class="btn btn-xs btn-lavar" (click)="lavarPedido($event, pedido)">
+              <i class="fa-solid fa-hand-sparkles" aria-hidden="true"></i> Lavar
+            </a>
+          </ng-container>
+
+          <!-- Botão/link para finalizar o pedido -->
+          <ng-container *ngIf="pedido.statuspedido === 'PAGO'">
+            <a href="#" title="Finalizar" alt="Finalizar" class="btn btn-xs btn-finalizar"
+              (click)="finalizarPedido($event, pedido)">
+              <i class="fa-solid fa-square-check" aria-hidden="true"></i> Finalizar
+            </a>
+          </ng-container>
+
         </td>
+
       </tr>
 
     </tbody>
   </table>
+  <p *ngIf="pedidosFiltrados.length === 0">Nenhum pedido encontrado.</p>
 </div>

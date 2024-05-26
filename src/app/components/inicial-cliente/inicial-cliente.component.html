@@ -23,15 +23,18 @@
 </nav>
 
 <div class="conteudo-principal">
-  <div class="filtro-pedidos">
-    <div class="cabecalho">
-      <h2 class="titulo-pagina">Pedidos</h2>
-    </div>
-    <label for="filtro-status" class="titulo-filtro">Filtrar por status:</label>
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Pedidos do Cliente</h2>
+  </div>
 
-    <select id="filtro-status">
+  <!-- Filtro de pedidos -->
+  <div class="filtro-pedidos">
+    <label for="filtro-status" class="titulo-filtro">Filtrar por status:</label>
+    <select id="filtro-status" [(ngModel)]="filtroStatus" (change)="filtrarPedidos()">
+      <option value="todos">Todos</option>
       <option value="em_aberto">Em Aberto</option>
       <option value="cancelado">Cancelado</option>
+      <option value="rejeitado">Rejeitado</option>
       <option value="recolhido">Recolhido</option>
       <option value="aguardando_pagamento">Aguardando Pagamento</option>
       <option value="pago">Pago</option>
@@ -39,48 +42,37 @@
     </select>
   </div>
 
-  <table class="tabela-pedidos">
-
-    <thead class="cabecalho-tabela">
+  <!-- Tabela de pedidos -->
+  <table class="table table-hover">
+    <tbody class="cabecalho-tabela">
       <tr>
-        <th>ID Pedido</th>
-        <th>Data</th>
-        <th>Nome do Cliente</th>
-        <th>Status do Pedido</th>
-        <th>Total</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <!-- EXEMPLOS -->
-      <tr class="linha-tabela">
-        <td>1234</td>
-        <td>15/03/2024</td>
-        <td>Marina Santos</td>
-        <td>Em Aberto</td>
-        <td>R$ 50,00</td>
-        <td><a [routerLink]="['/cancelar-pedido']" class="btn-cancelar">Cancelar</a></td>
+        <th class="titulo-coluna">ID do pedido</th>
+        <th class="titulo-coluna">Data</th>
+        <th class="titulo-coluna">Nome do cliente</th>
+        <th class="titulo-coluna">Status do pedido</th>
+        <th class="titulo-coluna">Total</th>
       </tr>
 
-      <tr class="linha-tabela">
-        <td>1235</td>
-        <td>15/03/2024</td>
-        <td>Marina Santos</td>
-        <td>Em Aberto</td>
-        <td>R$ 30,00</td>
-        <td><a [routerLink]="['/cancelar-pedido']" class="btn-cancelar">Cancelar</a></td>
+      <tr *ngFor="let pedido of pedidosFiltrados">
+        
+        <td class="info-pedido">{{pedido.idpedido}}</td>
+        <td class="info-pedido">{{pedido.datadopedido | date:'dd/MM/yyyy'}}</td>
+        <td class="info-pedido">{{pedido.nomecliente}}</td>
+        <td class="info-pedido" [ngClass]="getStatusClass(pedido.statuspedido)">{{pedido.statuspedido}}</td>
+        <td class="info-pedido">{{pedido.valorpedido | currency:'BRL':'symbol':'1.2-2'}}</td>
+
+        <td class="text-center" style="width: 300px">
+          <a href="#" title="Pagar" alt="Pagar" class="btn btn-xs btn-success" (click)="pagar($event, pedido)" [ngClass]="{'disabled-link': pedido.pagamentoRealizado}">
+            <i class="fa fa-credit-card" aria-hidden="true"></i> Pagar
+          </a>
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)" [ngClass]="{'disabled-link': pedido.cancelamentoRealizado}" [ngClass]="{'disabled-link': pedido.pagamentoRealizado}">
+            <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+          </a>
+        </td>
+
       </tr>
 
-      <tr class="linha-tabela">
-        <td>1236</td>
-        <td>15/03/2024</td>
-        <td>Marina Santos</td>
-        <td>Em Aberto</td>
-        <td>R$ 70,00</td>
-        <td><a [routerLink]="['/cancelar-pedido']" class="btn-cancelar">Cancelar</a></td>
-      </tr>
     </tbody>
-
   </table>
+  <p *ngIf="pedidosFiltrados.length === 0">Nenhum pedido encontrado.</p>
 </div>

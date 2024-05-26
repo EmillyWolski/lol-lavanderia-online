@@ -7,7 +7,11 @@ import { AutocadastroService } from '../../services/autocadastro/autocadastro.se
 @Injectable({
   providedIn: 'root'
 })
+
 export class LoginService {
+
+  private pessoaLogada: Pessoa | null = null; // Para armazenar a pessoa logada
+
   constructor(private autocadastroService: AutocadastroService) {}
 
   login(email: string, senha: string): Observable<Pessoa | null> {
@@ -16,8 +20,16 @@ export class LoginService {
   
     // Verifique se há uma pessoa com o email e senha fornecidos
     const pessoa = pessoas.find(p => p.email && p.email.toLowerCase() === email.toLowerCase() && p.senha === senha);
-  
+    
+    this.pessoaLogada = pessoa || null; // Armazena a pessoa logada
+    return of(this.pessoaLogada);
+
     // Retorna a pessoa se encontrada, caso contrário, null
-    return of(pessoa || null);
+    // return of(pessoa || null);
+    
   }  
+
+  getPessoaLogada(): Pessoa | null {
+    return this.pessoaLogada;
+  }
 }

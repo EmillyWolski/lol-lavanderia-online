@@ -38,14 +38,18 @@
       <tr *ngFor="let pecaroupa of pecasroupas" class="align-middle">
         <td class="info-pecaroupa"> {{pecaroupa.pecaroupa.nome}} </td>
         <td class="info-pecaroupa">{{pecaroupa.quantidade}} </td>
+
         <td class="text-center">
-          <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info" [routerLink]="['/editar-peca-roupa-quantidade', pecaroupa.id]">
-            <i class="fa fa-edit" aria-hidden="true"></i> Editar
-          </a>
-          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pecaroupa)">
-            <i class="fa fa-times" aria-hidden="true"></i> Remover
-          </a>
+          <div class="button-container">
+            <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info" [routerLink]="['/editar-peca-roupa-quantidade', pecaroupa.id]">
+              <i class="fa fa-edit" aria-hidden="true"></i> Editar
+            </a>
+            <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pecaroupa)">
+              <i class="fa fa-times" aria-hidden="true"></i> Remover
+            </a>  
+          </div>
         </td>
+
       </tr>
     </tbody>
   </table>

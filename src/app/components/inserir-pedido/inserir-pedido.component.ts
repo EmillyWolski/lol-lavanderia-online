@@ -6,6 +6,7 @@ import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.m
 import { Roupas } from '../../shared/models/roupas.model';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PedidoService } from '../../services/pedido/pedido.service';
+import { LoginService } from '../../services/login/login.service';
 
 @Component({
   selector: 'app-inserir-pedido',
@@ -22,11 +23,12 @@ export class InserirPedidoComponent implements OnInit {
     private pecaroupaService: PecaRoupaQntService,
     private pedidoservice: PedidoService, //injeta os serviços de pedido
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.pecasroupas = this.listarTodos();
   }
+
   listarTodos(): PecaRoupaQuantidade[] {
     return this.pecaroupaService.listarTodos();
   }

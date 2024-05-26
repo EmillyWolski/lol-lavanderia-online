@@ -39,7 +39,7 @@
 
         <th class="text-center">
           <a [routerLink]="['/inserir-pedido']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
-            <i class="fa fa-plus" aria-hidden="true"></i> Fazer novo pedido
+            <i class="fa fa-plus" aria-hidden="true"></i> Novo pedido
           </a>
         </th>
       </tr>
@@ -49,10 +49,10 @@
         <td class="info-pedido">{{pedido.datadopedido | date:'dd/MM/yyyy'}} </td>
         <td class="info-pedido">{{pedido.nomecliente}} </td>
         <td class="info-pedido">{{pedido.statuspedido}} </td>
-        <td class="info-pedido">{{pedido.valorpedido}} </td>
+        <td class="info-pedido">{{pedido.valorpedido | currency:'BRL':'symbol':'1.2-2' }}</td>
         <td class="text-center" style="width: 300px">
 
-          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)">
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)" [ngClass]="{'disabled-link': pedido.cancelamentoRealizado}">
             <i class="fa fa-times" aria-hidden="true"></i> Cancelar
           </a>
         </td>
@@ -60,3 +60,4 @@
     </tbody>
   </table>
   <p *ngIf="pedidos.length===0">Nenhum pedido realizado.</p>
+</div>

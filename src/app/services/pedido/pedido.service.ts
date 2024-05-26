@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
+import { LoginService } from '../login/login.service';
 
 const LS_CHAVE_PEDIDO = 'pedido';
 
@@ -8,7 +9,8 @@ const LS_CHAVE_PEDIDO = 'pedido';
   providedIn: 'root',
 })
 export class PedidoService {
-  constructor() {}
+  [x: string]: any;
+  constructor(private loginService: LoginService) {}
 
   listarTodos(): Pedido[] {
     const pedido = localStorage[LS_CHAVE_PEDIDO];
@@ -31,13 +33,15 @@ export class PedidoService {
     pedido.arrayPedidosRoupas = arrayPedidosRoupas;
 
     //atribui um nome de teste para o usuário
-    pedido.nomecliente = 'Teste';
+    // pedido.nomecliente = 'Teste';
+    const pessoaLogada = this.loginService.getPessoaLogada();
+    pedido.nomecliente = pessoaLogada ? pessoaLogada.nome : 'Não identificado';
 
     //atribui o valor total do pedido recebido via parametro
     pedido.valorpedido = valorpedido;
 
     //Atribui o status inicial do pedido
-    pedido.statuspedido = 'PEDIDO EM ABERTO';
+    pedido.statuspedido = 'EM ABERTO';
 
     //Adiciona no final da lista
     pedidos.push(pedido);
@@ -71,6 +75,7 @@ export class PedidoService {
   }
 
   remover(id: number): void {
+    
     //obtem lista completa de pedidos
     let pedidos = this.listarTodos();
 

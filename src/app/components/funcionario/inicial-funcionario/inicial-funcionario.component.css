@@ -1,12 +1,5 @@
 /* Estilo para o corpo da página */
-body {
-    background-color: #F5F6FA; 
-    font-family: "Montserrat", sans-serif; 
-    margin: 0;
-    padding: 0;
-}
-
-.md-3 {
+.mb-3 {
     display: flex;
     margin: 0;
 }
@@ -14,7 +7,7 @@ body {
 .header-base {
     width: 100%;
     height: 76px;
-    background: #FFFFFF;
+    background: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,7 +15,7 @@ body {
 }
 
 h2 {
-    font-size: 16px;
+    font-size: 12px;
 }
 
 .logo {
@@ -71,8 +64,8 @@ nav {
     top: 92px;
     width: 15%;
     height: calc(100% - 100px);
-    background-color: #FFFFFF; 
-    box-shadow: inset -1px 0px 0px #D7DBEC;
+    background-color: #ffffff;
+    box-shadow: inset -1px 0px 0px #d7dbec;
 }
 
 .nav-item {
@@ -85,125 +78,121 @@ nav {
 }
 
 .nav-item:hover {
-    background-color: #3498db; 
-    color: #FFFFFF;
+    background-color: #3498db;
+    color: #ffffff;
 }
 
 .conteudo-principal {
     flex: 1;
-    margin-left: 15%; 
-    margin-top: -3px; /* Altura do cabeçalho */
-    margin-bottom: 8px; 
+    margin-left: 15%;
+    margin-top: -18px;
     padding: 20px;
-    height: calc(100vh - 84px); /* 100% da altura da janela menos altura do cabeçalho e menu */
 }
 
-.cabecalho{
+.cabecalho {
     height: 45px;
+    margin-top: 14px;
+    position: relative;
 }
 
-.cabecalho .titulo-pagina{
+.cabecalho .titulo-pagina {
     font-size: 14px;
     font-weight: bold;
 }
 
 .titulo-pagina {
     margin-bottom: 20px;
-    background-color: #FFFFFF; 
-    box-shadow: inset -1px 0px 0px #D7DBEC;
+    background-color: #ffffff;
+    box-shadow: inset -1px 0px 0px #d7dbec;
     padding: 10px;
     color: #2c3e50;
 }
 
-.titulo-filtro{
-    font-size: 12px;
-    margin-left: 5px;
+.titulo-coluna {
+    padding: 10px;
+    text-align: left;
+    font-size: 13px;
+    color: #2c3e50;
 }
 
-#filtro {
+.cabecalho-tabela th {
+    width: 15%;
+    /* Define a largura desejada para cada coluna */
+}
+
+.info-pedido {
+    padding: 10px;
+    font-size: 12px;
+    text-align: left;
+}
+
+p {
+    font-size: 12px;
+    margin-left: 11px;
+}
+
+
+/* Estilo para os status e filtro */
+
+.titulo-filtro{
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+#filtro-status {
     padding: 8px 12px;
-    font-size: 12px; 
+    font-size: 10px; 
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-left: 10px;
-    margin-bottom: 15px;
+    margin-left: 12px;
+    margin-bottom: 10px;
     background-color: #fff;
     color: #2c3e50;
     outline: none; 
 }
 
-.tabela-pedidos {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-.cabecalho-tabela {
-    background-color: #fff; 
-    color: #2c3e50;
+.status-em-aberto {
+    color: #FFD700;
     font-weight: bold;
-    border-bottom: 1px solid #ccc;
-}
+  }
+  
+  .status-cancelado {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .status-recolhido {
+    color: gray;
+    font-weight: bold;
+  }
+  
+  .status-aguardando-pagamento {
+    color: #166092;
+    font-weight: bold;
+  }
+  
+  .status-pago {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .status-finalizado {
+    color: #198754;
+    font-weight: bold;
+  }
+  
 
-.cabecalho-tabela th {
-    padding: 10px;
-    text-align: left; 
+/* Estilo para os botões de ação */
+
+.btn {
     font-size: 12px;
-}
-
-.linha-tabela {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #f5f5f5;
-}
-
-.linha-tabela td {
-    padding: 10px;
-    text-align: left;
-    font-size: 12px;
-}
-
-.linha-tabela td.status {
-    padding: 6px 8px;
-    border-radius: 4px;
-    display: inline-block;
-    width: 150px;
-    margin-top: 10px;
-    text-align: center; 
-}
-
-/* Estilo para os status dos pedidos */
-.linha-tabela td.em-aberto {
-    background-color: #f3df7d; 
-    color: #af7012;
-}
-
-.linha-tabela td.recolhido {
-    background-color: #D3D3D3; 
-    color: #333752;
-}
-
-.linha-tabela td.pago {
-    background-color: #ffb077; 
-    color: #EA6200;
-}
-
-.linha-tabela td.aguardando-pagamento {
-    background-color: #7399f7; 
-    color: #062574;
-}
-
-.linha-tabela td.finalizado {
-    background-color: #36d490; 
-    color: #FFFFFF;
-}
-
-.linha-tabela td.cancelado {
-    background-color: #ec7171; 
-    color: rgb(109, 6, 6);
+    border: none;
+    margin-right: 10px;
 }
 
 
 /* Estilo para os botões de ação */
+
 .btn-recolher,
 .btn-lavar,
 .btn-finalizar,

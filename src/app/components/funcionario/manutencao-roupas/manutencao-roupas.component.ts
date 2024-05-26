@@ -19,6 +19,7 @@ import { NgxCurrencyDirective } from 'ngx-currency';
   templateUrl: './manutencao-roupas.component.html',
   styleUrl: './manutencao-roupas.component.css',
 })
+
 export class ManutencaoRoupasComponent {
   roupas: Roupas[] = [];
 

@@ -134,9 +134,16 @@ p {
 /* Estilo para os botões de ação */
 
 .btn {
-  margin-left: 10px;
+ 
   font-size: 12px;
   border: none;
+  padding: 5px 15px; 
+  display: inline-flex; 
+  align-items: center;
+}
+
+.btn i {
+  margin-right: 5px; 
 }
 
 .btn-info {
@@ -145,10 +152,15 @@ p {
   border: none;
 }
 
-.btn .btn-xs .btn-success {
-  right: 90%;
+.button-container{
+  display: inline-flex; 
+  gap: 10px; 
 }
 
 .info-pecaroupa {
   font-size: 12px;
+}
+
+.btn-primary{
+  margin-left: 10px; 
 }
