@@ -1,4 +1,4 @@
-import { Roupas } from './roupas.model';
+import { Roupas } from "./roupas.model";
 
 export class PecaRoupaQuantidade {
   constructor(
