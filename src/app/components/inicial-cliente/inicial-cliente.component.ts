@@ -40,6 +40,7 @@ export class InicialClienteComponent implements OnInit {
 
       this.pedidoService.atualizar(pedido);
       this.atualizarPedidos();
+      this.pedidos = this.listarTodos();
 
       // this.pedidoService.remover(pedido.idpedido!);
       alert(`O pedido ${pedido.idpedido} foi cancelado.`);

@@ -40,7 +40,6 @@ import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-r
     InicialClienteComponent,
     ConsultarPedidoComponent,
     FazerPedidoComponent,
-    ModalOrcamentoComponent,
     ModalCancelarPedidoComponent,
     ModalPagamentoComponent,
     ModalFiltroPeriodoComponent,
@@ -58,7 +57,7 @@ import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-r
     TelaRelatoriosComponent,
     FormsModule,
     CadastrarPecaRoupaComponent,
-    EditarPecaRoupaComponent
+    EditarPecaRoupaComponent,
   ],
 })
 export class AppComponent {

@@ -85,4 +85,5 @@ export class PedidoService {
     //atualiza a lista de pessoas
     localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
   }
+
 }

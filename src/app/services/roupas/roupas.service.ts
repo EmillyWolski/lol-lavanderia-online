@@ -11,8 +11,31 @@ export class RoupasService {
 
   listarTodas(): Roupas[] {
     const roupas = localStorage[LS_CHAVE_ROUPAS];
+
+    // Adicionando log para verificar se as roupas estão no localStorage
+    console.log('Roupas no localStorage:', roupas);
+
     // Precisa do condicional, pois retornar undefined se a chave não existe
     return roupas ? JSON.parse(roupas) : [];
+  }
+
+  listarTodasComPrazos(): { roupas: Roupas[], prazosMap: { [id: number]: number } } {
+    const roupas = localStorage[LS_CHAVE_ROUPAS];
+
+    // Precisa do condicional, pois retorna undefined se a chave não existe
+    if (roupas) {
+      const roupasArray: Roupas[] = JSON.parse(roupas);
+      const prazosMap: { [id: number]: number } = {};
+
+      // Preenche o mapa de prazos
+      roupasArray.forEach((roupa) => {
+        prazosMap[roupa.id] = roupa.prazo;
+      });
+
+      return { roupas: roupasArray, prazosMap };
+    } else {
+      return { roupas: [], prazosMap: {} };
+    }
   }
 
   inserir(roupa: Roupas): void {

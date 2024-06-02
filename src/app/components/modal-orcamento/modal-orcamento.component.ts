@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-modal-orcamento',
-  standalone: true,
-  imports: [],
   templateUrl: './modal-orcamento.component.html',
-  styleUrl: './modal-orcamento.component.css'
+  styleUrls: ['./modal-orcamento.component.css']
 })
+
 export class ModalOrcamentoComponent {
+  @Input() valorPedido: number | undefined;
+  @Input() prazoMaximo: number | undefined;
+
+  constructor() { }
 
 }
+
+

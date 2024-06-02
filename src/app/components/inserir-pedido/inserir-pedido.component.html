@@ -33,29 +33,34 @@
       <tr>
         <th class="titulo-coluna">Nome da peça</th>
         <th class="titulo-coluna">Quantidade</th>
+        <th class="titulo-coluna">Prazo lavagem</th>
         <th class="titulo-coluna">Opções</th>
       </tr>
       <tr *ngFor="let pecaroupa of pecasroupas" class="align-middle">
         <td class="info-pecaroupa"> {{pecaroupa.pecaroupa.nome}} </td>
         <td class="info-pecaroupa">{{pecaroupa.quantidade}} </td>
+        <td class="info-pecaroupa">
+          {{ prazosMap[pecaroupa.pecaroupa.id] || 'Prazo não encontrado' }}
+        </td>
 
         <td class="text-center">
           <div class="button-container">
-            <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info" [routerLink]="['/editar-peca-roupa-quantidade', pecaroupa.id]">
+            <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info"
+              [routerLink]="['/editar-peca-roupa-quantidade', pecaroupa.id]">
               <i class="fa fa-edit" aria-hidden="true"></i> Editar
             </a>
-            <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pecaroupa)">
+            <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger"
+              (click)="remover($event, pecaroupa)">
               <i class="fa fa-times" aria-hidden="true"></i> Remover
-            </a>  
+            </a>
           </div>
         </td>
 
       </tr>
+
     </tbody>
   </table>
   <p *ngIf="pecasroupas.length===0">Nenhuma peça foi adicionada.</p>
-
-
 
   <div>
     <a [routerLink]="['/formulario-peca-roupa']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
@@ -64,4 +69,5 @@
     <a href="#" title="Novo" alt="Novo" class="btn btn-primary" (click)="inserir($event)" *ngIf="pecasroupas.length !== 0" disabled>
       <i class="fa fa-save" aria-hidden="true"></i> Concluir pedido
     </a>
+
   </div>

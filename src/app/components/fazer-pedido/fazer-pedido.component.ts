@@ -37,6 +37,7 @@ export class FazerPedidoComponent implements OnInit {
 
       // Atualizar o pedido no serviço
       this.pedidoService.atualizar(pedido);
+      this.pedidos = this.listarTodos();
 
     }
   }

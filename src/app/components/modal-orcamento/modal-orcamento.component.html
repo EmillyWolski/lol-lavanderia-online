@@ -8,11 +8,6 @@
     <link rel="stylesheet" href="modal-orcamento.component.css">
 </head>
 <body>
-    <!-- Botão para acionar o modal -->
-    <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Ver Orçamento
-    </button>
-  
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -22,14 +17,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
-                    <p><b>Valor: </b>R$ 100,00</p>
+                    <p><b>Valor: </b>R$ {{ valorPedido }}</p>
                     <hr> <!-- Linha horizontal -->
-                    <p><b>Prazo: </b>3 dias</p>
+                    <p><b>Prazo: </b>{{ prazoMaximo }} dias</p>
                 </div>
                 <div class="modal-footer">
-                    <!-- Botão para aprovar o orçamento -->
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aprovar</button>
-                    <!-- Botão para recusar o orçamento -->
+
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Recusar</button>
                 </div>
             </div>
@@ -37,4 +31,6 @@
     </div>
 </body>
 </html>
+
+
 

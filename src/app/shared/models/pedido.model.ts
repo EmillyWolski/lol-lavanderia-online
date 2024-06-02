@@ -9,6 +9,7 @@ export class Pedido {
     public nomecliente: string = '',
     public statuspedido: string = '',
     public arrayPedidosRoupas: PecaRoupaQuantidade[] = [],
-    public valorpedido: number = 0
+    public valorpedido: number = 0,
+    public prazo: number = 0
   ) {}
 }
