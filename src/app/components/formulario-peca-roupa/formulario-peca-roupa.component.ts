@@ -48,7 +48,7 @@ export class FormularioPecaRoupaComponent implements OnInit {
     if (this.formPecaRoupa.form.valid) {
       this.pecasroupaqntservice.inserir(this.pecaroupaqnt);
       this.router.navigate(['/inserir-pedido']);
-      confirm('Peça adicionada com sucesso no pedido');
+      confirm('Peça adicionada com sucesso no pedido.');
     }
   }
 }

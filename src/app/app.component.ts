@@ -58,6 +58,7 @@ import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-r
     FormsModule,
     CadastrarPecaRoupaComponent,
     EditarPecaRoupaComponent,
+    ModalOrcamentoComponent,
   ],
 })
 export class AppComponent {

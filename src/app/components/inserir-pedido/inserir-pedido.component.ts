@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterLink, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PecaRoupaQntService } from '../../services/peca-roupa-qnt.service';
@@ -8,17 +8,20 @@ import { RoupasService } from '../../services/roupas/roupas.service';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PedidoService } from '../../services/pedido/pedido.service';
 import { LoginService } from '../../services/login/login.service';
+import { ModalOrcamentoComponent } from '../modal-orcamento/modal-orcamento.component';
 
 @Component({
   selector: 'app-inserir-pedido',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule],
+  imports: [CommonModule, RouterLink, RouterModule, ModalOrcamentoComponent],
   templateUrl: './inserir-pedido.component.html',
   styleUrl: './inserir-pedido.component.css',
   providers: [PecaRoupaQntService, PedidoService],
 })
-
 export class InserirPedidoComponent implements OnInit {
+  
+  @ViewChild(ModalOrcamentoComponent) modalOrcamento!: ModalOrcamentoComponent;
+
   pecasroupas: PecaRoupaQuantidade[] = [];
   pedido: Pedido = new Pedido();
   roupas: Roupas[] = [];
@@ -51,31 +54,17 @@ export class InserirPedidoComponent implements OnInit {
 
   remover($event: any, pecaroupa: PecaRoupaQuantidade): void {
     $event.preventDefault();
-    if (
-      confirm(
-        `Deseja realmente remover a Peça de Roupa ${pecaroupa.pecaroupa.nome}?`
-      )
-    ) {
+    if (confirm(`Deseja realmente remover a Peça de Roupa ${pecaroupa.pecaroupa.nome}?`)) {
       this.pecaroupaService.remover(pecaroupa.id);
       this.pecasroupas = this.listarTodos();
     }
   }
 
-  //insere o pedido com as peças de roupas escolhidas
-  inserir($event: any): void {
-    $event.preventDefault();
-
-    this.pedidoservice.inserir(this.pedido, this.pecasroupas, this.valorPedido || 0);
-
-    // Limpa o array pecasroupas
-    this.pecaroupaService.removertudo();
-
-    // Redefine o pedido para um novo objeto Pedido
-    this.pedido = new Pedido();
-
-    this.router.navigateByUrl('/fazer-pedido');
-
-    // this.abrirModal();
+  // Modal
+  abrirModal(): void {
+    if (this.modalOrcamento) {
+      this.modalOrcamento.open();
+    }
   }
 
   // Método para calcular o valor total do pedido e o prazo máximo entre as peças de roupa
@@ -104,8 +93,15 @@ export class InserirPedidoComponent implements OnInit {
     return prazoMaximo;
   }
 
-  // Método para abrir o modal com o resumo do pedido
-  abrirModal(): void {
-    this.router.navigateByUrl('/modal-orcamento');
+  // Método chamado ao aprovar o pedido no modal
+  aprovarPedido(): void {
+    this.pedidoservice.inserir(this.pedido, this.pecasroupas, this.valorPedido || 0);
+    this.pecaroupaService.removertudo();
+    this.pedido = new Pedido();
+    this.router.navigateByUrl('/fazer-pedido');
+  }
+
+  onRecusar($event: void) {
+    throw new Error('Method not implemented.');
   }
 }

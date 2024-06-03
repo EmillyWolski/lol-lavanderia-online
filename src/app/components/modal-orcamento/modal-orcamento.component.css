@@ -1,2 +1,6 @@
+.modal.fade.show {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo semi-transparente */
+}
 
 

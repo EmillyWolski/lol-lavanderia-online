@@ -127,6 +127,14 @@ body > app-root > div > app-formulario-peca-roupa > div.conteudo-principal > div
   font-size: 10px;
 }
 
+.itemComboBox{
+  font-size: 12px;
+}
+
+#quantidade{
+  font-size: 12px;
+}
+
 .btn {
   width: 48%;
   height: 30px;

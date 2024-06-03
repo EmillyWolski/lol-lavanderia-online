@@ -66,8 +66,11 @@
     <a [routerLink]="['/formulario-peca-roupa']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
       <i class="fa fa-plus" aria-hidden="true"></i> Adicionar item
     </a>
-    <a href="#" title="Novo" alt="Novo" class="btn btn-primary" (click)="inserir($event)" *ngIf="pecasroupas.length !== 0" disabled>
+    <button type="button" class="btn btn-primary" (click)="abrirModal()" *ngIf="pecasroupas.length !== 0">
       <i class="fa fa-save" aria-hidden="true"></i> Concluir pedido
-    </a>
-
+    </button>    
   </div>
+  <app-modal-orcamento [valorPedido]="valorPedido" [prazoMaximo]="prazoMaximo" 
+    (aprovar)="aprovarPedido()"
+    (recusar)="onRecusar($event)">
+  </app-modal-orcamento>

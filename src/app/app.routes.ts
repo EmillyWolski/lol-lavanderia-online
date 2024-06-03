@@ -4,7 +4,6 @@ import { AutocadastroComponent } from './components/autocadastro/autocadastro.co
 import { InicialClienteComponent } from './components/inicial-cliente/inicial-cliente.component';
 import { ConsultarPedidoComponent } from './components/consultar-pedido/consultar-pedido.component';
 import { FazerPedidoComponent } from './components/fazer-pedido/fazer-pedido.component';
-import { ModalOrcamentoComponent } from './components/modal-orcamento';
 import { ModalCancelarPedidoComponent } from './components/modal-cancelar-pedido';
 import { ModalPagamentoComponent } from './components/modal-pagamento';
 import { InicialFuncionarioComponent } from './components/funcionario/inicial-funcionario/inicial-funcionario.component';
@@ -34,7 +33,6 @@ export const routes: Routes = [
   { path: 'inicio-cliente', component: InicialClienteComponent },
   { path: 'consultar-pedido', component: ConsultarPedidoComponent },
   { path: 'fazer-pedido', component: FazerPedidoComponent },
-  { path: 'orcamento', component: ModalOrcamentoComponent },
   { path: 'cancelar-pedido', component: ModalCancelarPedidoComponent },
   { path: 'pagamento', component: ModalPagamentoComponent },
   { path: 'inicio-funcionario', component: InicialFuncionarioComponent },

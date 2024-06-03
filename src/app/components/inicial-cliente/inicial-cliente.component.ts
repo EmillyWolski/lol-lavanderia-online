@@ -33,7 +33,7 @@ export class InicialClienteComponent implements OnInit {
 
   remover($event: any, pedido: Pedido): void {
     $event.preventDefault();
-    if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}`)) {
+    if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}?`)) {
       pedido.statuspedido = 'CANCELADO';
       pedido.cancelamentoRealizado = true; // Define a propriedade como true após o cancelamento
       pedido.pagamentoRealizado = true; // Define a propriedade como true após o cancelamento
