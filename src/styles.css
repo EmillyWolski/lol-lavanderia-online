@@ -2,10 +2,6 @@
 
 /* CSS GERAL DE BODY */
 
-.mb-3 {
-    font-family: "Montserrat", sans-serif;
-}
-
 .conteudo-principal {
     font-family: "Montserrat", sans-serif;
 }
@@ -13,6 +9,64 @@
 nav {
     font-family: "Montserrat", sans-serif;
 }
+
+.md-3 {
+    display: flex;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+.header-base {
+    width: 100%;
+    height: 76px;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+h2 {
+    font-size: 12px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-image: url('../src/assets/imagens/logo.png');
+}
+
+.logo h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+}
+
+.usuario-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-image: url('../src/assets/imagens/usuario.png');
+}
+
+.hide-header .header-container {
+    display: none;
+}
+
 
 /* CSS DOS MODAIS */
 .btn-custom {
@@ -25,7 +79,6 @@ nav {
     /* Move o botão para o centro da tela */
     border-radius: 4px;
 }
-
 
 .modal-dialog {
     width: 30%;

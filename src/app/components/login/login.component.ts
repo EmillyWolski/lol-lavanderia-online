@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router,  RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -14,12 +14,21 @@ import { PessoaFuncionario } from '../../shared/models/pessoa-funcionario.model'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+
+export class LoginComponent implements OnInit, OnDestroy {
 
   email: string = "";
   senha: string = "";
 
   constructor(private loginService: LoginService, private loginFuncionarioService: LoginFuncionarioService, private router: Router) {}
+
+  ngOnInit(): void {
+    document.body.classList.add('hide-header');
+  }
+
+  ngOnDestroy(): void {
+    document.body.classList.remove('hide-header');
+  }
 
   fazerLogin(): void {
     // Tentar fazer login como cliente

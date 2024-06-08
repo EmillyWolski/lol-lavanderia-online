@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { AutocadastroService } from '../../services/autocadastro/autocadastro.service';
 import { Pessoa } from '../../shared/models/pessoa.model';
@@ -12,13 +12,23 @@ import { RouterLink, RouterModule } from '@angular/router';
   templateUrl: './autocadastro.component.html',
   styleUrl: './autocadastro.component.css'
 })
-export class AutocadastroComponent {
+
+export class AutocadastroComponent implements OnInit, OnDestroy{
+  
   @ViewChild('autocadastroForm') autocadastroForm!: NgForm;
   pessoa: Pessoa = new Pessoa();
   pessoaCadastrada: Pessoa | null = null;
   senhaGerada: string = "";
 
   constructor(private autocadastroService: AutocadastroService) {}
+
+  ngOnInit(): void {
+    document.body.classList.add('hide-header');
+  }
+
+  ngOnDestroy(): void {
+    document.body.classList.remove('hide-header');
+  }
 
   gerarSenhaAleatoria(): void {
     const senha = Math.floor(1000 + Math.random() * 9000).toString();
