@@ -1,5 +1,4 @@
 /* Estilo para o corpo da página */
-
 h2 {
     font-size: 12px;
 }
@@ -77,16 +76,28 @@ p {
     margin-left: 11px;
 }
 
-
-/* Estilo para os botões de ação */
-.btn {
-    margin-left: 220px;
+/* Estilo da listagem de clientes */
+.info-clientes {
     font-size: 12px;
-    border: 0;
-    margin-top: -5%;
-    background-color: #3498db;
 }
 
-.btn .btn-xs .btn-success {
-    right: 90%;
+/* Estilo para os botões de ação */
+.button-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    font-size: 12px;
+    border: 0;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #2980b9;
 }

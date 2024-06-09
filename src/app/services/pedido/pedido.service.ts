@@ -32,8 +32,6 @@ export class PedidoService {
     //atribui o array recebido ao pedido
     pedido.arrayPedidosRoupas = arrayPedidosRoupas;
 
-    //atribui um nome de teste para o usuário
-    // pedido.nomecliente = 'Teste';
     const pessoaLogada = this.loginService.getPessoaLogada();
     pedido.nomecliente = pessoaLogada ? pessoaLogada.nome : 'Não identificado';
 

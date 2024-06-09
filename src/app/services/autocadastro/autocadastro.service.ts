@@ -11,9 +11,9 @@ export class AutocadastroService {
   constructor() { }
 
   listarTodos(): Pessoa[] {
+    
     const pessoas = localStorage[LS_CHAVE];
-    // Precisa do condicional, pois retornar undefined se
-    // a chave não existe
+    // Precisa do condicional, pois retornar undefined se a chave não existe
     return pessoas ? JSON.parse(pessoas) : [];
   }
 
@@ -32,6 +32,5 @@ export class AutocadastroService {
 
     alert("Autocadastro concluído com sucesso!")
   }
-
   
 }

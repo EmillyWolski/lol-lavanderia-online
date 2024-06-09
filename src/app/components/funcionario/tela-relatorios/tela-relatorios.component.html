@@ -14,31 +14,51 @@
     <h2 class="titulo-pagina">Relatórios</h2>
   </div>
 
-
   <div class="container">
-    <div class="row section">
-      <div class="col-md-12">
-        <br>
-        <h2>Download relatório de receitas</h2>
-        <div class="button-container">
-          <button class="btn btn-primary button">
-            <i class="fas fa-download"></i> Receitas
-          </button>
-        </div>
+    <div class="section">
+      <div class="button-container">
+        <button class="btn btn-primary">
+          <i class="fas fa-download"></i> Receitas
+        </button>
+        <button class="btn btn-primary">
+          <i class="fas fa-download"></i> Clientes
+        </button>
+        <button class="btn btn-primary">
+          <i class="fas fa-download"></i> Clientes Fiéis
+        </button>
       </div>
     </div>
-    <h2>Download relatório de clientes</h2>
-    <div class="button-container"></div>
-    <div class="button-container">
-      <button class="btn btn-primary button">
-        <i class="fas fa-download"></i> Clientes
-      </button>
 
+    <div *ngIf="pessoaLogada">
+      <h2>Informações da Pessoa Logada</h2>
+      <ul>
+        <li><strong>ID:</strong> {{ pessoaLogada.id }}</li>
+        <li><strong>Nome:</strong> {{ pessoaLogada.nome }}</li>
+        <li><strong>CPF:</strong> {{ pessoaLogada.cpf }}</li>
+        <li><strong>Email:</strong> {{ pessoaLogada.email }}</li>
+        <li><strong>Endereço:</strong> {{ pessoaLogada.endereco }}</li>
+        <li><strong>Telefone:</strong> {{ pessoaLogada.telefone }}</li>
+      </ul>
     </div>
-    <h2>Download relatório de clientes fiéis</h2>
-    <div class="button-container"></div>
-    <div class="button-container">
-      <button class="btn btn-primary button">
-        <i class="fas fa-download"></i> Clientes Fiéis
-      </button>
+    
+    <hr>
+    <h2>Informações de Clientes Cadastrados</h2>
+    <div *ngIf="pessoas.length > 0" class="info-clientes">
+      <ul>
+        <li *ngFor="let pessoa of pessoas">
+          <strong>ID:</strong> {{ pessoa.id }}<br>
+          <strong>Nome:</strong> {{ pessoa.nome }}<br>
+          <strong>CPF:</strong> {{ pessoa.cpf }}<br>
+          <strong>Email:</strong> {{ pessoa.email }}<br>
+          <strong>Endereço:</strong> {{ pessoa.endereco }}<br>
+          <strong>Telefone:</strong> {{ pessoa.telefone }}<br>
+        </li>
+      </ul>
     </div>
+    <hr>
+    <div *ngIf="pessoas.length === 0">
+      <p>Nenhum cliente cadastrado.</p>
+    </div>
+  </div>
+</div>
+

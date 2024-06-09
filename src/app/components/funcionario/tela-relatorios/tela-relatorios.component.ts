@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
+import { LoginService } from '../../../services/login/login.service';
+import { Pessoa } from '../../../shared/models/pessoa.model';
+import { AutocadastroService } from '../../../services/autocadastro/autocadastro.service';
 
 @Component({
   selector: 'app-tela-relatorios',
@@ -9,6 +12,19 @@ import { RouterLink, RouterModule } from '@angular/router';
   templateUrl: './tela-relatorios.component.html',
   styleUrl: './tela-relatorios.component.css'
 })
-export class TelaRelatoriosComponent {
 
+export class TelaRelatoriosComponent implements OnInit{
+
+  pessoaLogada: Pessoa | null = null;
+  pessoas: Pessoa[] = [];
+
+  constructor(
+    private loginService: LoginService,
+    private autocadastroService: AutocadastroService
+  ) { }
+
+  ngOnInit(): void {
+    this.pessoaLogada = this.loginService.getPessoaLogada();
+    this.pessoas = this.autocadastroService.listarTodos();
+  }
 }

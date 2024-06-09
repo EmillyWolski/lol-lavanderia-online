@@ -22,10 +22,12 @@ export class AutocadastroComponent implements OnInit, OnDestroy{
 
   constructor(private autocadastroService: AutocadastroService) {}
 
+  // Código para ocultar o cabeçalho padrão do sistema nessa página
   ngOnInit(): void {
     document.body.classList.add('hide-header');
   }
 
+  // Código para ocultar o cabeçalho padrão do sistema nessa página
   ngOnDestroy(): void {
     document.body.classList.remove('hide-header');
   }
