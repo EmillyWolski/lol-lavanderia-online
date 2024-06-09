@@ -10,7 +10,7 @@ const LS_CHAVE_PEDIDO = 'pedido';
 })
 export class PedidoService {
   [x: string]: any;
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService) { }
 
   listarTodos(): Pedido[] {
     const pedido = localStorage[LS_CHAVE_PEDIDO];
@@ -73,7 +73,7 @@ export class PedidoService {
   }
 
   remover(id: number): void {
-    
+
     //obtem lista completa de pedidos
     let pedidos = this.listarTodos();
 
@@ -82,6 +82,52 @@ export class PedidoService {
 
     //atualiza a lista de pessoas
     localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
+  }
+
+  // Método para obter a receita total de todos os pedidos
+  obterReceitaTotal(): number {
+    let receitaTotal = 0;
+
+    // Obtém todos os pedidos
+    const pedidos = this.listarTodos();
+
+    // Itera sobre cada pedido
+    pedidos.forEach((pedido) => {
+      // Soma o valor do pedido à receita total
+      receitaTotal += pedido.valorpedido;
+    });
+
+    return receitaTotal;
+  }
+
+  // Método para obter os 3 clientes que mais gastaram
+  obterClientesQueMaisGastaram(): { nome: string; totalGasto: number }[] {
+    const clientes: { [nome: string]: number } = {}; // Definindo o tipo explícito
+
+    // Obtém todos os pedidos
+    const pedidos = this.listarTodos();
+
+    // Itera sobre cada pedido
+    pedidos.forEach((pedido) => {
+      // Se o cliente já existe no objeto clientes, soma o valor do pedido, senão, cria uma nova entrada
+      if (clientes[pedido.nomecliente]) {
+        clientes[pedido.nomecliente] += pedido.valorpedido;
+      } else {
+        clientes[pedido.nomecliente] = pedido.valorpedido;
+      }
+    });
+
+    // Converte o objeto para uma matriz de pares [chave, valor]
+    const clientesArray = Object.entries(clientes);
+
+    // Ordena a matriz com base no valor (total gasto)
+    clientesArray.sort((a, b) => b[1] - a[1]);
+
+    // Retorna os 3 clientes que mais gastaram
+    return clientesArray.slice(0, 3).map((cliente) => ({
+      nome: cliente[0],
+      totalGasto: cliente[1],
+    }));
   }
 
 }

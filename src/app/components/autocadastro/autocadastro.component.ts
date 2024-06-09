@@ -3,7 +3,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { AutocadastroService } from '../../services/autocadastro/autocadastro.service';
 import { Pessoa } from '../../shared/models/pessoa.model';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-autocadastro',
@@ -20,7 +20,7 @@ export class AutocadastroComponent implements OnInit, OnDestroy{
   pessoaCadastrada: Pessoa | null = null;
   senhaGerada: string = "";
 
-  constructor(private autocadastroService: AutocadastroService) {}
+  constructor(private autocadastroService: AutocadastroService, private router: Router) {}
 
   // Código para ocultar o cabeçalho padrão do sistema nessa página
   ngOnInit(): void {
@@ -53,6 +53,7 @@ export class AutocadastroComponent implements OnInit, OnDestroy{
   exibirAlerta(): void {
     if (this.senhaGerada) {
       alert(`Senha gerada: ${this.senhaGerada}`);
+      this.router.navigateByUrl('/inicio/login');
     }
   }
 
