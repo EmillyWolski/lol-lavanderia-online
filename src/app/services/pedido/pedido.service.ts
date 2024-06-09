@@ -102,18 +102,22 @@ export class PedidoService {
 
   // Método para obter os 3 clientes que mais gastaram
   obterClientesQueMaisGastaram(): { nome: string; totalGasto: number }[] {
-    const clientes: { [nome: string]: number } = {}; // Definindo o tipo explícito
+    const clientes: { [nome: string]: { totalGasto: number; quantidadePedidos: number } } = {}; // Definindo o tipo explícito
 
     // Obtém todos os pedidos
     const pedidos = this.listarTodos();
 
     // Itera sobre cada pedido
     pedidos.forEach((pedido) => {
-      // Se o cliente já existe no objeto clientes, soma o valor do pedido, senão, cria uma nova entrada
+      // Se o cliente já existe no objeto clientes, soma o valor do pedido e incrementa a quantidade de pedidos, senão, cria uma nova entrada
       if (clientes[pedido.nomecliente]) {
-        clientes[pedido.nomecliente] += pedido.valorpedido;
+        clientes[pedido.nomecliente].totalGasto += pedido.valorpedido;
+        clientes[pedido.nomecliente].quantidadePedidos += 1;
       } else {
-        clientes[pedido.nomecliente] = pedido.valorpedido;
+        clientes[pedido.nomecliente] = {
+          totalGasto: pedido.valorpedido,
+          quantidadePedidos: 1
+        };
       }
     });
 
@@ -121,12 +125,13 @@ export class PedidoService {
     const clientesArray = Object.entries(clientes);
 
     // Ordena a matriz com base no valor (total gasto)
-    clientesArray.sort((a, b) => b[1] - a[1]);
+    clientesArray.sort((a, b) => b[1].totalGasto - a[1].totalGasto);
 
     // Retorna os 3 clientes que mais gastaram
     return clientesArray.slice(0, 3).map((cliente) => ({
       nome: cliente[0],
-      totalGasto: cliente[1],
+      totalGasto: cliente[1].totalGasto,
+      quantidadePedidos: cliente[1].quantidadePedidos
     }));
   }
 

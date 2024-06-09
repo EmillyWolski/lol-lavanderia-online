@@ -57,7 +57,7 @@ export class InicialClienteComponent implements OnInit {
       // Notificar o pagamento
       alert(`Pagamento realizado para o pedido ${pedido.idpedido}.`);
     } else {
-      alert(`O pagamento não pode ser realizado para o pedido ${pedido.idpedido} no momento.`);
+      alert(`O pedido ${pedido.idpedido} ainda não foi lavado, aguarde para efetuar o pagamento!`);
     }
   }
   

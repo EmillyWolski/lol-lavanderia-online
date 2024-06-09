@@ -5,6 +5,7 @@ import { LoginService } from '../../../services/login/login.service';
 import { Pessoa } from '../../../shared/models/pessoa.model';
 import { AutocadastroService } from '../../../services/autocadastro/autocadastro.service';
 import { jsPDF } from 'jspdf';
+import { saveAs } from 'file-saver';
 import { PedidoService } from '../../../services/pedido/pedido.service';
 
 @Component({
@@ -39,14 +40,14 @@ export class TelaRelatoriosComponent implements OnInit {
     const margin = 10;
     let yPos = 20;
 
-    // Estilos do subtítulo
+    // Estilos do título
     doc.setFontSize(18);
     doc.setFont('helvetica', 'normal');
     doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, { align: 'center' });
 
     yPos += 15;
 
-    // Estilos do título
+    // Estilos do sub-título
     doc.setFontSize(14);
     doc.setFont('helvetica', 'normal');
     doc.text('Relatório de Clientes', pageWidth / 2, yPos, { align: 'center' });
@@ -54,7 +55,7 @@ export class TelaRelatoriosComponent implements OnInit {
     yPos += 15;
 
     this.pessoas.forEach((pessoa, index) => {
-      doc.setDrawColor(52, 152, 219); // Cor azul para a linha
+      doc.setDrawColor(200, 200, 200); // Cor para a linha
       doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
 
       doc.setFontSize(12);
@@ -89,31 +90,42 @@ export class TelaRelatoriosComponent implements OnInit {
     const margin = 10;
     let yPos = 20;
 
+    // Obtém a data atual
+    const dataAtual = new Date();
+    const dataFormatada = dataAtual.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
+
     // Obtém a receita total
     const receitaTotal = this.pedidoService.obterReceitaTotal();
 
-    // Estilos do subtítulo
+    // Estilos do título
     doc.setFontSize(18);
     doc.setFont('helvetica', 'normal');
     doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, { align: 'center' });
 
     yPos += 15;
 
-    // Estilos do título
+    // Estilos do sub-título
     doc.setFontSize(14);
     doc.setFont('helvetica', 'normal');
     doc.text('Relatório de Receitas', pageWidth / 2, yPos, { align: 'center' });
 
     yPos += 15;
 
-    doc.setDrawColor(52, 152, 219); // Cor azul para a linha
+    doc.setDrawColor(200, 200, 200); // Cor para a linha
     doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
+
+    // Adiciona a data da extração do relatório
+    doc.setFontSize(12);
+    doc.text(`Data de Extração: ${dataFormatada}`, margin, yPos);
+
+    yPos += 10;
 
     // Escreve a receita total
     doc.setFontSize(12);
     doc.text(`Receita Total: R$ ${receitaTotal.toFixed(2)}`, margin, yPos);
 
     doc.save('Relatorio_Receitas.pdf');
+
   }
 
 
@@ -129,7 +141,7 @@ export class TelaRelatoriosComponent implements OnInit {
 
     // Verifica se há pedidos
     if (!pedidos || pedidos.length === 0) {
-      // Caso não haja pedidos, exibe uma mensagem e retorna
+      // Caso não haja pedidos, exibe uma mensagem 
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
       doc.text('Nenhum pedido encontrado.', pageWidth / 2, yPos, { align: 'center' });
@@ -137,18 +149,25 @@ export class TelaRelatoriosComponent implements OnInit {
       return;
     }
 
-    // Mapeia os clientes e a quantidade de pedidos de cada um
-    const clientesPedidos = new Map<string, number>();
+    // Mapeia os clientes e as informações de pedidos e receitas de cada um
+    const clientesDados = new Map<string, { quantidadePedidos: number, receitaTotal: number }>();
     pedidos.forEach((pedido) => {
       const nomeCliente = pedido.nomecliente;
-      clientesPedidos.set(nomeCliente, (clientesPedidos.get(nomeCliente) || 0) + 1);
+
+      if (clientesDados.has(nomeCliente)) {
+        const dados = clientesDados.get(nomeCliente)!;
+        dados.quantidadePedidos += 1;
+        dados.receitaTotal += pedido.valorpedido;
+      } else {
+        clientesDados.set(nomeCliente, { quantidadePedidos: 1, receitaTotal: pedido.valorpedido });
+      }
     });
 
     // Ordena os clientes pelo número de pedidos
-    const clientesOrdenados = Array.from(clientesPedidos.entries()).sort((a, b) => b[1] - a[1]);
+    const clientesOrdenados = Array.from(clientesDados.entries()).sort((a, b) => b[1].quantidadePedidos - a[1].quantidadePedidos);
 
     // Seleciona os três clientes mais fiéis
-    const topClientesFieis = clientesOrdenados.slice(0, 3).map(([nomeCliente, _]) => nomeCliente);
+    const topClientesFieis = clientesOrdenados.slice(0, 3);
 
     // Verifica se há clientes fiéis
     if (topClientesFieis.length === 0) {
@@ -174,11 +193,21 @@ export class TelaRelatoriosComponent implements OnInit {
 
     yPos += 15;
 
-    // Escreve a lista dos três clientes mais fiéis
+    // Escreve a lista dos três clientes mais fiéis com quantidade de pedidos e receita total
     topClientesFieis.forEach((cliente, index) => {
+      doc.setDrawColor(200, 200, 200); // Cor para a linha
+      doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
+
+      const [nomeCliente, dados] = cliente;
       doc.setFontSize(12);
-      doc.text(`${index + 1}. ${cliente}`, margin, yPos);
+      doc.text(`${index + 1}. ${nomeCliente}`, margin, yPos);
       yPos += 10;
+
+      doc.text(`Quantidade de Pedidos: ${dados.quantidadePedidos}`, margin, yPos);
+      yPos += 10;
+
+      doc.text(`Receita Total: R$ ${dados.receitaTotal.toFixed(2)}`, margin, yPos);
+      yPos += 20; // Espaçamento adicional entre clientes
     });
 
     doc.save('Relatorio_Clientes_Fieis.pdf');
