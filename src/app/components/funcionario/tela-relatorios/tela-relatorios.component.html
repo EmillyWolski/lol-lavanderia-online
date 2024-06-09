@@ -17,47 +17,23 @@
   <div class="container">
     <div class="section">
       <div class="button-container">
+        <button class="btn btn-primary" (click)="gerarRelatorioClientes()">
+          <i class="fas fa-download"></i> Clientes
+        </button>
+        <p>Dados de todos os clientes.</p>
+      </div>
+      <div class="button-container">
         <button class="btn btn-primary">
           <i class="fas fa-download"></i> Receitas
         </button>
-        <button class="btn btn-primary">
-          <i class="fas fa-download"></i> Clientes
-        </button>
+        <p>Dados da receita conseguida pela empresa em determinado período.</p>
+      </div>
+      <div class="button-container">
         <button class="btn btn-primary">
           <i class="fas fa-download"></i> Clientes Fiéis
         </button>
+        <p>Dados dos três clientes que mais usam o serviço da lavanderia.</p>
       </div>
-    </div>
-
-    <div *ngIf="pessoaLogada">
-      <h2>Informações da Pessoa Logada</h2>
-      <ul>
-        <li><strong>ID:</strong> {{ pessoaLogada.id }}</li>
-        <li><strong>Nome:</strong> {{ pessoaLogada.nome }}</li>
-        <li><strong>CPF:</strong> {{ pessoaLogada.cpf }}</li>
-        <li><strong>Email:</strong> {{ pessoaLogada.email }}</li>
-        <li><strong>Endereço:</strong> {{ pessoaLogada.endereco }}</li>
-        <li><strong>Telefone:</strong> {{ pessoaLogada.telefone }}</li>
-      </ul>
-    </div>
-    
-    <hr>
-    <h2>Informações de Clientes Cadastrados</h2>
-    <div *ngIf="pessoas.length > 0" class="info-clientes">
-      <ul>
-        <li *ngFor="let pessoa of pessoas">
-          <strong>ID:</strong> {{ pessoa.id }}<br>
-          <strong>Nome:</strong> {{ pessoa.nome }}<br>
-          <strong>CPF:</strong> {{ pessoa.cpf }}<br>
-          <strong>Email:</strong> {{ pessoa.email }}<br>
-          <strong>Endereço:</strong> {{ pessoa.endereco }}<br>
-          <strong>Telefone:</strong> {{ pessoa.telefone }}<br>
-        </li>
-      </ul>
-    </div>
-    <hr>
-    <div *ngIf="pessoas.length === 0">
-      <p>Nenhum cliente cadastrado.</p>
     </div>
   </div>
 </div>

@@ -53,39 +53,10 @@ nav {
     color: #2c3e50;
 }
 
-.titulo-coluna {
-    padding: 10px;
-    text-align: left;
-    font-size: 13px;
-    color: #2c3e50;
-}
-
-.cabecalho-tabela th {
-    width: 20%;
-    /* Define a largura desejada para cada coluna */
-}
-
-.info-roupa {
-    padding: 10px;
-    font-size: 12px;
-    text-align: left;
-}
-
-p {
-    font-size: 12px;
-    margin-left: 11px;
-}
-
-/* Estilo da listagem de clientes */
-.info-clientes {
-    font-size: 12px;
-}
 
 /* Estilo para os botões de ação */
 .button-container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    margin-bottom: 25px; /* Espaçamento entre botões */
 }
 
 .btn {
@@ -96,8 +67,17 @@ p {
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: block;
+    width: 15%;
 }
 
 .btn:hover {
     background-color: #2980b9;
+}
+
+
+/* Estilo para os parágrafos */
+p{
+    margin-top: 5px;
+    font-size: 12px;
 }
