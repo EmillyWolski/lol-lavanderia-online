@@ -1,3 +1,5 @@
+<!-- consultar-pedido.component.html -->
+
 <head>
   <link rel="stylesheet" href="consultar-pedido.component.css">
 </head>
@@ -18,15 +20,15 @@
   <!-- Input para o código -->
   <div class="box-busca">
     <div class="input-wrapper">
-      <form method="post" action="#">
-        <input type="text" class="search-box-input" name="busca" placeholder="Digite o código">
+      <form (ngSubmit)="onSubmit()" #buscaForm="ngForm">
+        <input type="text" class="search-box-input" name="busca" [(ngModel)]="codigoPedido" placeholder="Digite o código" required>
+        <button type="submit" class="search-box-button"><i class="search-box-icone icon icon-search"></i>Buscar</button>
       </form>
     </div>
-    <button class="search-box-button"><i class="search-box-icone icon icon-search"></i>Buscar</button>
   </div>
 
   <!-- Tabela dos pedidos -->
-  <table class="itens-pedido">
+  <table class="itens-pedido" *ngIf="pedido">
     <thead class="cabecalho-tabela">
       <tr>
         <th>Item</th>
@@ -36,27 +38,16 @@
     </thead>
 
     <tbody>
-      <!-- EXEMPLOS DO RESUMO DO PEDIDO -->
-      <tr class="linha-tabela">
-        <td>Camiseta</td>
-        <td class="quantidade-itens">2</td>
-        <td class="preco-itens">R$ 20,00</td>
-      </tr>
-      <tr class="linha-tabela">
-        <td>Calça</td>
-        <td class="quantidade-itens">3</td>
-        <td class="preco-itens">R$ 25,00</td>
-      </tr>
-      <tr class="linha-tabela">
-        <td>Moletom</td>
-        <td class="quantidade-itens">3</td>
-        <td class="preco-itens">R$ 40,00</td>
+      <tr *ngFor="let item of pedido.arrayPedidosRoupas" class="linha-tabela">
+        <td>{{ item.id}}</td>
+        <td class="quantidade-itens">{{ item.quantidade }}</td>
+        <td class="preco-itens">{{ pedido.valorpedido | currency:'BRL' }}</td>
       </tr>
     </tbody>
   </table>
 
   <!-- TOTAIS E PRAZO -->
-  <table class="itens-pedido resumo">
+  <table class="itens-pedido resumo" *ngIf="pedido">
     <thead class="cabecalho-tabela">
       <tr>
         <th>Prazo previsto</th>
@@ -67,9 +58,9 @@
 
     <tbody>
       <tr class="linha-tabela resumo">
-        <td>02/04/2024</td>
-        <td class="situacao-pedido">Em aberto</td>
-        <td class="preco-itens">R$ 85,00</td>
+        <td>{{ pedido.prazo }}</td>
+        <td class="situacao-pedido">{{ pedido.statuspedido }}</td>
+        <td class="preco-itens">{{ pedido.valorpedido | currency:'BRL' }}</td>
       </tr>
     </tbody>
   </table>

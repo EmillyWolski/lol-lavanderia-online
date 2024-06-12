@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { ConsultarPedidoService } from '../../services/consultar-pedido';
+import { PedidoService } from '../../services/pedido/pedido.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Pedido } from '../../shared/models/pedido.model';
+
 
 @Component({
   selector: 'app-consultar-pedido',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule],
+  imports: [CommonModule, RouterLink, RouterModule, FormsModule],
   templateUrl: './consultar-pedido.component.html',
   styleUrl: './consultar-pedido.component.css'
 })
@@ -15,17 +18,22 @@ export class ConsultarPedidoComponent {
 
   codigoPedido!: number; // Alterado para número para corresponder ao tipo de ID
   pedidoEncontrado: any;
+  pedido: Pedido | undefined;
 
-  constructor(private consultarPedidoService: ConsultarPedidoService) { }
+  constructor(private PedidoService: PedidoService) { }
 
   // Método para buscar o pedido quando o usuário submeter o formulário
-  onSubmit() {
-    // Chamar o serviço para buscar o pedido com o ID fornecido
-    this.pedidoEncontrado = this.consultarPedidoService.buscarPedidoPorId(this.codigoPedido);
-    if (!this.pedidoEncontrado) {
-      console.log('Pedido não encontrado');
-      // Lógica para lidar com pedido não encontrado, se necessário
+  ngOnInit(): void { }
+
+  onSubmit(): void {
+    const pedidoId = Number(this.codigoPedido);
+    if (!isNaN(pedidoId)) {
+      this.pedido = this.PedidoService.buscaPorId(pedidoId);
+      if (!this.pedido) {
+        alert('Pedido não encontrado. Por favor, verifique o código e tente novamente.');
+      }
+    } else {
+      alert('Por favor, insira um código de pedido válido.');
     }
   }
 }
-
