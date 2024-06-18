@@ -28,40 +28,46 @@
   </div>
 
   <!-- Tabela dos pedidos -->
-  <table class="itens-pedido" *ngIf="pedido">
+  <table class="itens-pedido" *ngIf="pedido && itensPedido.length > 0">
     <thead class="cabecalho-tabela">
       <tr>
-        <th>Item</th>
+        <th>Item do pedido</th>
         <th>Quantidade</th>
-        <th>Preço</th>
+        <th>Preço Unitário</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let item of pedido.arrayPedidosRoupas" class="linha-tabela">
-        <td>{{ item.id}}</td>
-        <td class="quantidade-itens">{{ item.quantidade }}</td>
-        <td class="preco-itens">{{ pedido.valorpedido | currency:'BRL' }}</td>
+      <tr *ngFor="let item of itensPedido" class="linha-tabela">
+        <td>{{ item.nome }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td>{{ item.preco | currency:'BRL' }}</td>
       </tr>
     </tbody>
   </table>
 
-  <!-- TOTAIS E PRAZO -->
+  <!-- Resumo do pedido -->
   <table class="itens-pedido resumo" *ngIf="pedido">
     <thead class="cabecalho-tabela">
       <tr>
-        <th>Prazo previsto</th>
-        <th>Situação do pedido</th>
+        <th>Prazo Previsto</th>
+        <th>Situação</th>
         <th>Total do Pedido</th>
       </tr>
     </thead>
 
     <tbody>
       <tr class="linha-tabela resumo">
-        <td>{{ pedido.prazo }}</td>
+        <td>{{ prazoMaximo }}</td>
         <td class="situacao-pedido">{{ pedido.statuspedido }}</td>
         <td class="preco-itens">{{ pedido.valorpedido | currency:'BRL' }}</td>
       </tr>
     </tbody>
   </table>
+
+  <!-- Mensagem de pedido não encontrado -->
+  <div class="mensagem" *ngIf="!pedido && buscaForm.submitted">
+    <p>Pedido não encontrado. Verifique o código e tente novamente.</p>
+  </div>
 </div>
+
