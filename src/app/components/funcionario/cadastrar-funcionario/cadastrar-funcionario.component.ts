@@ -16,8 +16,8 @@ import { PessoaFuncionarioService } from '../../../services/pessoa-funcionario/p
 })
 export class CadastrarFuncionarioComponent {
 
-  @ViewChild('formFuncionario') formFuncionario! : NgForm;
-  funcionario : PessoaFuncionario = new PessoaFuncionario();
+  @ViewChild('formFuncionario') formFuncionario!: NgForm;
+  funcionario: PessoaFuncionario = new PessoaFuncionario();
   confirmarSenha: string = '';
   funcionarioCadastrado: PessoaFuncionario | null = null; // Variável para armazenar o funcionário cadastrado
 
@@ -29,8 +29,13 @@ export class CadastrarFuncionarioComponent {
     console.log('Método cadastrarFuncionario() chamado.');
     this.confirmarSenha = this.funcionario.confirmarSenha;
     if (this.formFuncionario.form.valid && this.funcionario.senha === this.confirmarSenha) {
-      this.pessoaFuncionarioService.cadastrarFuncionario(this.funcionario);
-      this.router.navigate(["/listar-funcionario"]);
+      const cadastroSucesso: boolean = this.pessoaFuncionarioService.cadastrarFuncionario(this.funcionario);
+      if (cadastroSucesso) {
+        this.router.navigate(["/listar-funcionario"]);
+      } else {
+        // Permanecer na página para que o usuário possa corrigir o email
+        console.log('Cadastro falhou devido a e-mail duplicado.');
+      }
     }
   }
 }
