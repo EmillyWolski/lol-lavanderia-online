@@ -35,10 +35,26 @@
           <input type="text" class="form-control" id="email" name="email" [(ngModel)]="pessoa.email" #email="ngModel"
             required>
         </div>
+        <div class="form-group">
+          <label for="cep">CEP:</label>
+          <input type="text" class="form-control" id="cep" name="cep" [(ngModel)]="pessoa.cep" #cepInput="ngModel" (blur)="buscarEndereco(cepInput.value)" required>
+        </div>
 
         <div class="form-group">
-          <label for="endereco">Endereço:</label>
-          <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="pessoa.endereco"
+          <label for="endereco">Rua:</label>
+          <input type="text" class="form-control" id="rua" name="rua" [(ngModel)]="pessoa.rua"
+            #endereco="ngModel" required>
+        </div>
+
+        <div class="form-group">
+          <label for="endereco">Cidade:</label>
+          <input type="text" class="form-control" id="cidade" name="cidade" [(ngModel)]="pessoa.cidade"
+            #endereco="ngModel" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="endereco">Estado:</label>
+          <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="pessoa.estado"
             #endereco="ngModel" required>
         </div>
 
