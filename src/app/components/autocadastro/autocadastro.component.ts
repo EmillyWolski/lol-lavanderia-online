@@ -66,14 +66,17 @@ export class AutocadastroComponent implements OnInit, OnDestroy{
 
   inserir(): void {
     if (this.autocadastroForm.form.valid) {
-      // Gera a senha antes de inserir a pessoa
       this.gerarSenhaAleatoria();
-      this.pessoa.senha = this.senhaGerada; // Define a senha na pessoa
+      this.pessoa.senha = this.senhaGerada;
 
-      this.autocadastroService.inserir(this.pessoa);
-      this.pessoaCadastrada = { ...this.pessoa }; // Armazena os detalhes da pessoa cadastrada
-      this.pessoa = new Pessoa(); // Limpa o formulário
-      this.exibirAlerta();
+      const sucesso = this.autocadastroService.inserir(this.pessoa);
+      if (sucesso) {
+        this.pessoaCadastrada = { ...this.pessoa };
+        this.pessoa = new Pessoa();
+        this.exibirAlerta();
+      } else {
+        console.log('Falha ao cadastrar: CPF ou e-mail já cadastrado.');
+      }
     }
   }
 

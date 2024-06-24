@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginService.login(this.email, this.senha).subscribe(
       (cliente: Pessoa | null) => {
         if (cliente) {
-          alert('Login efetuado com sucesso!');
+          alert('Login de cliente efetuado com sucesso!');
           // Redirecionar para a tela inicial de cliente
           this.router.navigate(['/inicio-cliente']);
         } else {
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.loginFuncionarioService.login(this.email, this.senha).subscribe(
             (funcionario: PessoaFuncionario | null) => {
               if (funcionario) {
-                alert('Login efetuado com sucesso!');
+                alert('Login de funcionario efetuado com sucesso!');
                 // Redirecionar para a tela inicial de funcionário
                 this.router.navigate(['/inicio-funcionario']);
               } else {

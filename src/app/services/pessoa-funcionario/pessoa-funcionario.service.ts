@@ -17,11 +17,19 @@ export class PessoaFuncionarioService {
     return funcionarios ? JSON.parse(funcionarios) : [];
   }
 
-  cadastrarFuncionario(funcionario: PessoaFuncionario): void {
+  cadastrarFuncionario(funcionario: PessoaFuncionario): boolean {
 
     console.log('Iniciando o cadastro do funcionário:', funcionario);
     // Obtém a lista completa de pessoas
     const funcionarios = this.listarFuncionarios();
+
+    // Verifica se já existe um funcionário com o mesmo email
+    const emailExistente = funcionarios.some(func => func.email === funcionario.email);
+    if (emailExistente) {
+      alert('Este e-mail já está sendo utilizado por outro funcionário.');
+      return false; // Cadastro falhou devido a email duplicado
+    }
+
     // Seta um ID único
     // Usamos o Timestamp, quantidade de segundos desde 1970
     funcionario.id = new Date().getTime();
@@ -30,6 +38,7 @@ export class PessoaFuncionarioService {
     // Armazena no LocalStorage
     localStorage[LS_CHAVE_FUNC] = JSON.stringify(funcionarios);
     alert("Cadastro de funcionário(a) concluído com sucesso!")
+    return true; // Cadastro realizado com sucesso
   }
 
   buscarPorId(id: number): PessoaFuncionario | undefined {

@@ -17,20 +17,30 @@ export class AutocadastroService {
     return pessoas ? JSON.parse(pessoas) : [];
   }
 
-  inserir(pessoa: Pessoa): void {
+  inserir(pessoa: Pessoa): boolean {
     console.log('Método inserir() foi chamado.');
-    
-    // Obtém a lista completa de pessoas
     const pessoas = this.listarTodos();
-    // Seta um ID único
-    // Usamos o Timestamp, quantidade de segundos desde 1970
+
+    // Verifica se já existe uma pessoa com o mesmo CPF ou e-mail
+    const cpfExistente = pessoas.some(p => p.cpf === pessoa.cpf);
+    const emailExistente = pessoas.some(p => p.email === pessoa.email);
+
+    if (cpfExistente) {
+      alert('Este CPF já está cadastrado.');
+      return false;
+    }
+
+    if (emailExistente) {
+      alert('Este e-mail já está cadastrado.');
+      return false;
+    }
+
     pessoa.id = new Date().getTime();
-    // Adiciona no final da lista
     pessoas.push(pessoa);
-    // Armazena no LocalStorage
     localStorage[LS_CHAVE] = JSON.stringify(pessoas);
 
-    alert("Autocadastro concluído com sucesso!")
+    alert("Autocadastro concluído com sucesso!");
+    return true;
   }
   
 }

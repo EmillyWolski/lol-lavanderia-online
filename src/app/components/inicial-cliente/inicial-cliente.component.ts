@@ -105,6 +105,3 @@ export class InicialClienteComponent implements OnInit {
   }
 
 }
-
-
-
