@@ -17,6 +17,7 @@ import { TelaRelatoriosComponent } from './components/funcionario/tela-relatorio
 import { FormsModule } from '@angular/forms';
 import { CadastrarPecaRoupaComponent } from './components/funcionario/cadastrar-peca-roupa/cadastrar-peca-roupa.component';
 import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-roupa/editar-peca-roupa.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +44,7 @@ import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-r
     CadastrarPecaRoupaComponent,
     EditarPecaRoupaComponent,
     ModalOrcamentoComponent,
+    HttpClientModule
   ],
 })
 export class AppComponent {

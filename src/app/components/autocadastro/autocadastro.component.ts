@@ -4,6 +4,7 @@ import { AutocadastroService } from '../../services/autocadastro/autocadastro.se
 import { Pessoa } from '../../shared/models/pessoa.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-autocadastro',
@@ -20,7 +21,7 @@ export class AutocadastroComponent implements OnInit, OnDestroy{
   pessoaCadastrada: Pessoa | null = null;
   senhaGerada: string = "";
 
-  constructor(private autocadastroService: AutocadastroService, private router: Router) {}
+  constructor(private autocadastroService: AutocadastroService, private router: Router, private http: HttpClient) {}
 
   // Código para ocultar o cabeçalho padrão do sistema nessa página
   ngOnInit(): void {
@@ -30,6 +31,32 @@ export class AutocadastroComponent implements OnInit, OnDestroy{
   // Código para ocultar o cabeçalho padrão do sistema nessa página
   ngOnDestroy(): void {
     document.body.classList.remove('hide-header');
+  }
+
+  buscarEndereco(cep: string) {
+    if (cep) {
+      cep = cep.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+      if (cep.length === 8) { // Verifica se o CEP tem 8 dígitos
+        this.http.get(`https://viacep.com.br/ws/${cep}/json/`).subscribe({
+          next: (data: any) => {
+            if (!data.erro) {
+              this.pessoa.rua = data.logradouro;
+              this.pessoa.cidade = data.localidade;
+              this.pessoa.estado = data.uf;
+            } else {
+              // CEP não encontrado
+              console.log('CEP não encontrado');
+            }
+          },
+          error: (error: any) => {
+            console.error('Erro ao buscar o CEP:', error);
+          }
+        });
+      } else {
+        console.log('CEP inválido');
+      }
+    }
   }
 
   gerarSenhaAleatoria(): void {

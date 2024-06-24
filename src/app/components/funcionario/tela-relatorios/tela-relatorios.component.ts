@@ -67,7 +67,13 @@ export class TelaRelatoriosComponent implements OnInit {
       yPos += 10;
       doc.text(`Email: ${pessoa.email}`, margin, yPos);
       yPos += 10;
-      doc.text(`Endereço: ${pessoa.endereco}`, margin, yPos);
+      doc.text(`CEP: ${pessoa.cep}`, margin, yPos);
+      yPos += 10;
+      doc.text(`Rua: ${pessoa.rua}`, margin, yPos);
+      yPos += 10;
+      doc.text(`Cidade: ${pessoa.cidade}`, margin, yPos);
+      yPos += 10;
+      doc.text(`Estado: ${pessoa.estado}`, margin, yPos);
       yPos += 10;
       doc.text(`Telefone: ${pessoa.telefone}`, margin, yPos);
       yPos += 20; // Espaçamento adicional entre clientes
