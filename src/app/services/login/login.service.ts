@@ -15,21 +15,32 @@ export class LoginService {
   constructor(private autocadastroService: AutocadastroService) {}
 
   login(email: string, senha: string): Observable<Pessoa | null> {
-    // Obtenha a lista de todas as pessoas cadastradas
+    // Obtém a lista de todas as pessoas cadastradas
     const pessoas = this.autocadastroService.listarTodos();
   
-    // Verifique se há uma pessoa com o email e senha fornecidos
+    // Verifica se há uma pessoa com o email e senha fornecidos
     const pessoa = pessoas.find(p => p.email && p.email.toLowerCase() === email.toLowerCase() && p.senha === senha);
     
-    this.pessoaLogada = pessoa || null; // Armazena a pessoa logada
+    // Armazena a pessoa logada
+    this.pessoaLogada = pessoa || null;
+    if (this.pessoaLogada) {
+      localStorage.setItem('pessoaLogadaId', this.pessoaLogada.id.toString());
+    }
     return of(this.pessoaLogada);
-
-    // Retorna a pessoa se encontrada, caso contrário, null
-    // return of(pessoa || null);
     
   }  
 
   getPessoaLogada(): Pessoa | null {
+    const pessoaLogadaId = localStorage.getItem('pessoaLogadaId');
+    if (pessoaLogadaId) {
+      const pessoas = this.autocadastroService.listarTodos();
+      this.pessoaLogada = pessoas.find(p => p.id.toString() === pessoaLogadaId) || null;
+    }
     return this.pessoaLogada;
+  }
+
+  logout(): void {
+    this.pessoaLogada = null;
+    localStorage.removeItem('pessoaLogadaId');
   }
 }

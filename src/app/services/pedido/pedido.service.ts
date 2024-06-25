@@ -8,14 +8,17 @@ const LS_CHAVE_PEDIDO = 'pedido';
 @Injectable({
   providedIn: 'root',
 })
+
 export class PedidoService {
+
   [x: string]: any;
+
   constructor(private loginService: LoginService) { }
 
-  listarTodos(): Pedido[] {
-    const pedido = localStorage[LS_CHAVE_PEDIDO];
-    //precisa do condicional, pois retorna undefined se a chave não existe
-    return pedido ? JSON.parse(pedido) : [];
+ listarTodos(): Pedido[] {
+    const pedidos = localStorage[LS_CHAVE_PEDIDO];
+    const pessoaLogada = this.loginService.getPessoaLogada();
+    return pedidos ? JSON.parse(pedidos).filter((pedido: Pedido) => pedido.clienteId === pessoaLogada?.id) : [];
   }
 
   inserir(
@@ -33,18 +36,16 @@ export class PedidoService {
     pedido.arrayPedidosRoupas = arrayPedidosRoupas;
 
     const pessoaLogada = this.loginService.getPessoaLogada();
-    pedido.nomecliente = pessoaLogada ? pessoaLogada.nome : 'Não identificado';
-
-    //atribui o valor total do pedido recebido via parametro
+    if (pessoaLogada) {
+      pedido.clienteId = pessoaLogada.id;
+      pedido.nomecliente = pessoaLogada.nome;
+    } else {
+      pedido.nomecliente = 'Não identificado';
+    }
+    
     pedido.valorpedido = valorpedido;
-
-    //Atribui o status inicial do pedido
     pedido.statuspedido = 'EM ABERTO';
-
-    //Adiciona no final da lista
     pedidos.push(pedido);
-
-    //armazena no LocalStrorage
     localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
   }
 
