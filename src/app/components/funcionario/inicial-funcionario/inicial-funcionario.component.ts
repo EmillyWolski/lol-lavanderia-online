@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { PedidoService } from '../../../services/pedido/pedido.service';
 import { Pedido } from '../../../shared/models/pedido.model';
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './inicial-funcionario.component.css'
 })
 
-export class InicialFuncionarioComponent {
+export class InicialFuncionarioComponent implements OnInit {
 
   pedidos: Pedido[] = [];
   pedidosFiltrados: Pedido[] = []; // Armazena os pedidos filtrados com base no status selecionado.
@@ -27,22 +27,7 @@ export class InicialFuncionarioComponent {
   }
 
   listarTodos(): Pedido[] {
-    return this.pedidoService.listarTodos();
-  }
-
-  remover($event: any, pedido: Pedido): void {
-    $event.preventDefault();
-    if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}`)) {
-      pedido.statuspedido = 'CANCELADO';
-      pedido.cancelamentoRealizado = true; // Define a propriedade como true após o cancelamento
-      pedido.pagamentoRealizado = true; // Define a propriedade como true após o cancelamento
-
-      this.pedidoService.atualizar(pedido);
-      this.atualizarPedidos();
-
-      // this.pedidoService.remover(pedido.idpedido!);
-      alert(`O pedido ${pedido.idpedido} foi cancelado.`);
-    }
+    return this.pedidoService.listarPedidosDoSistema();
   }
 
   recolherPedido($event: any, pedido: Pedido): void {

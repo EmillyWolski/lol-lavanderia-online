@@ -15,7 +15,7 @@ nav {
 
 .nav-item {
     padding: 15px 20px;
-    font-size: 13px;
+    font-size: 16px;
     text-decoration: none;
     color: #2c3e50;
     display: block;
@@ -41,7 +41,7 @@ nav {
 }
 
 .cabecalho .titulo-pagina {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -60,7 +60,7 @@ nav {
 }
 
 .btn {
-    font-size: 12px;
+    font-size: 14px;
     border: 0;
     background-color: #3498db;
     color: white;
@@ -79,5 +79,5 @@ nav {
 /* Estilo para os parágrafos */
 p{
     margin-top: 5px;
-    font-size: 12px;
+    font-size: 14px;
 }

@@ -21,6 +21,12 @@ export class PedidoService {
     return pedidos ? JSON.parse(pedidos).filter((pedido: Pedido) => pedido.clienteId === pessoaLogada?.id) : [];
   }
 
+  // Para visualização de funcionário
+  listarPedidosDoSistema(): Pedido[] {
+    const todosOsPedidos = localStorage[LS_CHAVE_PEDIDO];
+    return todosOsPedidos ? JSON.parse(todosOsPedidos) : [];
+  }
+
   inserir(
     pedido: Pedido,
     arrayPedidosRoupas: PecaRoupaQuantidade[],
@@ -42,7 +48,7 @@ export class PedidoService {
     } else {
       pedido.nomecliente = 'Não identificado';
     }
-    
+
     pedido.valorpedido = valorpedido;
     pedido.statuspedido = 'EM ABERTO';
     pedidos.push(pedido);
@@ -90,12 +96,12 @@ export class PedidoService {
     let receitaTotal = 0;
 
     // Obtém todos os pedidos
-    const pedidos = this.listarTodos();
+    const todosOsPedidos = this.listarPedidosDoSistema();
 
     // Itera sobre cada pedido
-    pedidos.forEach((pedido) => {
+    todosOsPedidos.forEach((todosOsPedidos) => {
       // Soma o valor do pedido à receita total
-      receitaTotal += pedido.valorpedido;
+      receitaTotal += todosOsPedidos.valorpedido;
     });
 
     return receitaTotal;
@@ -106,10 +112,10 @@ export class PedidoService {
     const clientes: { [nome: string]: { totalGasto: number; quantidadePedidos: number } } = {}; // Definindo o tipo explícito
 
     // Obtém todos os pedidos
-    const pedidos = this.listarTodos();
+    const todosOsPedidos = this.listarPedidosDoSistema();
 
     // Itera sobre cada pedido
-    pedidos.forEach((pedido) => {
+    todosOsPedidos.forEach((pedido) => {
       // Se o cliente já existe no objeto clientes, soma o valor do pedido e incrementa a quantidade de pedidos, senão, cria uma nova entrada
       if (clientes[pedido.nomecliente]) {
         clientes[pedido.nomecliente].totalGasto += pedido.valorpedido;
