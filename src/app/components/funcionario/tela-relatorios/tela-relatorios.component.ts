@@ -143,7 +143,7 @@ export class TelaRelatoriosComponent implements OnInit {
     let yPos = 20;
 
     // Obtém todos os pedidos
-    const pedidos = this.pedidoService.listarTodos();
+    const pedidos = this.pedidoService.listarTodosPedidos();
 
     // Verifica se há pedidos
     if (!pedidos || pedidos.length === 0) {

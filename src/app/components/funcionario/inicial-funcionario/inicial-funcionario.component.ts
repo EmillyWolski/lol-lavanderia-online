@@ -22,12 +22,12 @@ export class InicialFuncionarioComponent implements OnInit {
   constructor(private pedidoService: PedidoService) { }
 
   ngOnInit(): void {
-    this.pedidos = this.listarTodos();
+    this.pedidos = this.listarTodosPedidos();
     this.filtrarPedidos();
   }
 
-  listarTodos(): Pedido[] {
-    return this.pedidoService.listarTodos();
+  listarTodosPedidos(): Pedido[] {
+    return this.pedidoService.listarTodosPedidos();
   }
 
   recolherPedido($event: any, pedido: Pedido): void {
@@ -46,7 +46,7 @@ export class InicialFuncionarioComponent implements OnInit {
       alert(`O pedido ${pedido.idpedido} foi recolhido.`);
       console.log(`O pedido ${pedido.idpedido} foi recolhido.`);
 
-      this.pedidos = this.listarTodos();
+      this.pedidos = this.listarTodosPedidos();
       this.filtrarPedidos();
 
       // Atualizar a lista de pedidos
@@ -90,7 +90,7 @@ export class InicialFuncionarioComponent implements OnInit {
       console.log(`O pedido ${pedido.idpedido} foi finalizado.`);
 
       // Atualizar a lista de pedidos
-      this.pedidos = this.listarTodos();
+      this.pedidos = this.listarTodosPedidos();
       this.filtrarPedidos();
     }
   }
@@ -134,7 +134,7 @@ export class InicialFuncionarioComponent implements OnInit {
 
   // Método para atualizar a lista de pedidos após uma ação ser realizada.
   private atualizarPedidos(): void {
-    this.pedidos = this.listarTodos();
+    this.pedidos = this.listarTodosPedidos();
     this.filtrarPedidos();
   }
 

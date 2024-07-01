@@ -12,14 +12,14 @@ const LS_CHAVE_PEDIDO = 'pedido';
 
 export class PedidoService {
 
-  [x: string]: any;
+  // [x: string]: any;
 
   constructor(private loginService: LoginService) { }
 
- listarTodos(): Pedido[] {
+  listarTodos(): Pedido[] {
     const pedidos = localStorage.getItem(LS_CHAVE_PEDIDO);
     const pessoaLogada = this.loginService.getPessoaLogada();
-    
+
     if (pessoaLogada instanceof PessoaFuncionario) {
       // Se a pessoa logada é um funcionário, retornar todos os pedidos
       return pedidos ? JSON.parse(pedidos) : [];
@@ -27,6 +27,11 @@ export class PedidoService {
 
     // Caso contrário, retornar apenas os pedidos do cliente logado
     return pedidos ? JSON.parse(pedidos).filter((pedido: Pedido) => pedido.clienteId === pessoaLogada?.id) : [];
+  }
+
+  listarTodosPedidos(): Pedido[] {
+    const pedidos = localStorage.getItem(LS_CHAVE_PEDIDO);
+    return pedidos ? JSON.parse(pedidos) : [];
   }
 
   // Garantir salvamento no localstorage
@@ -111,7 +116,7 @@ export class PedidoService {
     let receitaTotal = 0;
 
     // Obtém todos os pedidos
-    const todosOsPedidos = this.listarTodos();
+    const todosOsPedidos = this.listarTodosPedidos();
 
     // Itera sobre cada pedido
     todosOsPedidos.forEach((todosOsPedidos) => {
@@ -123,38 +128,41 @@ export class PedidoService {
   }
 
   // Método para obter os 3 clientes que mais gastaram
-  obterClientesQueMaisGastaram(): { nome: string; totalGasto: number }[] {
-    const clientes: { [nome: string]: { totalGasto: number; quantidadePedidos: number } } = {}; // Definindo o tipo explícito
+  obterClientesQueMaisGastaram(): { nome: string; totalGasto: number; quantidadePedidos: number; receitaTotal: number }[] {
+    // Objeto para armazenar os dados de cada cliente
+    const clientes: { [nome: string]: { totalGasto: number; quantidadePedidos: number } } = {};
 
-    // Obtém todos os pedidos
-    const todosOsPedidos = this.listarTodos();
+    // Obtém todos os pedidos do localStorage
+    const pedidos = this.listarTodosPedidos();
 
-    // Itera sobre cada pedido
-    todosOsPedidos.forEach((pedido) => {
-      // Se o cliente já existe no objeto clientes, soma o valor do pedido e incrementa a quantidade de pedidos, senão, cria uma nova entrada
-      if (clientes[pedido.nomecliente]) {
-        clientes[pedido.nomecliente].totalGasto += pedido.valorpedido;
-        clientes[pedido.nomecliente].quantidadePedidos += 1;
+    // Itera sobre cada pedido para calcular o total gasto, quantidade de pedidos e receita total de cada cliente
+    pedidos.forEach((pedido) => {
+      const nomeCliente = pedido.nomecliente;
+
+      if (clientes[nomeCliente]) {
+        clientes[nomeCliente].totalGasto += pedido.valorpedido;
+        clientes[nomeCliente].quantidadePedidos++;
       } else {
-        clientes[pedido.nomecliente] = {
+        clientes[nomeCliente] = {
           totalGasto: pedido.valorpedido,
-          quantidadePedidos: 1
+          quantidadePedidos: 1,
         };
       }
     });
 
-    // Converte o objeto para uma matriz de pares [chave, valor]
-    const clientesArray = Object.entries(clientes);
-
-    // Ordena a matriz com base no valor (total gasto)
-    clientesArray.sort((a, b) => b[1].totalGasto - a[1].totalGasto);
-
-    // Retorna os 3 clientes que mais gastaram
-    return clientesArray.slice(0, 3).map((cliente) => ({
-      nome: cliente[0],
-      totalGasto: cliente[1].totalGasto,
-      quantidadePedidos: cliente[1].quantidadePedidos
+    // Converte o objeto para um array de objetos com nome, totalGasto, quantidadePedidos e receitaTotal
+    const clientesArray = Object.keys(clientes).map((nome) => ({
+      nome,
+      totalGasto: clientes[nome].totalGasto,
+      quantidadePedidos: clientes[nome].quantidadePedidos,
+      receitaTotal: clientes[nome].totalGasto, // Considerando receita total como o total gasto
     }));
+
+    // Ordena o array com base no totalGasto em ordem decrescente
+    clientesArray.sort((a, b) => b.totalGasto - a.totalGasto);
+
+    // Retorna os dados dos 3 clientes que mais gastaram
+    return clientesArray.slice(0, 3);
   }
 
 }

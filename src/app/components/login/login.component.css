@@ -28,7 +28,7 @@ label {
   display: block;
   margin-bottom: 8px;
   color: #333;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 input {
@@ -36,7 +36,7 @@ input {
   padding: 8px;
   margin-bottom: 12px;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .form-control{
@@ -54,7 +54,7 @@ input {
   text-decoration: none; /* Remove sublinhado padrão de links */
   text-align: center;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 a.btn:hover {

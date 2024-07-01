@@ -16,7 +16,7 @@
 }
 
 .menu a {
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .nav-item {
@@ -49,7 +49,7 @@
 }
 
 .cabecalho .titulo-pagina {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -69,11 +69,11 @@
 
 .form-control {
   height: 28px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .form-label {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 #InputDataNascimento {
@@ -95,7 +95,7 @@
 }
 
 .alert {
-  font-size: 10px;
+  font-size: 12px;
   height: 10px;
   display: flex;
   align-items: center;
