@@ -27,7 +27,7 @@ export class InicialFuncionarioComponent implements OnInit {
   }
 
   listarTodos(): Pedido[] {
-    return this.pedidoService.listarPedidosDoSistema();
+    return this.pedidoService.listarTodos();
   }
 
   recolherPedido($event: any, pedido: Pedido): void {

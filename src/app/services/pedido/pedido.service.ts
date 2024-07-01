@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
 import { LoginService } from '../login/login.service';
+import { PessoaFuncionario } from '../../shared/models/pessoa-funcionario.model';
 
 const LS_CHAVE_PEDIDO = 'pedido';
 
@@ -16,15 +17,27 @@ export class PedidoService {
   constructor(private loginService: LoginService) { }
 
  listarTodos(): Pedido[] {
-    const pedidos = localStorage[LS_CHAVE_PEDIDO];
+    const pedidos = localStorage.getItem(LS_CHAVE_PEDIDO);
     const pessoaLogada = this.loginService.getPessoaLogada();
+    
+    if (pessoaLogada instanceof PessoaFuncionario) {
+      // Se a pessoa logada é um funcionário, retornar todos os pedidos
+      return pedidos ? JSON.parse(pedidos) : [];
+    }
+
+    // Caso contrário, retornar apenas os pedidos do cliente logado
     return pedidos ? JSON.parse(pedidos).filter((pedido: Pedido) => pedido.clienteId === pessoaLogada?.id) : [];
   }
 
-  // Para visualização de funcionário
-  listarPedidosDoSistema(): Pedido[] {
-    const todosOsPedidos = localStorage[LS_CHAVE_PEDIDO];
-    return todosOsPedidos ? JSON.parse(todosOsPedidos) : [];
+  // Garantir salvamento no localstorage
+  salvarPedidos(pedidos: Pedido[]): void {
+    localStorage.setItem(LS_CHAVE_PEDIDO, JSON.stringify(pedidos));
+  }
+
+  salvar(pedido: Pedido): void {
+    const pedidos = this.listarTodos();
+    pedidos.push(pedido);
+    this.salvarPedidos(pedidos);
   }
 
   inserir(
@@ -33,7 +46,8 @@ export class PedidoService {
     valorpedido: number
   ): void {
     //obtém uma lista completa de pedidos
-    const pedidos = this.listarTodos();
+    const pedidos = localStorage.getItem(LS_CHAVE_PEDIDO);
+    const listaPedidos = pedidos ? JSON.parse(pedidos) : [];
 
     //seta um ID único, usamos Timestamp, quantidade de segundos desde 1970
     pedido.idpedido = new Date().getTime();
@@ -51,8 +65,8 @@ export class PedidoService {
 
     pedido.valorpedido = valorpedido;
     pedido.statuspedido = 'EM ABERTO';
-    pedidos.push(pedido);
-    localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
+    listaPedidos.push(pedido);
+    this.salvarPedidos(listaPedidos);
   }
 
   buscaPorId(id: number): Pedido | undefined {
@@ -72,11 +86,12 @@ export class PedidoService {
     pedidos.forEach((obj, index, objs) => {
       if (pedido.idpedido === obj.idpedido) {
         objs[index] = pedido;
+        this.salvarPedidos(pedidos);
       }
     });
 
     //Armazena a nova lista no LocalStorage
-    localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
+    // localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
   }
 
   remover(id: number): void {
@@ -88,7 +103,7 @@ export class PedidoService {
     pedidos = pedidos.filter((pedido) => pedido.idpedido !== id);
 
     //atualiza a lista de pessoas
-    localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
+    this.salvarPedidos(pedidos);
   }
 
   // Método para obter a receita total de todos os pedidos
@@ -96,7 +111,7 @@ export class PedidoService {
     let receitaTotal = 0;
 
     // Obtém todos os pedidos
-    const todosOsPedidos = this.listarPedidosDoSistema();
+    const todosOsPedidos = this.listarTodos();
 
     // Itera sobre cada pedido
     todosOsPedidos.forEach((todosOsPedidos) => {
@@ -112,7 +127,7 @@ export class PedidoService {
     const clientes: { [nome: string]: { totalGasto: number; quantidadePedidos: number } } = {}; // Definindo o tipo explícito
 
     // Obtém todos os pedidos
-    const todosOsPedidos = this.listarPedidosDoSistema();
+    const todosOsPedidos = this.listarTodos();
 
     // Itera sobre cada pedido
     todosOsPedidos.forEach((pedido) => {
