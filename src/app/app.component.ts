@@ -44,7 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
     CadastrarPecaRoupaComponent,
     EditarPecaRoupaComponent,
     ModalOrcamentoComponent,
-    HttpClientModule
+    HttpClientModule,
   ],
 })
 export class AppComponent {
