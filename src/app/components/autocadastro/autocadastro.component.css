@@ -12,7 +12,7 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 600px;
   display: flex;
   flex-direction: column;
 }
@@ -63,6 +63,27 @@ label {
 
 .alert-danger {
   font-size: 10px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-col {
+  width: 48%;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 
