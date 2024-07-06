@@ -46,8 +46,8 @@ export class InicialFuncionarioComponent implements OnInit {
       alert(`O pedido ${pedido.idpedido} foi recolhido.`);
       console.log(`O pedido ${pedido.idpedido} foi recolhido.`);
 
-      this.pedidos = this.listarTodosPedidos();
-      this.filtrarPedidos();
+      //this.pedidos = this.listarTodosPedidos();
+      //this.filtrarPedidos();
 
       // Atualizar a lista de pedidos
       this.atualizarPedidos();
@@ -91,7 +91,7 @@ export class InicialFuncionarioComponent implements OnInit {
 
       // Atualizar a lista de pedidos
       this.pedidos = this.listarTodosPedidos();
-      this.filtrarPedidos();
+      //this.filtrarPedidos();
     }
   }
 
@@ -135,7 +135,7 @@ export class InicialFuncionarioComponent implements OnInit {
   // Método para atualizar a lista de pedidos após uma ação ser realizada.
   private atualizarPedidos(): void {
     this.pedidos = this.listarTodosPedidos();
-    this.filtrarPedidos();
+    //this.filtrarPedidos();
   }
 
 }

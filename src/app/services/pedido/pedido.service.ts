@@ -85,7 +85,7 @@ export class PedidoService {
 
   atualizar(pedido: Pedido): void {
     //obtem a lista completa de pessoas
-    const pedidos = this.listarTodos();
+    const pedidos = this.listarTodosPedidos();
 
     //varre a lista de pessoas, quando encontra pessoa com mesmo id, altera a lista
     pedidos.forEach((obj, index, objs) => {

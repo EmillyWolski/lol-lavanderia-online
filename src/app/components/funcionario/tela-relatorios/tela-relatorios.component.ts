@@ -169,15 +169,15 @@ export class TelaRelatoriosComponent implements OnInit {
       }
     });
 
-    // Ordena os clientes pelo número de pedidos
-    const clientesOrdenados = Array.from(clientesDados.entries()).sort((a, b) => b[1].quantidadePedidos - a[1].quantidadePedidos);
+    // Ordena os clientes pelos valores da receita total (do maior para o menor)
+    const clientesOrdenados = Array.from(clientesDados.entries()).sort((a, b) => b[1].receitaTotal - a[1].receitaTotal);
 
     // Seleciona os três clientes mais fiéis
     const topClientesFieis = clientesOrdenados.slice(0, 3);
 
     // Verifica se há clientes fiéis
     if (topClientesFieis.length === 0) {
-      // Caso não haja clientes fiéis, exibe uma mensagem e retorna
+      // Caso não haja clientes fiéis, exibe uma mensagem
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
       doc.text('Nenhum cliente fiel encontrado.', pageWidth / 2, yPos, { align: 'center' });
