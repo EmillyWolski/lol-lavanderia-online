@@ -9,7 +9,7 @@ export class Pessoa {
         public rua: string = "",
         public cidade: string = "",
         public estado: string = "",
-        public telefone: number = 0,
+        public telefone: string = "",
         public senha: string = "",
     ){
         

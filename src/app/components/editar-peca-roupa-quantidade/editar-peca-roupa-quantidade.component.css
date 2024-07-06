@@ -10,49 +10,6 @@
   padding: 0 20px;
 }
 
-h2 {
-  font-size: 12px;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-  background-image: url("../../../assets/imagens/logo.png");
-}
-
-.logo h1 {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 24px;
-  color: #2c3e50;
-}
-
-.usuario-info {
-  display: flex;
-  align-items: center;
-}
-
-.usuario-info img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-  background-image: url("../../../assets/imagens/usuario.png");
-}
-
-.usuario-info span {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  color: #2c3e50;
-}
 
 nav {
   position: absolute;
@@ -66,7 +23,7 @@ nav {
 
 .nav-item {
   padding: 15px 20px;
-  font-size: 13px;
+  font-size: 16px;
   text-decoration: none;
   color: #2c3e50;
   display: block;
@@ -92,7 +49,7 @@ nav {
 }
 
 .cabecalho .titulo-pagina {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -100,14 +57,14 @@ nav {
   margin-bottom: 20px;
   background-color: #ffffff;
   box-shadow: inset -1px 0px 0px #d7dbec;
-  padding: 10px;
+ 
   color: #2c3e50;
 }
 
 .titulo-coluna {
   padding: 10px;
   text-align: left;
-  font-size: 13px;
+  font-size: 14px;
   color: #2c3e50;
 }
 
@@ -115,13 +72,19 @@ nav {
 .formulario-peca-roupa {
   max-width: 400px; /* Tamanho máximo desejado para o formulário */
 }
+
 .form-control {
   height: 36px;
   font-size: 14px;
 }
-.form-label {
-  font-size: 12px;
+.peca-roupa{
+  font-size: 14px;
 }
+
+.form-label {
+  font-size: 14px;
+}
+
 .btn {
   width: 48%;
   height: 30px;
@@ -131,11 +94,13 @@ nav {
   padding: 5px;
   box-sizing: border-box;
 }
+
 .btn-danger {
   margin-left: 14px;
 }
+
 .alert {
-  font-size: 10px;
+  font-size: 12px;
   height: 10px;
   display: flex;
   align-items: center;
@@ -143,9 +108,11 @@ nav {
   color: #dc3545;
   background-color: #fff3f4;
 }
+
 #salvar {
   margin-right: 10px;
 }
+
 #titulolabel {
-  font-size: 12px;
+  font-size: 14px;
 }

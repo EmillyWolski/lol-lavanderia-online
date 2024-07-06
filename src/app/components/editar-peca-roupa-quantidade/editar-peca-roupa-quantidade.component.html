@@ -2,36 +2,23 @@
   <link rel="stylesheet" href="editar-peca-roupa-quantidade.component.css">
 </head>
 
-<div class="md-3">
-  <header class="header-base">
-    <div class="logo">
-      <img src="../../../assets/imagens/logo.png" alt="Logo da Lavanderia LOL">
-      <h1>Lavanderia LOL</h1>
-    </div>
-
-    <div class="usuario-info">
-      <img src="../../../assets/imagens/usuario.png" alt="Foto do usuário">
-      <span>Nome do Usuário</span>
-    </div>
-  </header>
-</div>
-
 <nav>
   <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
   <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
   <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
+  <a [routerLink]="['/inicio/login']" class="nav-item">Sair</a>
 </nav>
 
 <div class="conteudo-principal">
   <div class="cabecalho">
-    <h2 class="titulo-pagina">Inserir peça de roupa</h2>
+    <h2 class="titulo-pagina">Editar</h2>
   </div>
 
   <div class="well">
     <form #formEditarPecaRoupaQnt="ngForm" class="formulario-peca-roupa">
       <div class="mb-3 form-group">
         <label for="nome" id="titulolabel">Peça de roupa:</label>
-        <ng-select name="pecaroupa" [items]="roupas" bindLabel="nome" [(ngModel)]="pecaroupaqnt.pecaroupa" placeholder="Selecione uma Peça" required></ng-select>
+        <ng-select class="peca-roupa" name="pecaroupa" [items]="roupas" bindLabel="nome" [(ngModel)]="pecaroupaqnt.pecaroupa" placeholder="Selecione uma Peça" required></ng-select>
         <div *ngIf="formEditarPecaRoupaQnt.form.controls['pecaroupa']?.invalid && (formEditarPecaRoupaQnt.form.controls['pecaroupa']?.dirty || formEditarPecaRoupaQnt.form.controls['pecaroupa']?.touched)" class="alert alert-danger">
           <div *ngIf="formEditarPecaRoupaQnt.form.controls['pecaroupa']?.errors?.['required']">Selecione uma peça de roupa.</div>
         </div>

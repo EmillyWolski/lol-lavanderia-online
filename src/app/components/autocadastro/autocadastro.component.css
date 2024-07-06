@@ -29,16 +29,16 @@ label {
   margin-bottom: 14px;
   color: #333;
   height: 10px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .form-control {
   width: 100%;
   padding: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   box-sizing: border-box;
   height: 30px;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .btn {
@@ -54,7 +54,7 @@ label {
   color: #fff;
   width: 258px; 
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .btn:hover {
@@ -62,7 +62,13 @@ label {
 }
 
 .alert-danger {
-  font-size: 10px;
+  font-size: 12px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #dc3545;
+  background-color: #fff3f4;
 }
 
 .form-row {

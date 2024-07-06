@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgForm, FormsModule } from '@angular/forms';
+import { NgForm, FormsModule, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AutocadastroService } from '../../services/autocadastro/autocadastro.service';
 import { Pessoa } from '../../shared/models/pessoa.model';
 import { CommonModule } from '@angular/common';
@@ -16,14 +16,14 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
   styleUrl: './autocadastro.component.css'
 })
 
-export class AutocadastroComponent implements OnInit, OnDestroy{
-  
+export class AutocadastroComponent implements OnInit, OnDestroy {
+
   @ViewChild('autocadastroForm') autocadastroForm!: NgForm;
   pessoa: Pessoa = new Pessoa();
   pessoaCadastrada: Pessoa | null = null;
   senhaGerada: string = "";
 
-  constructor(private autocadastroService: AutocadastroService, private router: Router, private http: HttpClient) {}
+  constructor(private autocadastroService: AutocadastroService, private router: Router, private http: HttpClient) { }
 
   // Código para ocultar o cabeçalho padrão do sistema nessa página
   ngOnInit(): void {
@@ -88,5 +88,23 @@ export class AutocadastroComponent implements OnInit, OnDestroy{
       this.router.navigateByUrl('/inicio/login');
     }
   }
+
+  onFocusTelefone() {
+    if (!this.pessoa.telefone) {
+      this.pessoa.telefone = '';
+    }
+  }
+
+  // NÃO ESTÁ FUNCIONANDO
+  emailValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const email = control.value as string;
+    if (!email) {
+      return { 'required': true };
+    }
+    if (!email.includes('@') || !(email.endsWith('.com') || email.endsWith('.com.br'))) {
+      return { 'emailInvalid': true };
+    }
+    return null;
+  };
 
 }
