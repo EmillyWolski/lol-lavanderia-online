@@ -81,7 +81,7 @@ export class InicialClienteComponent implements OnInit {
     const statusMap: { [key: string]: string } = {
       'em_aberto': 'EM ABERTO',
       'cancelado': 'CANCELADO',
-      'rejeitado': 'REJEITADO',
+      // 'rejeitado': 'REJEITADO',
       'recolhido': 'RECOLHIDO',
       'aguardando_pagamento': 'AGUARDANDO PAGAMENTO',
       'pago': 'PAGO',
@@ -95,7 +95,7 @@ export class InicialClienteComponent implements OnInit {
     const statusClassMap: { [key: string]: string } = {
       'EM ABERTO': 'status-em-aberto',
       'CANCELADO': 'status-cancelado',
-      'REJEITADO': 'status-cancelado',
+      // 'REJEITADO': 'status-cancelado',
       'RECOLHIDO': 'status-recolhido',
       'AGUARDANDO PAGAMENTO': 'status-aguardando-pagamento',
       'PAGO': 'status-pago',
