@@ -17,13 +17,18 @@ export class InicialFuncionarioComponent implements OnInit {
 
   pedidos: Pedido[] = [];
   pedidosFiltrados: Pedido[] = []; // Armazena os pedidos filtrados com base no status selecionado.
-  filtroStatus: string = 'todos';
+  filtroStatus: string = 'em_aberto'; // Inicia com 'em_aberto'
 
   constructor(private pedidoService: PedidoService) { }
 
   ngOnInit(): void {
     this.pedidos = this.listarTodosPedidos();
     this.filtrarPedidos();
+  }
+
+  carregarPedidos(): void {
+    this.pedidos = this.listarTodosPedidos(); // Carrega todos os pedidos
+    this.filtrarPedidos(); // Filtra de acordo com o filtro atual
   }
 
   listarTodosPedidos(): Pedido[] {
