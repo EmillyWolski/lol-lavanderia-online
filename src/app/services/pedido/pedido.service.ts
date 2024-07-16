@@ -69,10 +69,16 @@ export class PedidoService {
     }
 
     pedido.valorpedido = valorpedido;
-    pedido.statuspedido = 'EM ABERTO';
+
+    // Verifica se o status deve ser "EM ABERTO" ou "REJEITADO"
+    if (pedido.statuspedido !== 'REJEITADO') {
+      pedido.statuspedido = 'EM ABERTO';
+    }
+
     listaPedidos.push(pedido);
     this.salvarPedidos(listaPedidos);
   }
+
 
   buscaPorId(id: number): Pedido | undefined {
     //obtém a lista completa de pedido
@@ -82,6 +88,7 @@ export class PedidoService {
     //find() : retorna o primeiro elemento da lista que satisfaz a condição, caso contrário, undefined
     return pedidos.find((pedido) => pedido.idpedido === id);
   }
+
 
   atualizar(pedido: Pedido): void {
     //obtem a lista completa de pessoas
@@ -99,6 +106,7 @@ export class PedidoService {
     // localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
   }
 
+
   remover(id: number): void {
 
     //obtem lista completa de pedidos
@@ -110,6 +118,7 @@ export class PedidoService {
     //atualiza a lista de pessoas
     this.salvarPedidos(pedidos);
   }
+
 
   // Método para obter a receita total de todos os pedidos
   obterReceitaTotal(): number {
@@ -126,6 +135,7 @@ export class PedidoService {
 
     return receitaTotal;
   }
+
 
   // Método para obter os 3 clientes que mais gastaram
   obterClientesQueMaisGastaram(): { nome: string; totalGasto: number; quantidadePedidos: number; receitaTotal: number }[] {
@@ -150,6 +160,7 @@ export class PedidoService {
       }
     });
 
+    
     // Converte o objeto para um array de objetos com nome, totalGasto, quantidadePedidos e receitaTotal
     const clientesArray = Object.keys(clientes).map((nome) => ({
       nome,

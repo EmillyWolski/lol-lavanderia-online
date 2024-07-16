@@ -39,7 +39,7 @@
         <td class="info-pedido">{{pedido.statuspedido}} </td>
         <td class="info-pedido">{{pedido.valorpedido | currency:'BRL':'symbol':'1.2-2' }}</td>
         <td class="text-center" style="width: 300px">
-          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)" [ngClass]="{'disabled-link': pedido.cancelamentoRealizado}" [ngClass]="{'disabled-link': pedido.pagamentoRealizado}">
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)" [ngClass]="{'disabled-link': pedido.cancelamentoRealizado}" [ngClass]="{'disabled-link': pedido.pagamentoRealizado || pedido.statuspedido === 'REJEITADO'}">
             <i class="fa fa-times" aria-hidden="true"></i> Cancelar
           </a>
         </td>

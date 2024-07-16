@@ -101,7 +101,17 @@ export class InserirPedidoComponent implements OnInit {
     this.router.navigateByUrl('/fazer-pedido');
   }
 
-  onRecusar($event: void) {
-    throw new Error('Method not implemented.');
+  onRecusar(): void {
+    // Marcar o pedido como recusado
+    this.pedido.statuspedido = 'REJEITADO';
+    this.pedidoservice.inserir(this.pedido, this.pecasroupas, this.valorPedido || 0);
+
+    this.pedido.cancelamentoRealizado = true;
+    this.pedido.pagamentoRealizado = true;
+    
+    this.pecaroupaService.removertudo();
+
+    this.pedido = new Pedido(); // Limpar o objeto pedido
+    this.router.navigateByUrl('/fazer-pedido');
   }
 }

@@ -13,4 +13,8 @@ export class Pedido {
     public valorpedido: number = 0,
     public prazo: number = 0
   ) {}
+
+  recusarPedido(): void {
+    this.statuspedido = 'rejeitado';
+  }
 }

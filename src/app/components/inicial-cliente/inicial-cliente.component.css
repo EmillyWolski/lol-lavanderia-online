@@ -98,7 +98,7 @@ p {
     font-weight: bold;
 }
 
-.status-cancelado {
+.status-cancelado, .status-rejeitado {
     color: red;
     font-weight: bold;
 }

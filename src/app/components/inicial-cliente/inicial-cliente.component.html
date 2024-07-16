@@ -21,7 +21,7 @@
       <option value="todos">Todos</option>
       <option value="em_aberto">Em Aberto</option>
       <option value="cancelado">Cancelado</option>
-      <!-- <option value="rejeitado">Rejeitado</option> -->
+      <option value="rejeitado">Rejeitado</option>
       <option value="recolhido">Recolhido</option>
       <option value="aguardando_pagamento">Aguardando Pagamento</option>
       <option value="pago">Pago</option>
@@ -50,10 +50,10 @@
         <td class="info-pedido">{{pedido.valorpedido | currency:'BRL':'symbol':'1.2-2'}}</td>
 
         <td class="text-center" style="width: 300px">
-          <a href="#" title="Pagar" alt="Pagar" class="btn btn-xs btn-success" (click)="pagar($event, pedido)" [ngClass]="{'disabled-link': pedido.pagamentoRealizado}">
+          <a href="#" title="Pagar" alt="Pagar" class="btn btn-xs btn-success" (click)="pagar($event, pedido)" [ngClass]="{'disabled-link': pedido.pagamentoRealizado || pedido.statuspedido === 'REJEITADO'}">
             <i class="fa fa-credit-card" aria-hidden="true"></i> Pagar
           </a>
-          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)" [ngClass]="{'disabled-link': pedido.cancelamentoRealizado}" [ngClass]="{'disabled-link': pedido.pagamentoRealizado}">
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)" [ngClass]="{'disabled-link': pedido.cancelamentoRealizado}" [ngClass]="{'disabled-link': pedido.pagamentoRealizado || pedido.statuspedido === 'REJEITADO'}">
             <i class="fa fa-times" aria-hidden="true"></i> Cancelar
           </a>
         </td>

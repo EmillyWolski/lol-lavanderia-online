@@ -90,3 +90,14 @@ p {
 .btn .btn-xs .btn-success {
   right: 90%;
 }
+
+.disabled-link {
+  pointer-events: none;
+  /* Desabilita eventos de clique */
+  color: rgb(179, 177, 177);
+  /* Altera a cor do texto para indicar que está desabilitado */
+  text-decoration: none;
+  /* Remove sublinhado */
+  cursor: default;
+  /* Altera o cursor */
+}

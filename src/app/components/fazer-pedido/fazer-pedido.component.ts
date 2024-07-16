@@ -30,6 +30,7 @@ export class FazerPedidoComponent implements OnInit {
     if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}?`)) {
       // Alterar o status do pedido para "CANCELADO"
       pedido.statuspedido = 'CANCELADO';
+      pedido.pagamentoRealizado = true;
       pedido.cancelamentoRealizado = true; // Define a propriedade como true após o cancelamento
 
       this.pedidoService.remover(pedido.idpedido!);

@@ -37,6 +37,6 @@ export class ModalOrcamentoComponent {
   onRecusar(): void {
     this.recusar.emit();
     this.close();
-    alert("O orçamento do pedido foi recusado. Edite para então concluí-lo, ou remova-o!")
+    alert("O orçamento do pedido foi rejeitado.")
   }
 }

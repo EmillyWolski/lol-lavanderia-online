@@ -36,9 +36,11 @@ export class InicialClienteComponent implements OnInit {
     $event.preventDefault();
     if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}?`)) {
       pedido.statuspedido = 'CANCELADO';
+      this.pedidoService.atualizar(pedido);
+
       pedido.cancelamentoRealizado = true;
       pedido.pagamentoRealizado = true;
-      this.pedidoService.atualizar(pedido);
+
       this.carregarPedidos(); // Atualiza a lista de pedidos após remover
       alert(`O pedido ${pedido.idpedido} foi cancelado.`);
     }
@@ -47,10 +49,13 @@ export class InicialClienteComponent implements OnInit {
   pagar($event: any, pedido: Pedido): void {
     $event.preventDefault();
     if (pedido.statuspedido === 'AGUARDANDO PAGAMENTO' && confirm(`Deseja realmente pagar o pedido ${pedido.idpedido}?`)) {
+
       pedido.statuspedido = 'PAGO';
       pedido.pagamentoRealizado = true;
+      
       this.pedidoService.atualizar(pedido);
       this.carregarPedidos(); // Atualiza a lista de pedidos após pagamento
+
       alert(`Pagamento realizado para o pedido ${pedido.idpedido}.`);
     } else {
       alert(`O pedido ${pedido.idpedido} ainda não foi lavado, aguarde para efetuar o pagamento!`);
@@ -71,6 +76,7 @@ export class InicialClienteComponent implements OnInit {
     const statusMap: { [key: string]: string } = {
       'em_aberto': 'EM ABERTO',
       'cancelado': 'CANCELADO',
+      'rejeitado': 'REJEITADO',
       'recolhido': 'RECOLHIDO',
       'aguardando_pagamento': 'AGUARDANDO PAGAMENTO',
       'pago': 'PAGO',
@@ -84,6 +90,7 @@ export class InicialClienteComponent implements OnInit {
     const statusClassMap: { [key: string]: string } = {
       'EM ABERTO': 'status-em-aberto',
       'CANCELADO': 'status-cancelado',
+      'REJEITADO': 'status-rejeitado',
       'RECOLHIDO': 'status-recolhido',
       'AGUARDANDO PAGAMENTO': 'status-aguardando-pagamento',
       'PAGO': 'status-pago',
