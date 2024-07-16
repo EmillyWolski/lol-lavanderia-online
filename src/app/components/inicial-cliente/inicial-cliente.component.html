@@ -6,7 +6,7 @@
   <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
   <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
   <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
-  <a [routerLink]="['/inicio/login']" class="nav-item">Sair</a>
+  <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
 </nav>
 
 <div class="conteudo-principal">

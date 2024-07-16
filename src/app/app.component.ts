@@ -19,6 +19,7 @@ import { CadastrarPecaRoupaComponent } from './components/funcionario/cadastrar-
 import { EditarPecaRoupaComponent } from './components/funcionario/editar-peca-roupa/editar-peca-roupa.component';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -44,7 +45,7 @@ import { HttpClientModule } from '@angular/common/http';
     CadastrarPecaRoupaComponent,
     EditarPecaRoupaComponent,
     ModalOrcamentoComponent,
-    HttpClientModule,
+    HttpClientModule
   ],
 })
 export class AppComponent {

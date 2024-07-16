@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Pessoa } from '../../shared/models/pessoa.model';
 import { AutocadastroService } from '../../services/autocadastro/autocadastro.service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class LoginService {
 
   private pessoaLogada: Pessoa | null = null; // Para armazenar a pessoa logada
 
-  constructor(private autocadastroService: AutocadastroService) {}
+  constructor(private autocadastroService: AutocadastroService, private router: Router) {}
 
   login(email: string, senha: string): Observable<Pessoa | null> {
     // Obtém a lista de todas as pessoas cadastradas
@@ -40,7 +41,12 @@ export class LoginService {
   }
 
   logout(): void {
-    this.pessoaLogada = null;
-    localStorage.removeItem('pessoaLogadaId');
+    const confirmed = window.confirm('Você realmente deseja sair?');
+    if (confirmed) {
+      this.pessoaLogada = null;
+      localStorage.removeItem('pessoaLogadaId');
+      this.router.navigate(['/inicio/login']);
+    }
+    // Não há necessidade de fazer nada se o usuário cancelar
   }
 }

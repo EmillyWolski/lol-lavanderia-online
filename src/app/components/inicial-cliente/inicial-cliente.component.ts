@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterLink, RouterModule, Router } from '@angular/router';
 import { PedidoService } from '../../services/pedido/pedido.service';
 import { Pedido } from '../../shared/models/pedido.model';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; // Adicionando o FormsModule
+import { LoginService } from '../../services/login/login.service'; // Importando o LoginService
 
 @Component({
   selector: 'app-inicial-cliente',
@@ -17,7 +18,7 @@ export class InicialClienteComponent implements OnInit {
   pedidosFiltrados: Pedido[] = [];
   filtroStatus: string = 'em_aberto'; // Inicia com 'em_aberto'
 
-  constructor(private pedidoService: PedidoService) {}
+  constructor(private pedidoService: PedidoService, private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.carregarPedidos(); // Inicia o carregamento de pedidos
@@ -97,5 +98,15 @@ export class InicialClienteComponent implements OnInit {
       'FINALIZADO': 'status-finalizado'
     };
     return statusClassMap[status] || '';
+  }
+
+  confirmarLogout(event: Event): void {
+    event.preventDefault();
+    
+    const confirmed = window.confirm('Você realmente deseja sair?');
+    if (confirmed) {
+      this.loginService.logout();
+      this.router.navigate(['inicio/login']); // Redireciona para a tela de login após o logout
+    }
   }
 }
