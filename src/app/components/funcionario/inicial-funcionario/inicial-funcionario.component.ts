@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterLink, RouterModule, Router } from '@angular/router';
 import { PedidoService } from '../../../services/pedido/pedido.service';
 import { Pedido } from '../../../shared/models/pedido.model';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from '../../../services/login/login.service';
 
 @Component({
   selector: 'app-inicial-funcionario',
@@ -19,7 +20,7 @@ export class InicialFuncionarioComponent implements OnInit {
   pedidosFiltrados: Pedido[] = []; // Armazena os pedidos filtrados com base no status selecionado.
   filtroStatus: string = 'todos';
 
-  constructor(private pedidoService: PedidoService) { }
+  constructor(private pedidoService: PedidoService, private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.pedidos = this.listarTodosPedidos();
@@ -138,4 +139,13 @@ export class InicialFuncionarioComponent implements OnInit {
     //this.filtrarPedidos();
   }
 
+  confirmarLogout(event: Event): void {
+    event.preventDefault();
+    
+    const confirmed = window.confirm('Você realmente deseja sair?');
+    if (confirmed) {
+      this.loginService.logout();
+      this.router.navigate(['inicio/login']); // Redireciona para a tela de login após o logout
+    }
+  }
 }

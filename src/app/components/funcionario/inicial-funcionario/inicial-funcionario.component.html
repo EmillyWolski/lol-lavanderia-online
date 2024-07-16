@@ -7,7 +7,7 @@
   <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
   <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
   <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
-  <a [routerLink]="['/inicio/login']" class="nav-item">Sair</a>
+  <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
 </nav>
 
 <div class="conteudo-principal">
