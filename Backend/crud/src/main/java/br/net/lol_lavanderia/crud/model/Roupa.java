@@ -4,14 +4,14 @@ public class Roupa {
 
   private int roupaId;
   private String nome;
-  private int valor;
+  private double valor;
   private int prazo;
 
   public Roupa() {
     super();
   }
 
-  public Roupa(int roupaId, String nome, int valor, int prazo) {
+  public Roupa(int roupaId, String nome, double valor, int prazo) {
     super();
     this.roupaId = roupaId;
     this.nome = nome;
@@ -35,11 +35,11 @@ public class Roupa {
     this.nome = nome;
   }
 
-  public int getValor() {
+  public double getValor() {
     return valor;
   }
 
-  public void setValor(int valor) {
+  public void setValor(double valor) {
     this.valor = valor;
   }
 

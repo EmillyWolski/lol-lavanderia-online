@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "CrudApplication",
+      "request": "launch",
+      "mainClass": "br.net.lol_lavanderia.crud.CrudApplication",
+      "projectName": "crud"
+    },
+    {
       "name": "ng serve",
       "type": "chrome",
       "request": "launch",
