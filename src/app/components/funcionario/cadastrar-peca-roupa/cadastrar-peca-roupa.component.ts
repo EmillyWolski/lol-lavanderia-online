@@ -6,6 +6,7 @@ import { Roupas } from '../../../shared/models/roupas.model';
 import { RoupasService } from '../../../services/roupas/roupas.service';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { NgxCurrencyDirective } from 'ngx-currency';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastrar-peca-roupa',
@@ -18,10 +19,12 @@ import { NgxCurrencyDirective } from 'ngx-currency';
     NgxMaskDirective,
     NgxMaskPipe,
     NgxCurrencyDirective,
+    HttpClientModule
   ],
   templateUrl: './cadastrar-peca-roupa.component.html',
-  styleUrl: './cadastrar-peca-roupa.component.css',
+  styleUrls: ['./cadastrar-peca-roupa.component.css'],
 })
+
 export class CadastrarPecaRoupaComponent {
   @ViewChild('formRoupa') formRoupa!: NgForm;
 
@@ -31,9 +34,10 @@ export class CadastrarPecaRoupaComponent {
 
   inserir(): void {
     if (this.formRoupa.form.valid) {
-      this.roupaService.inserir(this.roupa);
-      alert('Peça adicionada com sucesso!');
-      this.router.navigate(['/manutencao-roupas']);
+      this.roupaService.inserir(this.roupa).subscribe(() => {
+        alert('Peça adicionada com sucesso!');
+        this.router.navigate(['/manutencao-roupas']);
+      });
     }
   }
 }

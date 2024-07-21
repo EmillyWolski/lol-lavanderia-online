@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { RoupasService } from '../../../services/roupas/roupas.service';
 import { Roupas } from '../../../shared/models/roupas.model';
 import { NgxMaskPipe } from 'ngx-mask';
 import { NgxCurrencyDirective } from 'ngx-currency';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-manutencao-roupas',
@@ -15,29 +16,33 @@ import { NgxCurrencyDirective } from 'ngx-currency';
     RouterLink,
     NgxMaskPipe,
     NgxCurrencyDirective,
+    HttpClientModule
   ],
   templateUrl: './manutencao-roupas.component.html',
-  styleUrl: './manutencao-roupas.component.css',
+  styleUrls: ['./manutencao-roupas.component.css'],
 })
 
-export class ManutencaoRoupasComponent {
+export class ManutencaoRoupasComponent implements OnInit {
   roupas: Roupas[] = [];
 
   constructor(private roupaService: RoupasService) {}
 
   ngOnInit(): void {
-    this.roupas = this.listarTodas();
+    this.listarTodas();
   }
 
-  listarTodas(): Roupas[] {
-    return this.roupaService.listarTodas();
+  listarTodas(): void {
+    this.roupaService.listarTodas().subscribe(roupas => {
+      this.roupas = roupas;
+    });
   }
 
   remover($event: any, roupa: Roupas): void {
     $event.preventDefault();
     if (confirm(`Deseja realmente remover a peça de roupa ${roupa.nome}?`)) {
-      this.roupaService.remover(roupa.id!);
-      this.roupas = this.listarTodas();
+      this.roupaService.remover(roupa.id!).subscribe(() => {
+        this.listarTodas();
+      });
     }
   }
 }

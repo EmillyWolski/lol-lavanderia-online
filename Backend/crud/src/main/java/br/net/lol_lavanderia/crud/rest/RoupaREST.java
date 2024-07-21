@@ -19,6 +19,8 @@ import br.net.lol_lavanderia.crud.model.Roupa;
 @CrossOrigin
 @RestController
 public class RoupaREST {
+
+  // Por enquanto, simula um "banco de dados"
   public static List<Roupa> lista = new ArrayList<>();
 
   @GetMapping("/roupas")
