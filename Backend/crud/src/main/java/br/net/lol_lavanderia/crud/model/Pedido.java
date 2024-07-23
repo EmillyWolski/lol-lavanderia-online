@@ -1,26 +1,26 @@
 package br.net.lol_lavanderia.crud.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class Pedido {
-
+  private long idPedido;
   private Cliente cliente;
-  private int idPedido;
   private String status;
   private double valorTotal;
   private int prazo;
-  private int dataHoraDoPedido;
+  private long dataHoraDoPedido;
   private List<PecaRoupaQnt> pecaRoupaQnt;
 
   public Pedido() {
     super();
   }
 
-  public Pedido(Cliente cliente, int idPedido, String status, double valorTotal, int prazo, int dataHoraDoPedido,
+  public Pedido(Cliente cliente, long idPedido, String status, double valorTotal, int prazo, long dataHoraDoPedido,
       List<PecaRoupaQnt> pecaRoupaQnt) {
     super();
+    this.idPedido = new Date().getTime();
     this.cliente = cliente;
-    this.idPedido = idPedido;
     this.status = status;
     this.valorTotal = valorTotal;
     this.prazo = prazo;
@@ -36,11 +36,11 @@ public class Pedido {
     this.cliente = cliente;
   }
 
-  public int getIdPedido() {
+  public long getIdPedido() {
     return idPedido;
   }
 
-  public void setIdPedido(int idPedido) {
+  public void setIdPedido(long idPedido) {
     this.idPedido = idPedido;
   }
 
@@ -68,11 +68,11 @@ public class Pedido {
     this.prazo = prazo;
   }
 
-  public int getDataHoraDoPedido() {
+  public long getDataHoraDoPedido() {
     return dataHoraDoPedido;
   }
 
-  public void setDataHoraDoPedido(int dataHoraDoPedido) {
+  public void setDataHoraDoPedido(long dataHoraDoPedido) {
     this.dataHoraDoPedido = dataHoraDoPedido;
   }
 

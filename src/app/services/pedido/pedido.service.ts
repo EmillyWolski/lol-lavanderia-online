@@ -9,12 +9,10 @@ const LS_CHAVE_PEDIDO = 'pedido';
 @Injectable({
   providedIn: 'root',
 })
-
 export class PedidoService {
-
   // [x: string]: any;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService) {}
 
   listarTodos(): Pedido[] {
     const pedidos = localStorage.getItem(LS_CHAVE_PEDIDO);
@@ -26,7 +24,11 @@ export class PedidoService {
     }
 
     // Caso contrário, retornar apenas os pedidos do cliente logado
-    return pedidos ? JSON.parse(pedidos).filter((pedido: Pedido) => pedido.clienteId === pessoaLogada?.id) : [];
+    return pedidos
+      ? JSON.parse(pedidos).filter(
+          (pedido: Pedido) => pedido.clienteId === pessoaLogada?.id
+        )
+      : [];
   }
 
   listarTodosPedidos(): Pedido[] {
@@ -79,7 +81,6 @@ export class PedidoService {
     this.salvarPedidos(listaPedidos);
   }
 
-
   buscaPorId(id: number): Pedido | undefined {
     //obtém a lista completa de pedido
     const pedidos = this.listarTodos();
@@ -88,7 +89,6 @@ export class PedidoService {
     //find() : retorna o primeiro elemento da lista que satisfaz a condição, caso contrário, undefined
     return pedidos.find((pedido) => pedido.idpedido === id);
   }
-
 
   atualizar(pedido: Pedido): void {
     //obtem a lista completa de pessoas
@@ -106,9 +106,7 @@ export class PedidoService {
     // localStorage[LS_CHAVE_PEDIDO] = JSON.stringify(pedidos);
   }
 
-
   remover(id: number): void {
-
     //obtem lista completa de pedidos
     let pedidos = this.listarTodos();
 
@@ -118,7 +116,6 @@ export class PedidoService {
     //atualiza a lista de pessoas
     this.salvarPedidos(pedidos);
   }
-
 
   // Método para obter a receita total de todos os pedidos
   obterReceitaTotal(): number {
@@ -136,11 +133,17 @@ export class PedidoService {
     return receitaTotal;
   }
 
-
   // Método para obter os 3 clientes que mais gastaram
-  obterClientesQueMaisGastaram(): { nome: string; totalGasto: number; quantidadePedidos: number; receitaTotal: number }[] {
+  obterClientesQueMaisGastaram(): {
+    nome: string;
+    totalGasto: number;
+    quantidadePedidos: number;
+    receitaTotal: number;
+  }[] {
     // Objeto para armazenar os dados de cada cliente
-    const clientes: { [nome: string]: { totalGasto: number; quantidadePedidos: number } } = {};
+    const clientes: {
+      [nome: string]: { totalGasto: number; quantidadePedidos: number };
+    } = {};
 
     // Obtém todos os pedidos do localStorage
     const pedidos = this.listarTodosPedidos();
@@ -160,7 +163,6 @@ export class PedidoService {
       }
     });
 
-    
     // Converte o objeto para um array de objetos com nome, totalGasto, quantidadePedidos e receitaTotal
     const clientesArray = Object.keys(clientes).map((nome) => ({
       nome,
@@ -175,5 +177,4 @@ export class PedidoService {
     // Retorna os dados dos 3 clientes que mais gastaram
     return clientesArray.slice(0, 3);
   }
-
 }
