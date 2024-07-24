@@ -1,0 +1,35 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nome": "Admin",
+      "login": "admin",
+      "senha": "admin",
+      "perfil": "ADMIN"
+    },
+    {
+      "id": "2",
+      "nome": "Gerente",
+      "login": "gerente",
+      "senha": "gerente",
+      "perfil": "GERENTE"
+    },
+    {
+      "id": "3",
+      "nome": "Func",
+      "login": "func",
+      "senha": "func",
+      "perfil": "FUNC"
+    },
+    {
+      "id": "c987",
+      "email": "admin",
+      "senha": "admin"
+    },
+    {
+      "id": "af1a",
+      "email": "wiejwi",
+      "senha": "djwiejiw"
+    }
+  ]
+}
