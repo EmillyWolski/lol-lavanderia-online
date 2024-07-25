@@ -25,7 +25,7 @@ import { NgxCurrencyDirective } from 'ngx-currency';
     NgxCurrencyDirective,
   ],
   templateUrl: './editar-peca-roupa.component.html',
-  styleUrl: './editar-peca-roupa.component.css',
+  styleUrls: ['./editar-peca-roupa.component.css'],
 })
 export class EditarPecaRoupaComponent implements OnInit {
   @ViewChild('formRoupa') formRoupa!: NgForm;
@@ -39,23 +39,40 @@ export class EditarPecaRoupaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let id = +this.route.snapshot.params['id'];
+    const id = +this.route.snapshot.params['id'];
 
-    // Com o id, obtém a pessoa
-    const res = this.roupaService.buscarPorId(id);
-    if (res !== undefined) this.roupa = res;
-    else throw new Error('Roupa não encontrada: id = ' + id);
+    // Busca a roupa por id e trata o caso em que a roupa não é encontrada
+    this.roupaService.buscarPorId(id).subscribe({
+      next: (res) => {
+        if (res) {
+          this.roupa = res;
+        } else {
+          alert('Roupa não encontrada: id = ' + id);
+          this.router.navigate(['/manutencao-roupas']);
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao buscar a roupa:', err.message);
+        alert('Erro ao buscar a roupa.');
+        this.router.navigate(['/manutencao-roupas']);
+      }
+    });
   }
 
   atualizar(): void {
-    // Verifica se o formulário é válido
     if (this.formRoupa.form.valid) {
-      // Efetivamente atualiza a roupa
-      this.roupaService.atualizar(this.roupa);
-      alert('Peça atualizada com sucesso!');
-
-      // Redireciona para /manutencao-roupas
-      this.router.navigate(['/manutencao-roupas']);
+      this.roupaService.atualizar(this.roupa).subscribe({
+        next: () => {
+          alert('Peça atualizada com sucesso!');
+          this.router.navigate(['/manutencao-roupas']);
+        },
+        error: (err) => {
+          console.error('Erro ao atualizar a roupa:', err.message);
+          alert('Erro ao atualizar a roupa.');
+        }
+      });
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios.');
     }
   }
 }

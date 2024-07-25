@@ -9,37 +9,50 @@ import { Pedido } from '../../shared/models/pedido.model';
   standalone: true,
   imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './fazer-pedido.component.html',
-  styleUrl: './fazer-pedido.component.css',
+  styleUrls: ['./fazer-pedido.component.css'],
 })
-
 export class FazerPedidoComponent implements OnInit {
-  pedidos: Pedido[] = [];
+  pedidos: Pedido[] = []; // Array para armazenar a lista de pedidos
 
   constructor(private pedidoService: PedidoService) {}
 
+  // Método de inicialização do componente
   ngOnInit(): void {
-    this.pedidos = this.listarTodos();
+    this.listarTodos();
   }
-  
-  listarTodos(): Pedido[] {
-    return this.pedidoService.listarTodos();
+
+  listarTodos(): void {
+    // Usar a função listarTodos do serviço que retorna um Observable
+    this.pedidoService.listarTodos().subscribe({
+      next: (pedidos) => {
+        // Atualiza a propriedade pedidos com os dados recebidos do serviço
+        this.pedidos = pedidos;
+      },
+      error: (err) => {
+        console.error('Erro ao listar pedidos:', err);
+      },
+    });
   }
 
   remover($event: any, pedido: Pedido): void {
-    $event.preventDefault();
+    $event.preventDefault(); // Previne o comportamento padrão do evento
     if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}?`)) {
-      // Alterar o status do pedido para "CANCELADO"
+
       pedido.statuspedido = 'CANCELADO';
       pedido.pagamentoRealizado = true;
-      pedido.cancelamentoRealizado = true; // Define a propriedade como true após o cancelamento
+      pedido.cancelamentoRealizado = true;
 
-      this.pedidoService.remover(pedido.idpedido!);
-      alert(`O pedido ${pedido.idpedido} foi cancelado.`);
-
-      // Atualizar o pedido no serviço
-      this.pedidoService.atualizar(pedido);
-      this.pedidos = this.listarTodos();
-
+      // Atualiza o pedido no serviço
+      this.pedidoService.atualizar(pedido).subscribe({
+        next: () => {
+          alert(`O pedido ${pedido.idpedido} foi cancelado.`);
+          // Remove o pedido cancelado da lista de pedidos local, sem precisar fazer uma nova chamada para a API
+          this.pedidos = this.pedidos.filter(p => p.idpedido !== pedido.idpedido);
+        },
+        error: (err) => {
+          console.error('Erro ao cancelar pedido:', err);
+        },
+      });
     }
   }
 }
