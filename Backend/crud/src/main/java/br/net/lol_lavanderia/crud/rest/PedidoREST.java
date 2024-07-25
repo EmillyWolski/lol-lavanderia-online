@@ -25,7 +25,7 @@ import br.net.lol_lavanderia.crud.model.Roupa;
 public class PedidoREST {
 
   // instancia de cliente para teste
-  public static Cliente cliente = new Cliente("Julio", "julioyamaguchi99@gmail.com", "1234", "10756274940",
+  public static Cliente cliente = new Cliente(1, "Julio", "julioyamaguchi99@gmail.com", "1234", "10756274940",
       "Rua das peras", "9999999");
 
   // instancias de roupas para teste
