@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Roupas } from '../../shared/models/roupas.model';
 
@@ -10,13 +10,13 @@ import { Roupas } from '../../shared/models/roupas.model';
 export class RoupasService {
   private readonly API = 'http://localhost:8080/roupas';
   private httpOptions = {
-    observe: 'response' as 'response',
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
-    })
+    }),
+    observe: 'response' as 'response'
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = '';
@@ -29,50 +29,102 @@ export class RoupasService {
     return throwError(() => new Error(errorMessage));
   }
 
-  listarTodas(): Observable<Roupas[]> {
-    return this.http.get<Roupas[]>(this.API, this.httpOptions).pipe(
-      map(response => response.body as Roupas[]),
-      catchError(this.handleError)
-    );
-  }
-
-  listarTodasComPrazos(): Observable<{ roupas: Roupas[], prazosMap: { [id: number]: number } }> {
-    return this.http.get<Roupas[]>(this.API, this.httpOptions).pipe(
-      map(response => {
-        const roupas = response.body as Roupas[];
-        const prazosMap: { [id: number]: number } = {};
-        roupas.forEach(roupa => prazosMap[roupa.id] = roupa.prazo);
-        return { roupas, prazosMap };
+  listarTodas(): Observable<Roupas[] | null> {
+    return this.http.get<Roupas[]>(this.API, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<Roupas[]>) => {
+        if (response.status === 200) {
+          return response.body || [];
+        } else {
+          return [];
+        }
       }),
-      catchError(this.handleError)
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return of([]);
+        } else {
+          return throwError(() => new Error(`Erro ao listar roupas: ${error.message}`));
+        }
+      })
     );
   }
 
-  inserir(roupa: Roupas): Observable<Roupas> {
-    return this.http.post<Roupas>(this.API, roupa, this.httpOptions).pipe(
-      map(response => response.body as Roupas),
-      catchError(this.handleError)
+  listarTodasComPrazos(): Observable<{ roupas: Roupas[], prazosMap: { [id: number]: number } } | null> {
+    return this.http.get<Roupas[]>(this.API, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<Roupas[]>) => {
+        if (response.status === 200) {
+          const roupas = response.body || [];
+          const prazosMap: { [id: number]: number } = {};
+          roupas.forEach(roupa => prazosMap[roupa.id] = roupa.prazo);
+          return { roupas, prazosMap };
+        } else {
+          return { roupas: [], prazosMap: {} };
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return of({ roupas: [], prazosMap: {} });
+        } else {
+          return throwError(() => new Error(`Erro ao listar roupas com prazos: ${error.message}`));
+        }
+      })
     );
   }
 
-  buscarPorId(id: number): Observable<Roupas> {
-    return this.http.get<Roupas>(`${this.API}/${id}`, this.httpOptions).pipe(
-      map(response => response.body as Roupas),
-      catchError(this.handleError)
+  inserir(roupa: Roupas): Observable<Roupas | null> {
+    return this.http.post<Roupas>(this.API, roupa, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<Roupas>) => {
+        if (response.status === 201) {
+          return response.body;
+        } else {
+          return null;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => new Error(`Erro ao inserir roupa: ${error.message}`));
+      })
     );
   }
 
-  atualizar(roupa: Roupas): Observable<Roupas> {
-    return this.http.put<Roupas>(`${this.API}/${roupa.id}`, roupa, this.httpOptions).pipe(
-      map(response => response.body as Roupas),
-      catchError(this.handleError)
+  buscarPorId(id: number): Observable<Roupas | null> {
+    return this.http.get<Roupas>(`${this.API}/${id}`).pipe(
+      map((response: Roupas) => response || null),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return of(null);
+        } else {
+          return throwError(() => new Error(`Erro ao buscar roupa por ID: ${error.message}`));
+        }
+      })
     );
   }
 
-  remover(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API}/${id}`, this.httpOptions).pipe(
-      map(() => undefined),
-      catchError(this.handleError)
+  atualizar(roupa: Roupas): Observable<Roupas | null> {
+    return this.http.put<Roupas>(`${this.API}/${roupa.id}`, roupa, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<Roupas>) => {
+        if (response.status === 200) {
+          return response.body;
+        } else {
+          return null;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => new Error(`Erro ao atualizar roupa: ${error.message}`));
+      })
+    );
+  }
+
+  remover(id: number): Observable<void | null> {
+    return this.http.delete<void>(`${this.API}/${id}`, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<void>) => {
+        if (response.status === 200) {
+          return null;
+        } else {
+          return null;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => new Error(`Erro ao remover roupa: ${error.message}`));
+      })
     );
   }
 }

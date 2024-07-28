@@ -33,7 +33,7 @@ export class ManutencaoRoupasComponent implements OnInit {
 
   listarTodas(): void {
     this.roupaService.listarTodas().subscribe(roupas => {
-      this.roupas = roupas;
+      this.roupas = roupas ?? [];
     });
   }
 

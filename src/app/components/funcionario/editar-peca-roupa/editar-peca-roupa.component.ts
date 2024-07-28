@@ -40,12 +40,13 @@ export class EditarPecaRoupaComponent implements OnInit {
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params['id'];
-
-    // Busca a roupa por id e trata o caso em que a roupa não é encontrada
+    console.log(`ID recebido: ${id}`);
+  
     this.roupaService.buscarPorId(id).subscribe({
       next: (res) => {
         if (res) {
           this.roupa = res;
+          console.log(`Roupa encontrada: ${JSON.stringify(this.roupa)}`);
         } else {
           alert('Roupa não encontrada: id = ' + id);
           this.router.navigate(['/manutencao-roupas']);

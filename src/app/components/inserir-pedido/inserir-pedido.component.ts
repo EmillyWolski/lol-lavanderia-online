@@ -58,9 +58,14 @@ export class InserirPedidoComponent implements OnInit {
   carregarRoupas(): void {
     this.roupasService.listarTodasComPrazos().subscribe({
       next: (data) => {
-        this.roupas = data.roupas;
-        this.prazosMap = data.prazosMap;
-        this.calcularValoresPedido();
+        if (data) {
+          this.roupas = data.roupas;
+          this.prazosMap = data.prazosMap;
+          this.calcularValoresPedido();
+        } else {
+          this.roupas = [];
+          this.prazosMap = {};
+        }
       },
       error: (err: HttpErrorResponse) => {
         console.error('Erro ao carregar roupas:', err.message);

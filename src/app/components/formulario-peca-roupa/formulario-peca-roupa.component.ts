@@ -37,7 +37,7 @@ export class FormularioPecaRoupaComponent implements OnInit {
     // Carrega a lista de roupas ao inicializar o componente
     this.roupas_service.listarTodas().subscribe({
       next: (roupas) => {
-        this.roupas = roupas;
+        this.roupas = roupas ?? [];
       },
       error: (err) => {
         console.error('Erro ao carregar roupas:', err.message);
