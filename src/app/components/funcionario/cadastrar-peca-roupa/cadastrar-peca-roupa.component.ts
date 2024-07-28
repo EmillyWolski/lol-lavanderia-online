@@ -30,11 +30,11 @@ export class CadastrarPecaRoupaComponent {
 
   roupa: Roupas = new Roupas();
 
-  constructor(private roupaService: RoupasService, private router: Router) {}
+  constructor(private roupasService: RoupasService, private router: Router) {}
 
   inserir(): void {
     if (this.formRoupa.form.valid) {
-      this.roupaService.inserir(this.roupa).subscribe(() => {
+      this.roupasService.inserir(this.roupa).subscribe(() => {
         alert('Peça adicionada com sucesso!');
         this.router.navigate(['/manutencao-roupas']);
       });

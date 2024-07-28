@@ -43,7 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
     TelaRelatoriosComponent,
     FormsModule,
     CadastrarPecaRoupaComponent,
-    EditarPecaRoupaComponent,
+    // EditarPecaRoupaComponent,
     ModalOrcamentoComponent,
     HttpClientModule
   ],

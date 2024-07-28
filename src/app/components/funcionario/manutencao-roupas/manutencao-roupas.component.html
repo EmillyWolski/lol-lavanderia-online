@@ -36,12 +36,14 @@
         <td class="info-roupa"> {{ roupa.valor | currency:'BRL':'symbol':'1.2-2' }} </td>
 
         <td class="text-center" style="width: 300px">
-          <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info" [routerLink]="['/editar-peca-roupa', roupa.id]">
-            <i class="fa fa-edit" aria-hidden="true"></i> Editar
+
+          <button (click)="verificarRoupa(roupa)">Verificar Roupa</button>
+
+          <a [routerLink]="['/editar-peca-roupa', roupa.id]" title="Editar" alt="Editar" class="btn btn-xs btn-info">
+            <i class="fa fa-edit" aria-hidden="true"></i> Editar {{roupa.id}}
           </a>
 
-          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger"
-            (click)="remover($event, roupa)">
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, roupa)">
             <i class="fa fa-times" aria-hidden="true"></i> Remover
           </a>
         </td>

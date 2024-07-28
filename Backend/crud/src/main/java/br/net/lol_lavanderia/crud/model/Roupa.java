@@ -2,7 +2,7 @@ package br.net.lol_lavanderia.crud.model;
 
 public class Roupa {
 
-  private int roupaId;
+  private int id;
   private String nome;
   private double valor;
   private int prazo;
@@ -11,20 +11,20 @@ public class Roupa {
     super();
   }
 
-  public Roupa(int roupaId, String nome, double valor, int prazo) {
+  public Roupa(int id, String nome, double valor, int prazo) {
     super();
-    this.roupaId = roupaId;
+    this.id = id;
     this.nome = nome;
     this.valor = valor;
     this.prazo = prazo;
   }
 
-  public int getRoupaId() {
-    return roupaId;
+  public int getId() {
+    return id;
   }
 
-  public void setRoupaId(int roupaId) {
-    this.roupaId = roupaId;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getNome() {

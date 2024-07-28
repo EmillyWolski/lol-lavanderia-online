@@ -6,3 +6,5 @@ export class Roupas {
     public prazo: number = 0
   ) {}
 }
+
+

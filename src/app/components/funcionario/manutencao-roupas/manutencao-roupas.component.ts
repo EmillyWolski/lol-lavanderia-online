@@ -6,6 +6,7 @@ import { Roupas } from '../../../shared/models/roupas.model';
 import { NgxMaskPipe } from 'ngx-mask';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { HttpClientModule } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-manutencao-roupas',
@@ -25,7 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class ManutencaoRoupasComponent implements OnInit {
   roupas: Roupas[] = [];
 
-  constructor(private roupaService: RoupasService) {}
+  constructor(private roupaService: RoupasService) { }
 
   ngOnInit(): void {
     this.listarTodas();
@@ -34,15 +35,21 @@ export class ManutencaoRoupasComponent implements OnInit {
   listarTodas(): void {
     this.roupaService.listarTodas().subscribe(roupas => {
       this.roupas = roupas ?? [];
+      console.log(this.roupas);  // Verifica se as roupas estão sendo carregadas corretamente
     });
   }
 
   remover($event: any, roupa: Roupas): void {
     $event.preventDefault();
     if (confirm(`Deseja realmente remover a peça de roupa ${roupa.nome}?`)) {
-      this.roupaService.remover(roupa.id!).subscribe(() => {
+      this.roupaService.remover(roupa.id).subscribe(() => {
         this.listarTodas();
       });
     }
+  }
+
+  verificarRoupa(roupa: Roupas): void {
+    console.log('Roupa:', roupa);
+    console.log('ID da roupa:', roupa.id);
   }
 }

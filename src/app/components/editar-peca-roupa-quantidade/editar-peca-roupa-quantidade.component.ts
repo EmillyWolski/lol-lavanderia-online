@@ -23,6 +23,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
   styleUrls: ['./editar-peca-roupa-quantidade.component.css'],
   schemas: [NO_ERRORS_SCHEMA],
 })
+
 export class EditarPecaRoupaQuantidadeComponent implements OnInit {
   // Instancia uma nova peça de roupa com quantidade
   pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade();
@@ -35,14 +36,14 @@ export class EditarPecaRoupaQuantidadeComponent implements OnInit {
 
   constructor(
     private pecasroupaqntservice: PecaRoupaQntService, // Serviço para manipulação de peças de roupa
-    private roupas_service: RoupasService, // Serviço para manipulação de roupas
+    private roupaService: RoupasService, // Serviço para manipulação de roupas
     private route: ActivatedRoute, // Serviço para acessar parâmetros da rota
     private router: Router // Serviço para navegação
   ) {}
 
   ngOnInit(): void {
     // Carrega a lista de roupas ao inicializar o componente
-    this.roupas_service.listarTodas().subscribe({
+    this.roupaService.listarTodas().subscribe({
       next: (roupas) => {
         this.roupas = roupas ?? [];
       },

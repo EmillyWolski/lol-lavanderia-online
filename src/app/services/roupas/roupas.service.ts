@@ -99,18 +99,20 @@ export class RoupasService {
   }
 
   atualizar(roupa: Roupas): Observable<Roupas | null> {
-    return this.http.put<Roupas>(`${this.API}/${roupa.id}`, roupa, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
-      map((response: HttpResponse<Roupas>) => {
-        if (response.status === 200) {
-          return response.body;
-        } else {
-          return null;
-        }
-      }),
-      catchError((error: HttpErrorResponse) => {
-        return throwError(() => new Error(`Erro ao atualizar roupa: ${error.message}`));
-      })
-    );
+
+    return this.http.put<Roupas>(`${this.API}/${roupa.id}`, roupa, { headers: this.httpOptions.headers, observe: this.httpOptions.observe })
+      .pipe(
+        map((response: HttpResponse<Roupas>) => {
+          if (response.status === 200) {
+            return response.body;
+          } else {
+            return null;
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          return throwError(() => new Error(`Erro ao atualizar roupa: ${error.message}`));
+        })
+      );
   }
 
   remover(id: number): Observable<void | null> {
