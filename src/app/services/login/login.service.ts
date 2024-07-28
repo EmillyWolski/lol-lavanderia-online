@@ -13,11 +13,10 @@ export class LoginService {
 
   private pessoaLogada: Pessoa | null = null; // Para armazenar a pessoa logada
 
-  
   constructor(private http: HttpClient, private autocadastroService: AutocadastroService, private router: Router) {}
 
   login(email: string, senha: string): Observable<Pessoa | null> {
-    const url = "http://localhost:3000/usuarios"; // URL do endpoint de login
+    const url = "http://localhost:8080/clientes"; // URL do endpoint de login do cliente
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { email, senha };
 
@@ -34,7 +33,7 @@ export class LoginService {
         return of(null);
       })
     );
-  }  
+  }
 
   getPessoaLogada(): Pessoa | null {
     const pessoaLogadaId = localStorage.getItem('pessoaLogadaId');
