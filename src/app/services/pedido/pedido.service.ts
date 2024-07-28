@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
@@ -18,28 +18,58 @@ export class PedidoService {
     })
   };
 
-  constructor(private http: HttpClient, private loginService: LoginService) { }
+  constructor(private http: HttpClient, private loginService: LoginService) {}
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
-      errorMessage = `Erro: ${error.error.message}`;
+      errorMessage = 'Erro: ${error.error.message}';
     } else {
-      errorMessage = `Código do erro: ${error.status}\nMensagem: ${error.message}`;
+      errorMessage = 'Código do erro: ${error.status}\nMensagem: ${error.message}';
     }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 
-  listarTodos(): Observable<Pedido[]> {
+  listarTodos(): Observable<Pedido[] | null> {
     const pessoaLogada = this.loginService.getPessoaLogada();
     let url = this.API;
 
     if (pessoaLogada instanceof PessoaFuncionario) {
-      return this.http.get<Pedido[]>(url).pipe(catchError(this.handleError));
+      return this.http.get<Pedido[]>(url, this.httpOptions).pipe(
+        map((resp) => {
+          if (resp) {
+            return resp;
+          } else {
+            return [];
+          }
+        }),
+        catchError((err) => {
+          if (err.status === 404) {
+            return of([]);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
     } else {
-      url += `?clienteId=${pessoaLogada?.id}`;
-      return this.http.get<Pedido[]>(url).pipe(catchError(this.handleError));
+      url += '?clienteId=${pessoaLogada?.id}';
+      return this.http.get<Pedido[]>(url, this.httpOptions).pipe(
+        map((resp) => {
+          if (resp) {
+            return resp;
+          } else {
+            return [];
+          }
+        }),
+        catchError((err) => {
+          if (err.status === 404) {
+            return of([]);
+          } else {
+            return throwError(() => err);
+          }
+        })
+      );
     }
   }
 
@@ -63,29 +93,31 @@ export class PedidoService {
   }
 
   buscaPorId(id: number): Observable<Pedido | undefined> {
-    return this.http.get<Pedido>(`${this.API}/${id}`).pipe(
+    return this.http.get<Pedido>(`${this.API}/${id}`, this.httpOptions).pipe(
       catchError(this.handleError),
       map(pedido => pedido)
     );
   }
 
   atualizar(pedido: Pedido): Observable<void> {
-    return this.http.put<void>(`${this.API}/${pedido.idpedido}`, pedido, this.httpOptions).pipe(catchError(this.handleError));
+    return this.http.put<void>('${this.API}/${pedido.idpedido}', pedido, this.httpOptions).pipe(catchError(this.handleError));
   }
 
   remover(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API}/${id}`).pipe(catchError(this.handleError));
+    return this.http.delete<void>('${this.API}/${id}', this.httpOptions).pipe(catchError(this.handleError));
   }
 
   obterReceitaTotal(): Observable<number> {
     return this.listarTodos().pipe(
-      map(pedidos => pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0))
+      map(pedidos => pedidos ? pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0) : 0)
     );
   }
 
   obterClientesQueMaisGastaram(): Observable<{ nome: string; totalGasto: number; quantidadePedidos: number; receitaTotal: number }[]> {
     return this.listarTodos().pipe(
       map(pedidos => {
+        if (!pedidos) return [];
+
         const clientes: { [nome: string]: { totalGasto: number; quantidadePedidos: number } } = {};
 
         pedidos.forEach(pedido => {

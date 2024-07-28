@@ -13,6 +13,8 @@ import { Pedido } from '../../shared/models/pedido.model';
 })
 export class FazerPedidoComponent implements OnInit {
   pedidos: Pedido[] = []; // Array para armazenar a lista de pedidos
+  mensagem: string | null = null; // Mensagem de erro ou sucesso
+  mensagem_detalhes: string | null = null; // Detalhes da mensagem de erro
 
   constructor(private pedidoService: PedidoService) {}
 
@@ -22,13 +24,13 @@ export class FazerPedidoComponent implements OnInit {
   }
 
   listarTodos(): void {
-    // Usar a função listarTodos do serviço que retorna um Observable
     this.pedidoService.listarTodos().subscribe({
       next: (pedidos) => {
-        // Atualiza a propriedade pedidos com os dados recebidos do serviço
-        this.pedidos = pedidos;
+        this.pedidos = pedidos ?? []; // Garante que pedidos será um array
       },
       error: (err) => {
+        this.mensagem = 'Erro ao listar pedidos.';
+        this.mensagem_detalhes = '[${err.status}] ${err.message}';
         console.error('Erro ao listar pedidos:', err);
       },
     });
@@ -36,20 +38,19 @@ export class FazerPedidoComponent implements OnInit {
 
   remover($event: any, pedido: Pedido): void {
     $event.preventDefault(); // Previne o comportamento padrão do evento
-    if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}?`)) {
-
+    if (confirm('Deseja realmente cancelar o pedido ${pedido.idpedido}?')) {
       pedido.statuspedido = 'CANCELADO';
       pedido.pagamentoRealizado = true;
       pedido.cancelamentoRealizado = true;
 
-      // Atualiza o pedido no serviço
       this.pedidoService.atualizar(pedido).subscribe({
         next: () => {
-          alert(`O pedido ${pedido.idpedido} foi cancelado.`);
-          // Remove o pedido cancelado da lista de pedidos local, sem precisar fazer uma nova chamada para a API
+          alert('O pedido ${pedido.idpedido} foi cancelado.');
           this.pedidos = this.pedidos.filter(p => p.idpedido !== pedido.idpedido);
         },
         error: (err) => {
+          this.mensagem = 'Erro ao cancelar o pedido.';
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
           console.error('Erro ao cancelar pedido:', err);
         },
       });
