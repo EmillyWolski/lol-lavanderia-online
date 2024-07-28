@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PedidoService } from '../../services/pedido/pedido.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Pedido } from '../../shared/models/pedido.model';
+import { ConsultarPedidoService } from '../../services/consultar-pedido/consultar-pedido.service';
 
 @Component({
   selector: 'app-consultar-pedido',
@@ -15,35 +15,43 @@ import { Pedido } from '../../shared/models/pedido.model';
 export class ConsultarPedidoComponent implements OnInit {
 
   codigoPedido!: number; // Código do pedido inserido pelo usuário
-  pedido: Pedido | undefined; // Objeto que irá armazenar os detalhes do pedido
+  pedido: Pedido | null = null; // Objeto que irá armazenar os detalhes do pedido
   prazoMaximo: number | undefined;
   itensPedido: { nome: string, quantidade: number, preco: number }[] = []; // Lista de itens do pedido
+  mensagem: string | null = null; // Mensagem de erro a ser exibida
+  mensagem_detalhes: string | null = null; // Detalhes da mensagem de erro
 
-  constructor(private pedidoService: PedidoService) { }
+  constructor(private consultarPedidoService: ConsultarPedidoService) { }
 
   ngOnInit(): void { }
 
   onSubmit(): void {
+    this.mensagem = null;
+    this.mensagem_detalhes = null;
+
     // Converte o código do pedido para número e verifica se é válido
     const pedidoId = Number(this.codigoPedido);
     if (!isNaN(pedidoId)) {
       // Consulta a API de pedidos pelo ID
-      this.pedidoService.buscaPorId(pedidoId).subscribe({
+      this.consultarPedidoService.buscarPedidoPorId(pedidoId).subscribe({
         next: (pedido) => {
-          this.pedido = pedido;
-          if (this.pedido) {
+          if (pedido === null) {
+            this.pedido = null;
+            this.mensagem = 'Pedido não encontrado. Por favor, verifique o código e tente novamente.';
+          } else {
+            this.pedido = pedido;
             this.calcularPrazoMaximo();
             this.carregarItensPedido();
-          } else {
-            alert('Pedido não encontrado. Por favor, verifique o código e tente novamente.');
           }
         },
-        error: () => {
-          alert('Erro ao buscar o pedido. Por favor, tente novamente.');
+        error: (err) => {
+          this.pedido = null;
+          this.mensagem = 'Erro ao buscar o pedido. Por favor, tente novamente.';
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
         }
       });
     } else {
-      alert('Por favor, insira um código de pedido válido.');
+      this.mensagem = 'Por favor, insira um código de pedido válido.';
     }
   }
 

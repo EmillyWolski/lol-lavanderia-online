@@ -13,12 +13,13 @@ import { LoginService } from '../../../services/login/login.service';
   templateUrl: './inicial-funcionario.component.html',
   styleUrls: ['./inicial-funcionario.component.css']
 })
-
 export class InicialFuncionarioComponent implements OnInit {
 
   pedidos: Pedido[] = [];
   pedidosFiltrados: Pedido[] = []; // Armazena os pedidos filtrados com base no status selecionado.
   filtroStatus: string = 'em_aberto'; // Inicia com 'em_aberto'
+  mensagem: string | null = null; // Mensagem de erro ou sucesso
+  mensagem_detalhes: string | null = null; // Detalhes da mensagem de erro
 
   constructor(
     private pedidoService: PedidoService,
@@ -33,11 +34,13 @@ export class InicialFuncionarioComponent implements OnInit {
   carregarPedidos(): void {
     this.pedidoService.listarTodos().subscribe({
       next: (pedidos) => {
-        this.pedidos = pedidos; // Atualiza a lista de pedidos
+        this.pedidos = pedidos ?? []; // Garante que pedidos será um array
         this.filtrarPedidos(); // Filtra de acordo com o filtro atual
       },
       error: (err) => {
-        console.error('Erro ao carregar pedidos:', err.message);
+        this.mensagem = 'Erro ao carregar pedidos.';
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+        console.error('Erro ao carregar pedidos:', err);
       }
     });
   }
@@ -45,7 +48,7 @@ export class InicialFuncionarioComponent implements OnInit {
   recolherPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm(`Deseja realmente recolher o pedido ${pedido.idpedido}?`)) {
+    if (confirm('Deseja realmente recolher o pedido ${pedido.idpedido}?')) {
       pedido.statuspedido = 'RECOLHIDO';
 
       this.pedidoService.atualizar(pedido).subscribe({
@@ -54,7 +57,9 @@ export class InicialFuncionarioComponent implements OnInit {
           this.carregarPedidos(); // Atualiza a lista de pedidos
         },
         error: (err) => {
-          console.error('Erro ao atualizar pedido:', err.message);
+          this.mensagem = 'Erro ao atualizar pedido.';
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+          console.error('Erro ao atualizar pedido:', err);
         }
       });
     }
@@ -63,16 +68,18 @@ export class InicialFuncionarioComponent implements OnInit {
   lavarPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm(`Deseja realmente lavar o pedido ${pedido.idpedido}?`)) {
+    if (confirm('Deseja realmente lavar o pedido ${pedido.idpedido}?')) {
       pedido.statuspedido = 'AGUARDANDO PAGAMENTO';
 
       this.pedidoService.atualizar(pedido).subscribe({
         next: () => {
-          alert(`O pedido ${pedido.idpedido} foi lavado.`);
+          alert('O pedido ${pedido.idpedido} foi lavado.');
           this.carregarPedidos(); // Atualiza a lista de pedidos
         },
         error: (err) => {
-          console.error('Erro ao atualizar pedido:', err.message);
+          this.mensagem = 'Erro ao atualizar pedido.';
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+          console.error('Erro ao atualizar pedido:', err);
         }
       });
     }
@@ -81,16 +88,18 @@ export class InicialFuncionarioComponent implements OnInit {
   finalizarPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm(`Deseja realmente finalizar o pedido ${pedido.idpedido}?`)) {
+    if (confirm('Deseja realmente finalizar o pedido ${pedido.idpedido}?')) {
       pedido.statuspedido = 'FINALIZADO';
 
       this.pedidoService.atualizar(pedido).subscribe({
         next: () => {
-          alert(`O pedido ${pedido.idpedido} foi finalizado.`);
+          alert('O pedido ${pedido.idpedido} foi finalizado.');
           this.carregarPedidos(); // Atualiza a lista de pedidos
         },
         error: (err) => {
-          console.error('Erro ao atualizar pedido:', err.message);
+          this.mensagem = 'Erro ao atualizar pedido.';
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+          console.error('Erro ao atualizar pedido:', err);
         }
       });
     }

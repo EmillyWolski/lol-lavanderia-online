@@ -20,6 +20,8 @@ export class InicialClienteComponent implements OnInit {
   pedidos: Pedido[] = [];
   pedidosFiltrados: Pedido[] = [];
   filtroStatus: string = 'em_aberto'; // Inicializa com 'em_aberto'
+  mensagem: string | null = null; // Mensagem de erro ou sucesso
+  mensagem_detalhes: string | null = null; // Detalhes da mensagem de erro
 
   constructor(
     private pedidoService: PedidoService,
@@ -35,10 +37,12 @@ export class InicialClienteComponent implements OnInit {
   carregarPedidos(): void {
     this.pedidoService.listarTodos().subscribe({
       next: (pedidos) => {
-        this.pedidos = pedidos;
+        this.pedidos = pedidos ?? []; // Garante que pedidos será um array
         this.filtrarPedidos(); // Filtra os pedidos após o carregamento
       },
       error: (err: HttpErrorResponse) => {
+        this.mensagem = 'Erro ao carregar pedidos.';
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`;
         console.error('Erro ao carregar pedidos:', err.message);
       }
     });
@@ -47,7 +51,7 @@ export class InicialClienteComponent implements OnInit {
   // Remove o pedido e atualiza a lista
   remover($event: any, pedido: Pedido): void {
     $event.preventDefault();
-    if (confirm(`Deseja realmente cancelar o pedido ${pedido.idpedido}?`)) {
+    if (confirm('Deseja realmente cancelar o pedido ${pedido.idpedido}?')) {
       pedido.statuspedido = 'CANCELADO';
       pedido.cancelamentoRealizado = true;
       pedido.pagamentoRealizado = true;
@@ -55,9 +59,11 @@ export class InicialClienteComponent implements OnInit {
       this.pedidoService.atualizar(pedido).subscribe({
         next: () => {
           this.carregarPedidos(); // Atualiza a lista de pedidos após remoção
-          alert(`O pedido ${pedido.idpedido} foi cancelado.`);
+          alert('O pedido ${pedido.idpedido} foi cancelado.');
         },
         error: (err: HttpErrorResponse) => {
+          this.mensagem = 'Erro ao atualizar pedido.';
+          this.mensagem_detalhes = '[${err.status}] ${err.message}';
           console.error('Erro ao atualizar pedido:', err.message);
         }
       });
@@ -67,21 +73,23 @@ export class InicialClienteComponent implements OnInit {
   // Realiza o pagamento do pedido e atualiza a lista
   pagar($event: any, pedido: Pedido): void {
     $event.preventDefault();
-    if (pedido.statuspedido === 'AGUARDANDO PAGAMENTO' && confirm(`Deseja realmente pagar o pedido ${pedido.idpedido}?`)) {
+    if (pedido.statuspedido === 'AGUARDANDO PAGAMENTO' && confirm('Deseja realmente pagar o pedido ${pedido.idpedido}?')) {
       pedido.statuspedido = 'PAGO';
       pedido.pagamentoRealizado = true;
 
       this.pedidoService.atualizar(pedido).subscribe({
         next: () => {
           this.carregarPedidos(); // Atualiza a lista de pedidos após pagamento
-          alert(`Pagamento realizado para o pedido ${pedido.idpedido}.`);
+          alert('Pagamento realizado para o pedido ${pedido.idpedido}.');
         },
         error: (err: HttpErrorResponse) => {
+          this.mensagem = 'Erro ao atualizar pedido.';
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
           console.error('Erro ao atualizar pedido:', err.message);
         }
       });
     } else {
-      alert(`O pedido ${pedido.idpedido} ainda não foi lavado, aguarde para efetuar o pagamento!`);
+      alert('O pedido ${pedido.idpedido} ainda não foi lavado, aguarde para efetuar o pagamento!');
     }
   }
 
