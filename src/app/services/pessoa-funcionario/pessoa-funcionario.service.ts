@@ -1,77 +1,33 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { PessoaFuncionario } from '../../shared/models/pessoa-funcionario.model';
-
-const LS_CHAVE_FUNC = "funcionarios";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PessoaFuncionarioService {
+  private apiUrl = 'http://localhost:8080/funcionarios'; 
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
-  listarFuncionarios(): PessoaFuncionario[] {
-    const funcionarios = localStorage[LS_CHAVE_FUNC];
-    // Precisa do condicional, pois retornar undefined se
-    // a chave não existe
-    return funcionarios ? JSON.parse(funcionarios) : [];
+  listarFuncionarios(): Observable<PessoaFuncionario[]> {
+    return this.http.get<PessoaFuncionario[]>(this.apiUrl);
   }
 
-  cadastrarFuncionario(funcionario: PessoaFuncionario): boolean {
-
-    console.log('Iniciando o cadastro do funcionário:', funcionario);
-    // Obtém a lista completa de pessoas
-    const funcionarios = this.listarFuncionarios();
-
-    // Verifica se já existe um funcionário com o mesmo email
-    const emailExistente = funcionarios.some(func => func.email === funcionario.email);
-    if (emailExistente) {
-      alert('Este e-mail já está sendo utilizado por outro funcionário.');
-      return false; // Cadastro falhou devido a email duplicado
-    }
-
-    // Seta um ID único
-    // Usamos o Timestamp, quantidade de segundos desde 1970
-    funcionario.id = new Date().getTime();
-    // Adiciona no final da lista
-    funcionarios.push(funcionario);
-    // Armazena no LocalStorage
-    localStorage[LS_CHAVE_FUNC] = JSON.stringify(funcionarios);
-    alert("Cadastro de funcionário(a) concluído com sucesso!")
-    return true; // Cadastro realizado com sucesso
+  cadastrarFuncionario(funcionario: PessoaFuncionario): Observable<any> {
+    return this.http.post(this.apiUrl, funcionario);
   }
 
-  buscarPorId(id: number): PessoaFuncionario | undefined {
-    // Obtém a lista completa de pessoas
-    const funcionarios = this.listarFuncionarios();
-    // Efetua a busca
-    // find() : retorna o primeiro elemento da lista que
-    // satisfaz a condição, caso contrário, undefined
-    return funcionarios.find(funcionario => funcionario.id === id);
+  buscarPorId(id: number): Observable<PessoaFuncionario> {
+    return this.http.get<PessoaFuncionario>(`${this.apiUrl}/${id}`);
   }
 
-  editarFuncionario(funcionario: PessoaFuncionario): void {
-    // Obtem a lista completa de pessoas
-    const funcionarios = this.listarFuncionarios();
-    // Varre a lista de pessoas
-    // Quando encontra pessoa com mesmo id, altera a lista
-    funcionarios.forEach((obj, index, objs) => {
-      if (funcionario.id === obj.id) {
-        objs[index] = funcionario
-      }
-    });
-    // Armazena a nova lista no LocalStorage
-    localStorage[LS_CHAVE_FUNC] = JSON.stringify(funcionarios);
-
+  editarFuncionario(funcionario: PessoaFuncionario): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${funcionario.id}`, funcionario);
   }
 
-  removerFuncionario(id: number): void {
-    // Obtem a lista completa de pessoas
-    let funcionarios = this.listarFuncionarios();
-    // filter() : retorna a mesma lista contendo todos
-    // os registros que satisfazem a condição
-    funcionarios = funcionarios.filter(funcionario => funcionario.id !== id);
-    // Atualiza a lista de pessoas
-    localStorage[LS_CHAVE_FUNC] = JSON.stringify(funcionarios);
+  removerFuncionario(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

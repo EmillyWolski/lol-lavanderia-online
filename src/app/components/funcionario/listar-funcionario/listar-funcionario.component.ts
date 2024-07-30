@@ -18,18 +18,32 @@ export class ListarFuncionarioComponent implements OnInit {
   constructor(private pessoaFuncionarioService: PessoaFuncionarioService) { }
 
   ngOnInit(): void {
-    this.funcionarios = this.listarFuncionarios();
+    this.listarFuncionarios();
   }
 
-  listarFuncionarios(): PessoaFuncionario[] {
-    return this.pessoaFuncionarioService.listarFuncionarios();
+  listarFuncionarios(): void {
+    this.pessoaFuncionarioService.listarFuncionarios().subscribe(
+      response => {
+        this.funcionarios = response;
+      },
+      error => {
+        console.error('Erro ao listar funcionários', error);
+      }
+    );
   }
 
   removerFuncionario($event: any, funcionario: PessoaFuncionario): void {
     $event.preventDefault();
-    if (confirm(`Deseja realmente remover o(a) funionário(a) ${funcionario.nome}?`)) {
-      this.pessoaFuncionarioService.removerFuncionario(funcionario.id!);
-      this.funcionarios = this.listarFuncionarios();
+    if (confirm(`Deseja realmente remover o(a) funcionário(a) ${funcionario.nome}?`)) {
+      this.pessoaFuncionarioService.removerFuncionario(funcionario.id!).subscribe(
+        response => {
+          this.funcionarios = this.funcionarios.filter(f => f.id !== funcionario.id);
+          console.log('Funcionário removido com sucesso', response);
+        },
+        error => {
+          console.error('Erro ao remover funcionário', error);
+        }
+      );
     }
   }
 }

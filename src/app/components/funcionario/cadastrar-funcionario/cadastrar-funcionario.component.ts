@@ -19,7 +19,7 @@ export class CadastrarFuncionarioComponent {
   @ViewChild('formFuncionario') formFuncionario!: NgForm;
   funcionario: PessoaFuncionario = new PessoaFuncionario();
   confirmarSenha: string = '';
-  funcionarioCadastrado: PessoaFuncionario | null = null; // Variável para armazenar o funcionário cadastrado
+  funcionarioCadastrado: PessoaFuncionario | null = null; // Variavel para armazenar o funcionário 
 
   constructor(
     private pessoaFuncionarioService: PessoaFuncionarioService,
@@ -29,13 +29,21 @@ export class CadastrarFuncionarioComponent {
     console.log('Método cadastrarFuncionario() chamado.');
     this.confirmarSenha = this.funcionario.confirmarSenha;
     if (this.formFuncionario.form.valid && this.funcionario.senha === this.confirmarSenha) {
-      const cadastroSucesso: boolean = this.pessoaFuncionarioService.cadastrarFuncionario(this.funcionario);
-      if (cadastroSucesso) {
-        this.router.navigate(["/listar-funcionario"]);
-      } else {
-        // Permanecer na página para que o usuário possa corrigir o email
-        console.log('Cadastro falhou devido a e-mail duplicado.');
-      }
+      this.pessoaFuncionarioService.cadastrarFuncionario(this.funcionario).subscribe(
+        response => {
+          console.log('Funcionário cadastrado com sucesso', response);
+          alert('Cadastro de funcionário(a) concluído com sucesso!');
+          this.router.navigate(['/listar-funcionario']);
+        },
+        error => {
+          console.error('Erro ao cadastrar funcionário', error);
+          if (error.status === 409) {
+            alert('Este e-mail já está sendo utilizado por outro funcionário.');
+          } else {
+            alert('Erro ao cadastrar funcionário. Por favor, tente novamente.');
+          }
+        }
+      );
     }
   }
 }
