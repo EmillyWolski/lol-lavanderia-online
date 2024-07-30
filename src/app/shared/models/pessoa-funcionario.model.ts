@@ -1,6 +1,6 @@
 export class PessoaFuncionario {
     constructor(
-      public id: number = 0,
+      public id?: number,
       public nome: string = '',
       public email: string = '',
       public senha: string = '',
