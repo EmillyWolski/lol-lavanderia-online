@@ -1,6 +1,6 @@
 package br.net.lol_lavanderia.crud.model;
 
-public class Cliente {
+public class Usuariointerm {
   private long id;
   private String nome;
   private String email;
@@ -8,8 +8,10 @@ public class Cliente {
   private String cpf;
   private String endereco;
   private String telefone;
+  private String dataNascimento;
 
-  public Cliente(long id, String nome, String email, String senha, String cpf, String endereco, String telefone) {
+  public Usuariointerm(long id, String nome, String email, String senha, String cpf, String endereco, String telefone,
+      String dataNascimento) {
     this.id = id;
     this.nome = nome;
     this.email = email;
@@ -17,11 +19,7 @@ public class Cliente {
     this.cpf = cpf;
     this.endereco = endereco;
     this.telefone = telefone;
-  }
-
-  // Getters e Setters
-  public String getCpf() {
-    return cpf;
+    this.dataNascimento = dataNascimento;
   }
 
   public long getId() {
@@ -56,6 +54,10 @@ public class Cliente {
     this.senha = senha;
   }
 
+  public String getCpf() {
+    return cpf;
+  }
+
   public void setCpf(String cpf) {
     this.cpf = cpf;
   }
@@ -74,5 +76,13 @@ public class Cliente {
 
   public void setTelefone(String telefone) {
     this.telefone = telefone;
+  }
+
+  public String getDataNascimento() {
+    return dataNascimento;
+  }
+
+  public void setDataNascimento(String dataNascimento) {
+    this.dataNascimento = dataNascimento;
   }
 }

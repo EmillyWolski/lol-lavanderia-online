@@ -3,13 +3,13 @@ package br.net.lol_lavanderia.crud.model;
 public class PecaRoupaQnt {
   private Roupa roupa;
   private int quantidade;
+  private Pedido pedido;
 
   public PecaRoupaQnt() {
-    super();
-    // TODO Auto-generated constructor stub
+
   }
 
-  public PecaRoupaQnt(Roupa roupa, int quantidade) {
+  public PecaRoupaQnt(Roupa roupa, int quantidade, Pedido pedido) {
     super();
     this.roupa = roupa;
     this.quantidade = quantidade;
@@ -29,5 +29,13 @@ public class PecaRoupaQnt {
 
   public void setQuantidade(int quantidade) {
     this.quantidade = quantidade;
+  }
+
+  public Pedido getPedido() {
+    return pedido;
+  }
+
+  public void setPedido(Pedido pedido) {
+    this.pedido = pedido;
   }
 }
