@@ -15,7 +15,11 @@ public class PecaRoupaQnt {
     this.quantidade = quantidade;
   }
 
-  public Roupa getRoupa() {
+  public PecaRoupaQnt(Roupa calca, int i) {
+    //TODO Auto-generated constructor stub
+}
+
+public Roupa getRoupa() {
     return roupa;
   }
 

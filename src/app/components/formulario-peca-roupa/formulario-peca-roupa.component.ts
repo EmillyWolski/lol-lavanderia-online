@@ -8,6 +8,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { Roupas } from '../../shared/models/roupas.model';
 import { RoupasService } from '../../services/roupas/roupas.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-formulario-peca-roupa',
@@ -17,28 +18,30 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
   styleUrls: ['./formulario-peca-roupa.component.css'],
   schemas: [NO_ERRORS_SCHEMA],
 })
-
 export class FormularioPecaRoupaComponent implements OnInit {
   @ViewChild('formPecaRoupa') formPecaRoupa!: NgForm;
   
   pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade();
-  
   roupas: Roupas[] = [];
 
   constructor(
     private pecasroupaqntservice: PecaRoupaQntService,
-    private roupas_service: RoupasService,
+    private roupasService: RoupasService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.roupas_service.listarTodas().subscribe({
+    this.carregarRoupas();
+  }
+
+  carregarRoupas(): void {
+    this.roupasService.listarTodas().subscribe({
       next: (roupas) => {
         this.roupas = roupas ?? [];
       },
       error: (err) => {
-        console.error('Erro ao carregar roupas:', err.message);
+        console.error('Erro ao carregar roupas:', (err as HttpErrorResponse).message);
         alert('Erro ao carregar roupas.');
       }
     });
@@ -46,16 +49,14 @@ export class FormularioPecaRoupaComponent implements OnInit {
 
   inserir(): void {
     if (this.formPecaRoupa.form.valid) {
-      this.pecasroupaqntservice.inserir(this.pecaroupaqnt).subscribe({
-        next: () => {
-          this.router.navigate(['/inserir-pedido']);
-          alert('Peça adicionada com sucesso no pedido.');
-        },
-        error: (err) => {
-          console.error('Erro ao adicionar peça de roupa:', err.message);
-          alert('Erro ao adicionar peça de roupa.');
-        }
-      });
+      try {
+        this.pecasroupaqntservice.inserir(this.pecaroupaqnt);
+        this.router.navigate(['/inserir-pedido']);
+        alert('Peça adicionada com sucesso no pedido.');
+      } catch (error: any) {
+        console.error('Erro ao adicionar peça de roupa:', error.message);
+        alert('Erro ao adicionar peça de roupa.');
+      }
     } else {
       alert('Por favor, preencha todos os campos corretamente.');
     }

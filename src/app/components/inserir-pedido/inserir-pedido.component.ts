@@ -6,9 +6,9 @@ import { Roupas } from '../../shared/models/roupas.model';
 import { RoupasService } from '../../services/roupas/roupas.service';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PedidoService } from '../../services/pedido/pedido.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ModalOrcamentoComponent } from '../modal-orcamento/modal-orcamento.component';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-inserir-pedido',
@@ -23,11 +23,11 @@ export class InserirPedidoComponent implements OnInit {
   @ViewChild(ModalOrcamentoComponent) modalOrcamento!: ModalOrcamentoComponent;
 
   pecasroupas: PecaRoupaQuantidade[] = []; // Array de peças
-  pedido: Pedido = new Pedido(); // Objeto do pedido
-  roupas: Roupas[] = []; // Array de roupas
+  pedido: Pedido = new Pedido(); 
+  roupas: Roupas[] = []; 
   prazosMap: { [id: number]: number } = {}; // Mapa de prazos
-  valorPedido: number = 0; // Valor total do pedido
-  prazoMaximo: number = 0; // Prazo máximo
+  valorPedido: number = 0; 
+  prazoMaximo: number = 0; 
 
   constructor(
     private pecaroupaService: PecaRoupaQntService,
@@ -42,15 +42,13 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   carregarPecasRoupas(): void {
-    this.pecaroupaService.listarTodos().subscribe({
-      next: (pecas) => {
-        this.pecasroupas = pecas ?? [];
-        this.calcularValoresPedido();
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('Erro ao carregar peças de roupas:', err.message);
-      }
-    });
+    try {
+      const pecas = this.pecaroupaService.listarTodos();
+      this.pecasroupas = pecas ?? [];
+      this.calcularValoresPedido();
+    } catch (error: any) {
+      console.error('Erro ao carregar peças de roupas:', error.message);
+    }
   }
 
   carregarRoupas(): void {
@@ -65,8 +63,8 @@ export class InserirPedidoComponent implements OnInit {
           this.prazosMap = {};
         }
       },
-      error: (err: HttpErrorResponse) => {
-        console.error('Erro ao carregar roupas:', err.message);
+      error: (err) => {
+        console.error('Erro ao carregar roupas:', (err as HttpErrorResponse).message);
       }
     });
   }
@@ -106,16 +104,13 @@ export class InserirPedidoComponent implements OnInit {
     this.pedido.valorpedido = this.valorPedido;
     this.pedido.prazo = this.prazoMaximo;
 
-    // Chamando o serviço de pedidos para inserir o pedido
-    this.pedidoservice.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.valorPedido).subscribe({
-      next: () => {
-        this.pedido = new Pedido(); // Reinicia o pedido
-        this.router.navigateByUrl('/fazer-pedido');
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('Erro ao aprovar pedido:', err.message);
-      }
-    });
+    try {
+      this.pedidoservice.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.valorPedido);
+      this.pedido = new Pedido(); // Reinicia o pedido
+      this.router.navigateByUrl('/fazer-pedido');
+    } catch (error: any) {
+      console.error('Erro ao aprovar pedido:', error.message);
+    }
   }
 
   onRecusar(): void {
