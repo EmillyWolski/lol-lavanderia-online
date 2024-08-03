@@ -66,7 +66,7 @@ export class EditarPecaRoupaComponent implements OnInit {
     if (this.formRoupa.form.valid) {
 
       // Verifica se o ID está definido corretamente
-      if (!this.roupa.id) { // Verifica 'id'
+      if (!this.roupa.id) {
         alert('ID da roupa não encontrado. Não é possível atualizar.');
         return;
       }

@@ -17,13 +17,12 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
   styleUrls: ['./formulario-peca-roupa.component.css'],
   schemas: [NO_ERRORS_SCHEMA],
 })
+
 export class FormularioPecaRoupaComponent implements OnInit {
   @ViewChild('formPecaRoupa') formPecaRoupa!: NgForm;
   
-  // Atributo de binding para dados do formulário
   pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade();
   
-  // Lista de roupas para o combo box
   roupas: Roupas[] = [];
 
   constructor(
@@ -34,32 +33,30 @@ export class FormularioPecaRoupaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Carrega a lista de roupas ao inicializar o componente
     this.roupas_service.listarTodas().subscribe({
       next: (roupas) => {
         this.roupas = roupas ?? [];
       },
       error: (err) => {
         console.error('Erro ao carregar roupas:', err.message);
+        alert('Erro ao carregar roupas.');
       }
     });
   }
 
   inserir(): void {
-    // Verifica se o formulário é válido antes de tentar inserir
     if (this.formPecaRoupa.form.valid) {
       this.pecasroupaqntservice.inserir(this.pecaroupaqnt).subscribe({
         next: () => {
-          // Redireciona para a página de inserir pedido após sucesso
           this.router.navigate(['/inserir-pedido']);
           alert('Peça adicionada com sucesso no pedido.');
         },
         error: (err) => {
           console.error('Erro ao adicionar peça de roupa:', err.message);
+          alert('Erro ao adicionar peça de roupa.');
         }
       });
     } else {
-      // Mensagem de erro se o formulário não for válido
       alert('Por favor, preencha todos os campos corretamente.');
     }
   }

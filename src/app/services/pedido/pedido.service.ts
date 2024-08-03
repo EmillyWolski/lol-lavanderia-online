@@ -15,19 +15,24 @@ export class PedidoService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
-    })
+    }),
+    observe: 'response' as 'response'
   };
 
   constructor(private http: HttpClient, private loginService: LoginService) {}
 
+  private handleSuccess(status: number, message: string) {
+    console.log(`Status: ${status} - ${message}`);
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
-      errorMessage = 'Erro: ${error.error.message}';
+      errorMessage = `Erro: ${error.error.message}`;
     } else {
-      errorMessage = 'Código do erro: ${error.status}\nMensagem: ${error.message}';
+      errorMessage = `Código do erro: ${error.status}\nMensagem: ${error.message}`;
     }
-    console.error(errorMessage);
+    console.error(`Status: ${error.status} - ${errorMessage}`);
     return throwError(() => new Error(errorMessage));
   }
 
@@ -37,36 +42,32 @@ export class PedidoService {
 
     if (pessoaLogada instanceof PessoaFuncionario) {
       return this.http.get<Pedido[]>(url, this.httpOptions).pipe(
-        map((resp) => {
-          if (resp) {
-            return resp;
-          } else {
-            return [];
-          }
+        map((response) => {
+          this.handleSuccess(response.status, 'Pedidos listados com sucesso.');
+          return response.body || [];
         }),
         catchError((err) => {
           if (err.status === 404) {
+            this.handleSuccess(404, 'Nenhum pedido encontrado.');
             return of([]);
           } else {
-            return throwError(() => err);
+            return this.handleError(err);
           }
         })
       );
     } else {
-      url += '?clienteId=${pessoaLogada?.id}';
+      url += `?clienteId=${pessoaLogada?.id}`;
       return this.http.get<Pedido[]>(url, this.httpOptions).pipe(
-        map((resp) => {
-          if (resp) {
-            return resp;
-          } else {
-            return [];
-          }
+        map((response) => {
+          this.handleSuccess(response.status, 'Pedidos listados com sucesso.');
+          return response.body || [];
         }),
         catchError((err) => {
           if (err.status === 404) {
+            this.handleSuccess(404, 'Nenhum pedido encontrado.');
             return of([]);
           } else {
-            return throwError(() => err);
+            return this.handleError(err);
           }
         })
       );
@@ -74,11 +75,25 @@ export class PedidoService {
   }
 
   salvarPedidos(pedidos: Pedido[]): Observable<void> {
-    return this.http.put<void>(this.API, pedidos, this.httpOptions).pipe(catchError(this.handleError));
+    return this.http.put<void>(this.API, pedidos, this.httpOptions).pipe(
+      map((response) => {
+        this.handleSuccess(response.status, 'Pedidos salvos com sucesso.');
+      }),
+      catchError((err) => {
+        return this.handleError(err);
+      })
+    );
   }
 
   salvar(pedido: Pedido): Observable<void> {
-    return this.http.post<void>(this.API, pedido, this.httpOptions).pipe(catchError(this.handleError));
+    return this.http.post<void>(this.API, pedido, this.httpOptions).pipe(
+      map((response) => {
+        this.handleSuccess(response.status, 'Pedido salvo com sucesso.');
+      }),
+      catchError((err) => {
+        return this.handleError(err);
+      })
+    );
   }
 
   inserir(pedido: Pedido, arrayPedidosRoupas: PecaRoupaQuantidade[], valorpedido: number): Observable<void> {
@@ -94,22 +109,56 @@ export class PedidoService {
 
   buscaPorId(id: number): Observable<Pedido | undefined> {
     return this.http.get<Pedido>(`${this.API}/${id}`, this.httpOptions).pipe(
-      catchError(this.handleError),
-      map(pedido => pedido)
+      map((response) => {
+        this.handleSuccess(response.status, 'Pedido encontrado com sucesso.');
+        return response.body || undefined; // Retorna undefined se o corpo for null
+      }),
+      catchError((err) => {
+        if (err.status === 404) {
+          this.handleSuccess(404, 'Pedido não encontrado.');
+          return of(undefined); // Retorna undefined se não encontrado
+        } else {
+          return this.handleError(err);
+        }
+      })
     );
   }
 
   atualizar(pedido: Pedido): Observable<void> {
-    return this.http.put<void>('${this.API}/${pedido.idpedido}', pedido, this.httpOptions).pipe(catchError(this.handleError));
+    return this.http.put<void>(`${this.API}/${pedido.idpedido}`, pedido, this.httpOptions).pipe(
+      map((response) => {
+        this.handleSuccess(response.status, 'Pedido atualizado com sucesso.');
+      }),
+      catchError((err) => {
+        if (err.status === 404) {
+          this.handleSuccess(404, 'Pedido não encontrado.');
+        }
+        return this.handleError(err);
+      })
+    );
   }
 
   remover(id: number): Observable<void> {
-    return this.http.delete<void>('${this.API}/${id}', this.httpOptions).pipe(catchError(this.handleError));
+    return this.http.delete<void>(`${this.API}/${id}`, this.httpOptions).pipe(
+      map((response) => {
+        this.handleSuccess(response.status, 'Pedido removido com sucesso.');
+      }),
+      catchError((err) => {
+        if (err.status === 404) {
+          this.handleSuccess(404, 'Pedido não encontrado.');
+        }
+        return this.handleError(err);
+      })
+    );
   }
 
   obterReceitaTotal(): Observable<number> {
     return this.listarTodos().pipe(
-      map(pedidos => pedidos ? pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0) : 0)
+      map(pedidos => {
+        this.handleSuccess(200, 'Receita total calculada com sucesso.');
+        return pedidos ? pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0) : 0;
+      }),
+      catchError(this.handleError)
     );
   }
 
@@ -140,8 +189,10 @@ export class PedidoService {
           receitaTotal: clientes[nome].totalGasto
         }));
 
+        this.handleSuccess(200, 'Clientes que mais gastaram obtidos com sucesso.');
         return clientesArray.sort((a, b) => b.totalGasto - a.totalGasto).slice(0, 3);
-      })
+      }),
+      catchError(this.handleError)
     );
   }
 }
