@@ -37,10 +37,8 @@
 
         <td class="text-center" style="width: 300px">
 
-          <button (click)="verificarRoupa(roupa)">Verificar Roupa</button>
-
           <a [routerLink]="['/editar-peca-roupa', roupa.id]" title="Editar" alt="Editar" class="btn btn-xs btn-info">
-            <i class="fa fa-edit" aria-hidden="true"></i> Editar {{roupa.id}}
+            <i class="fa fa-edit" aria-hidden="true"></i> Editar
           </a>
 
           <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, roupa)">

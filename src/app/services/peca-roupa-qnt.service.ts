@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { PecaRoupaQuantidade } from '../shared/models/peca-roupa-quantidade.model';
+import { Pedido } from '../shared/models/pedido.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PecaRoupaQntService {
-  private readonly API = 'http://localhost:8080/pecasroupas';
+  private readonly API = 'http://localhost:8080/pedidos'; // Alterado para a API de pedidos
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
-    })
+    }),
+    observe: 'response' as 'response'
   };
 
   constructor(private http: HttpClient) {}
@@ -28,28 +29,95 @@ export class PecaRoupaQntService {
     return throwError(() => new Error(errorMessage));
   }
 
-  listarTodos(): Observable<PecaRoupaQuantidade[]> {
-    return this.http.get<PecaRoupaQuantidade[]>(this.API).pipe(catchError(this.handleError));
+  listarTodos(): Observable<Pedido[] | null> {
+    return this.http.get<Pedido[]>(this.API, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<Pedido[]>) => {
+        if (response.status === 200) {
+          return response.body || [];
+        } else {
+          return [];
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return of([]);
+        } else {
+          return throwError(() => new Error(`Erro ao listar pedidos: ${error.message}`));
+        }
+      })
+    );
   }
 
-  inserir(pecaroupa: PecaRoupaQuantidade): Observable<void> {
-    pecaroupa.id = new Date().getTime();
-    return this.http.post<void>(this.API, pecaroupa, this.httpOptions).pipe(catchError(this.handleError));
+  inserir(pedido: Pedido): Observable<Pedido | null> {
+    return this.http.post<Pedido>(this.API, pedido, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<Pedido>) => {
+        if (response.status === 201) {
+          return response.body;
+        } else {
+          return null;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => new Error(`Erro ao inserir pedido: ${error.message}`));
+      })
+    );
   }
 
-  buscarPorId(id: number): Observable<PecaRoupaQuantidade | undefined> {
-    return this.http.get<PecaRoupaQuantidade>(`${this.API}/${id}`).pipe(catchError(this.handleError));
+  buscarPorId(id: number): Observable<Pedido | null> {
+    return this.http.get<Pedido>(`${this.API}/${id}`).pipe(
+      map((response: Pedido) => response || null),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return of(null);
+        } else {
+          return throwError(() => new Error(`Erro ao buscar pedido por ID: ${error.message}`));
+        }
+      })
+    );
   }
 
-  atualizar(pecaroupa: PecaRoupaQuantidade): Observable<void> {
-    return this.http.put<void>(`${this.API}/${pecaroupa.id}`, pecaroupa, this.httpOptions).pipe(catchError(this.handleError));
+  atualizar(pedido: Pedido): Observable<Pedido | null> {
+    return this.http.put<Pedido>(`${this.API}/${pedido.idpedido}`, pedido, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<Pedido>) => {
+        if (response.status === 200) {
+          return response.body;
+        } else {
+          return null;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => new Error(`Erro ao atualizar pedido: ${error.message}`));
+      })
+    );
   }
 
-  remover(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.API}/${id}`).pipe(catchError(this.handleError));
+  remover(id: number): Observable<void | null> {
+    return this.http.delete<void>(`${this.API}/${id}`, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<void>) => {
+        if (response.status === 200) {
+          return null;
+        } else {
+          return null;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => new Error(`Erro ao remover pedido: ${error.message}`));
+      })
+    );
   }
 
-  removertudo(): Observable<void> {
-    return this.http.delete<void>(this.API).pipe(catchError(this.handleError));
+  removertudo(): Observable<void | null> {
+    return this.http.delete<void>(this.API, { headers: this.httpOptions.headers, observe: this.httpOptions.observe }).pipe(
+      map((response: HttpResponse<void>) => {
+        if (response.status === 200) {
+          return null;
+        } else {
+          return null;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => new Error(`Erro ao remover todos os pedidos: ${error.message}`));
+      })
+    );
   }
 }
