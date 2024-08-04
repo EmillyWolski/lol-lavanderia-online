@@ -1,51 +1,57 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { PecaRoupaQuantidade } from '../shared/models/peca-roupa-quantidade.model';
-
-const LS_CHAVE_PECAROUPAQNT = 'pecaroupaqnt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PecaRoupaQntService {
-  constructor() {}
-  listarTodos(): PecaRoupaQuantidade[] {
-    const pecasroupas = localStorage[LS_CHAVE_PECAROUPAQNT];
-    return pecasroupas ? JSON.parse(pecasroupas) : [];
+  private readonly API = 'http://localhost:8080/pecasRoupaQnt';
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
+  constructor(private http: HttpClient) {}
+
+  listarTodos(): Observable<PecaRoupaQuantidade[]> {
+    return this.http.get<PecaRoupaQuantidade[]>(this.API, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  inserir(pecaroupa: PecaRoupaQuantidade): void {
-    const pecasroupas = this.listarTodos();
-    pecaroupa.id = new Date().getTime();
-    pecasroupas.push(pecaroupa);
-
-    localStorage[LS_CHAVE_PECAROUPAQNT] = JSON.stringify(pecasroupas);
+  inserir(pecaRoupaQnt: PecaRoupaQuantidade): Observable<PecaRoupaQuantidade> {
+    return this.http.post<PecaRoupaQuantidade>(this.API, pecaRoupaQnt, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  buscarPorId(id: number): PecaRoupaQuantidade | undefined {
-    const pecasroupas = this.listarTodos();
-
-    return pecasroupas.find((pecaroupa) => pecaroupa.id === id);
+  atualizar(pecaRoupaQnt: PecaRoupaQuantidade): Observable<void> {
+    return this.http.put<void>(`${this.API}/${pecaRoupaQnt.id}`, pecaRoupaQnt, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  atualizar(pecaroupa: PecaRoupaQuantidade): void {
-    const pecasroupas = this.listarTodos();
-    pecasroupas.forEach((obj, index, objs) => {
-      if (pecaroupa.id === obj.id) {
-        objs[index] = pecaroupa;
-      }
-    });
-    localStorage[LS_CHAVE_PECAROUPAQNT] = JSON.stringify(pecasroupas);
+  remover(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API}/${id}`, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  remover(id: number): void {
-    let pecasroupas = this.listarTodos();
-
-    pecasroupas = pecasroupas.filter((pecaroupa) => pecaroupa.id !== id);
-
-    localStorage[LS_CHAVE_PECAROUPAQNT] = JSON.stringify(pecasroupas);
+  buscarPorId(id: number): Observable<PecaRoupaQuantidade> {
+    return this.http.get<PecaRoupaQuantidade>(`${this.API}/${id}`, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  removertudo(): void {
-    localStorage.removeItem(LS_CHAVE_PECAROUPAQNT);
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Ocorreu um erro';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Erro: ${error.error.message}`;
+    } else {
+      errorMessage = `Código do erro: ${error.status}\nMensagem: ${error.message}`;
+    }
+    return throwError(() => new Error(errorMessage));
   }
 }

@@ -4,22 +4,18 @@ public class PecaRoupaQnt {
   private Roupa roupa;
   private int quantidade;
   private Pedido pedido;
+  private int valor;
 
   public PecaRoupaQnt() {
-
   }
 
   public PecaRoupaQnt(Roupa roupa, int quantidade, Pedido pedido) {
-    super();
     this.roupa = roupa;
     this.quantidade = quantidade;
+    this.pedido = pedido;
   }
 
-  public PecaRoupaQnt(Roupa calca, int i) {
-    //TODO Auto-generated constructor stub
-}
-
-public Roupa getRoupa() {
+  public Roupa getRoupa() {
     return roupa;
   }
 

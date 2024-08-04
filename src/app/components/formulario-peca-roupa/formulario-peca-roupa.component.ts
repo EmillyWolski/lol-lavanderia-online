@@ -18,10 +18,11 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./formulario-peca-roupa.component.css'],
   schemas: [NO_ERRORS_SCHEMA],
 })
+
 export class FormularioPecaRoupaComponent implements OnInit {
   @ViewChild('formPecaRoupa') formPecaRoupa!: NgForm;
-  
-  pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade();
+
+  pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade(0, 0, new Roupas(), 0); 
   roupas: Roupas[] = [];
 
   constructor(
@@ -50,9 +51,16 @@ export class FormularioPecaRoupaComponent implements OnInit {
   inserir(): void {
     if (this.formPecaRoupa.form.valid) {
       try {
-        this.pecasroupaqntservice.inserir(this.pecaroupaqnt);
-        this.router.navigate(['/inserir-pedido']);
-        alert('Peça adicionada com sucesso no pedido.');
+        this.pecasroupaqntservice.inserir(this.pecaroupaqnt).subscribe({
+          next: () => {
+            this.router.navigate(['/inserir-pedido']);
+            alert('Peça adicionada com sucesso no pedido.');
+          },
+          error: (error: any) => {
+            console.error('Erro ao adicionar peça de roupa:', error.message);
+            alert('Erro ao adicionar peça de roupa.');
+          }
+        });
       } catch (error: any) {
         console.error('Erro ao adicionar peça de roupa:', error.message);
         alert('Erro ao adicionar peça de roupa.');

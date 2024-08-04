@@ -95,44 +95,44 @@ export class TelaRelatoriosComponent implements OnInit {
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 10;
     let yPos = 20;
-
+  
     // Obtém a data atual
     const dataAtual = new Date();
     const dataFormatada = dataAtual.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
-
+  
     // Obtém a receita total
-    this.pedidoService.obterReceitaTotal().subscribe((receitaTotal) => {
+    this.pedidoService.obterReceitaTotal().subscribe((receitaTotal: number) => { // Defina o tipo aqui
       // Estilos do título
       doc.setFontSize(18);
       doc.setFont('helvetica', 'normal');
       doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, {
         align: 'center',
       });
-
+  
       yPos += 15;
-
+  
       // Estilos do sub-título
       doc.setFontSize(14);
       doc.setFont('helvetica', 'normal');
       doc.text('Relatório de Receitas', pageWidth / 2, yPos, {
         align: 'center',
       });
-
+  
       yPos += 15;
-
+  
       doc.setDrawColor(200, 200, 200); // Cor para a linha
       doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
-
+  
       // Adiciona a data da extração do relatório
       doc.setFontSize(12);
       doc.text(`Data de Extração: ${dataFormatada}`, margin, yPos);
-
+  
       yPos += 10;
-
+  
       // Escreve a receita total
       doc.setFontSize(12);
       doc.text(`Receita Total: R$ ${receitaTotal.toFixed(2)}`, margin, yPos);
-
+  
       doc.save('Relatorio_Receitas.pdf');
     });
   }

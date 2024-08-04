@@ -20,7 +20,7 @@ export class FazerPedidoComponent implements OnInit {
   pedidos: Pedido[] = [];
   pedido: Pedido = new Pedido();
   pecasRoupa: PecaRoupaQuantidade[] = [];
-  valorTotal: number = 0; // Você pode definir como calcular o valor total posteriormente
+  valorTotal: number = 0; 
   mensagem: string | null = null;
   mensagem_detalhes: string | null = null;
 
@@ -48,14 +48,27 @@ export class FazerPedidoComponent implements OnInit {
   }
 
   carregarPecasRoupa(): void {
-    // Carregando as peças de roupa diretamente
-    this.pecasRoupa = this.pecaRoupaQntService.listarTodos();
+    // Certifique-se de que a função listarTodos retorna um Observable
+    this.pecaRoupaQntService.listarTodos().subscribe({
+      next: (pecas) => {
+        this.pecasRoupa = pecas ?? [];
+      },
+      error: (err: HttpErrorResponse) => {
+        this.mensagem = 'Erro ao carregar peças de roupa.';
+        this.mensagem_detalhes = `[${err.status}] ${err.message}`;
+        console.error('Erro ao carregar peças de roupa:', err);
+      },
+    });
   }
 
   fazerPedido(form: NgForm): void {
     if (form.valid) {
+      // Atualiza as propriedades do pedido antes de enviá-lo
+      this.pedido.arrayPedidosRoupas = this.pecasRoupa; // Adicionando as peças de roupa
+      this.pedido.valorpedido = this.calcularValorTotal(); // Calculando o valor total
+
       // Inserir pedido com todas as informações necessárias
-      this.pedidoService.inserir(this.pedido, this.pecasRoupa, this.valorTotal).subscribe({
+      this.pedidoService.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.pedido.valorpedido).subscribe({
         next: () => {
           this.mensagem = 'Pedido realizado com sucesso.';
           form.resetForm();
@@ -70,6 +83,11 @@ export class FazerPedidoComponent implements OnInit {
     } else {
       this.mensagem = 'Por favor, preencha todos os campos corretamente.';
     }
+  }
+
+  calcularValorTotal(): number {
+    // Implementar lógica para calcular o valor total das peças de roupa
+    return this.pecasRoupa.reduce((total, peca) => total + (peca.valor || 0), 0);
   }
 
   remover($event: any, pedido: Pedido): void {

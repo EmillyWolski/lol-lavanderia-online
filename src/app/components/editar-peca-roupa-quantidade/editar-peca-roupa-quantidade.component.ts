@@ -26,7 +26,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class EditarPecaRoupaQuantidadeComponent implements OnInit {
-  pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade();
+  pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade(0, 0, new Roupas(), 0); // Passando os parâmetros do construtor
   @ViewChild('formEditarPecaRoupaQnt') formEditarPecaRoupaQnt!: NgForm;
   roupas: Roupas[] = [];
 
@@ -56,26 +56,30 @@ export class EditarPecaRoupaQuantidadeComponent implements OnInit {
 
   carregarPecaRoupa(): void {
     const id = +this.route.snapshot.params['id'];
-    const peca = this.pecasroupaqntservice.buscarPorId(id);
-    if (peca) {
-      this.pecaroupaqnt = peca;
-    } else {
-      console.error('Peça de roupa não encontrada: id =' + id);
-      alert('Peça de roupa não encontrada.');
-      this.router.navigate(['/inserir-pedido']);
-    }
+    this.pecasroupaqntservice.buscarPorId(id).subscribe({
+      next: (peca) => {
+        this.pecaroupaqnt = peca;
+      },
+      error: (err) => {
+        console.error('Peça de roupa não encontrada: id =' + id);
+        alert('Peça de roupa não encontrada.');
+        this.router.navigate(['/inserir-pedido']);
+      }
+    });
   }
 
   atualizar(): void {
     if (this.formEditarPecaRoupaQnt.form.valid) {
-      try {
-        this.pecasroupaqntservice.atualizar(this.pecaroupaqnt);
-        this.router.navigate(['/inserir-pedido']);
-        alert('Peça atualizada com sucesso');
-      } catch (error: any) {
-        console.error('Erro ao atualizar peça de roupa:', error.message);
-        alert('Erro ao atualizar peça de roupa.');
-      }
+      this.pecasroupaqntservice.atualizar(this.pecaroupaqnt).subscribe({
+        next: () => {
+          this.router.navigate(['/inserir-pedido']);
+          alert('Peça atualizada com sucesso');
+        },
+        error: (error) => {
+          console.error('Erro ao atualizar peça de roupa:', error.message);
+          alert('Erro ao atualizar peça de roupa.');
+        }
+      });
     } else {
       alert('Por favor, preencha todos os campos corretamente.');
     }

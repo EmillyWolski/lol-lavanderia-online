@@ -7,17 +7,17 @@ public class Pedido {
   private long idPedido;
   private Usuario usuario;
   private String status;
-  private double valorTotal;
+  private double valorpedido;
   private int prazo;
   private long dataHoraDoPedido;
   private List<PecaRoupaQnt> pecaRoupaQnt;
 
-  public Pedido(long idPedido, Usuario usuario, String status, double valorTotal, int prazo, long dataHoraDoPedido,
+  public Pedido(long idPedido, Usuario usuario, String status, double valorpedido, int prazo, long dataHoraDoPedido,
       List<PecaRoupaQnt> pecaRoupaQnt) {
     this.idPedido = idPedido;
     this.usuario = usuario;
     this.status = status;
-    this.valorTotal = valorTotal;
+    this.valorpedido = valorpedido;
     this.prazo = prazo;
     this.dataHoraDoPedido = dataHoraDoPedido;
     this.pecaRoupaQnt = pecaRoupaQnt;
@@ -48,11 +48,11 @@ public class Pedido {
   }
 
   public double getValorTotal() {
-    return valorTotal;
+    return valorpedido;
   }
 
-  public void setValorTotal(double valorTotal) {
-    this.valorTotal = valorTotal;
+  public void setValorTotal(double valorpedido) {
+    this.valorpedido = valorpedido;
   }
 
   public int getPrazo() {

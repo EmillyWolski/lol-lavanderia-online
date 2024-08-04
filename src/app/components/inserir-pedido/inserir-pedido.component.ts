@@ -1,69 +1,91 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { PecaRoupaQntService } from '../../services/peca-roupa-qnt.service';
-import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
-import { Roupas } from '../../shared/models/roupas.model';
+import { PedidoService } from '../../services/pedido/pedido.service';
 import { RoupasService } from '../../services/roupas/roupas.service';
 import { Pedido } from '../../shared/models/pedido.model';
-import { PedidoService } from '../../services/pedido/pedido.service';
+import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
+import { Roupas } from '../../shared/models/roupas.model';
 import { ModalOrcamentoComponent } from '../modal-orcamento/modal-orcamento.component';
 import { CommonModule } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-inserir-pedido',
   standalone: true,
-  imports: [CommonModule, ModalOrcamentoComponent, RouterLink, FormsModule],
+  imports: [CommonModule, NgSelectModule, RouterLink, ModalOrcamentoComponent],
   templateUrl: './inserir-pedido.component.html',
   styleUrls: ['./inserir-pedido.component.css'],
-  providers: [PecaRoupaQntService, PedidoService, RoupasService]
 })
 export class InserirPedidoComponent implements OnInit {
-
-  @ViewChild(ModalOrcamentoComponent) modalOrcamento!: ModalOrcamentoComponent;
-
-  pecasroupas: PecaRoupaQuantidade[] = [];
-  pedido: Pedido = new Pedido();
+  form!: FormGroup;
   roupas: Roupas[] = [];
-  prazosMap: { [id: number]: number } = {};
-  valorPedido: number = 0;
-  prazoMaximo: number = 0;
+  arrayPedidosRoupas: PecaRoupaQuantidade[] = [];
+  pedido: Pedido = new Pedido(); // Instância do pedido
+  valorPedido: number = 0; // Valor total do pedido
+  prazoMaximo: number = 0; // Prazo máximo
+  prazosMap: { [id: number]: number } = {}; // Mapa de prazos
+
+  @ViewChild(ModalOrcamentoComponent) modalOrcamento!: ModalOrcamentoComponent; // Referência ao componente da modal
 
   constructor(
-    private pecaroupaService: PecaRoupaQntService,
-    private pedidoservice: PedidoService,
-    private router: Router,
-    private roupasService: RoupasService
-  ) { }
+    private fb: FormBuilder,
+    private pedidoService: PedidoService,
+    private roupasService: RoupasService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.carregarPecasRoupas();
-    this.carregarRoupas();
-  }
+    this.form = this.fb.group({
+      clienteId: [null, Validators.required],
+      prazo: [null, Validators.required]
+    });
 
-  carregarPecasRoupas(): void {
-    const pecas = this.pecaroupaService.listarTodos();
-    this.pecasroupas = pecas.length > 0 ? pecas : [];
-    this.calcularValoresPedido();
+    this.carregarRoupas();
   }
 
   carregarRoupas(): void {
     this.roupasService.listarTodas().subscribe({
-      next: (roupas) => {
-        this.roupas = roupas ?? [];
-        this.prazosMap = {};
-        this.roupas.forEach((roupa: Roupas) => {
-          if (roupa.id !== undefined && roupa.prazo !== undefined) {
-            this.prazosMap[roupa.id] = roupa.prazo; // Definindo prazos para as roupas
-          }
-        });
-        this.calcularValoresPedido();
+      next: (roupas: Roupas[] | null) => {
+        if (roupas) {
+          this.roupas = roupas;
+          // Preencher o mapa de prazos
+          this.prazosMap = roupas.reduce((map, roupa) => {
+            map[roupa.id] = roupa.prazo; // Assume que roupa.id é o identificador
+            return map;
+          }, {} as { [id: number]: number });
+        }
       },
-      error: (err: HttpErrorResponse) => {
-        console.error('Erro ao carregar roupas:', err.message);
+      error: (error: any) => {
+        console.error('Erro ao carregar roupas:', error);
       }
     });
+  }
+
+  adicionarPecaRoupa(pecaRoupaQuantidade: PecaRoupaQuantidade): void {
+    this.arrayPedidosRoupas.push(pecaRoupaQuantidade);
+    this.atualizarValores();
+  }
+
+  removerPecaRoupa(id: number): void {
+    this.arrayPedidosRoupas = this.arrayPedidosRoupas.filter(peca => peca.id !== id);
+    this.atualizarValores();
+    console.log('Peça de roupa removida com sucesso!');
+  }
+
+  atualizarValores(): void {
+    this.valorPedido = this.calcularValorTotal();
+    this.prazoMaximo = this.calcularPrazoMaximo();
+  }
+
+  calcularValorTotal(): number {
+    return this.arrayPedidosRoupas.reduce((total, peca) => total + (peca.valor || 0), 0);
+  }
+
+  calcularPrazoMaximo(): number {
+    // Acessando o prazo da peça de roupa associada através do mapa de prazos
+    return Math.max(...this.arrayPedidosRoupas.map(peca => this.prazosMap[peca.pecaroupa.id] || 0), 0);
   }
 
   abrirModal(): void {
@@ -72,28 +94,15 @@ export class InserirPedidoComponent implements OnInit {
     }
   }
 
-  calcularValoresPedido(): void {
-    this.valorPedido = this.calcularValorPedido();
-    this.prazoMaximo = this.calcularPrazoMaximo();
-  }
-
-  calcularValorPedido(): number {
-    return this.pecasroupas.reduce((total, peca) => total + (peca.quantidade * (peca.pecaroupa?.valor || 0)), 0);
-  }
-
-  calcularPrazoMaximo(): number {
-    return Math.max(...this.pecasroupas.map(peca => peca.pecaroupa?.prazo || 0), 0);
-  }
-
   aprovarPedido(): void {
     this.pedido.idpedido = new Date().getTime();
-    this.pedido.arrayPedidosRoupas = [...this.pecasroupas];
+    this.pedido.arrayPedidosRoupas = [...this.arrayPedidosRoupas];
     this.pedido.valorpedido = this.valorPedido;
     this.pedido.prazo = this.prazoMaximo;
 
-    this.pedidoservice.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.valorPedido).subscribe({
+    this.pedidoService.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.valorPedido).subscribe({
       next: () => {
-        this.pedido = new Pedido();
+        this.pedido = new Pedido(); // Reinicia a instância do pedido
         this.router.navigateByUrl('/fazer-pedido');
       },
       error: (err: HttpErrorResponse) => {
@@ -103,12 +112,6 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   onRecusar(): void {
-    this.pedido.recusarPedido();
-  }
-
-  remover(event: Event, pecaroupa: PecaRoupaQuantidade): void {
-    event.preventDefault();
-    this.pecasroupas = this.pecasroupas.filter(pr => pr !== pecaroupa);
-    this.calcularValoresPedido();
+    this.pedido.recusarPedido(); // Chamando o método de recusa do pedido
   }
 }

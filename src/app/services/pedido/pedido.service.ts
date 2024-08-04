@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
-import { LoginService } from '../login/login.service';
-import { PessoaFuncionario } from '../../shared/models/pessoa-funcionario.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,164 +11,55 @@ import { PessoaFuncionario } from '../../shared/models/pessoa-funcionario.model'
 export class PedidoService {
   private readonly API = 'http://localhost:8080/pedidos';
   private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-    observe: 'response' as 'response',
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient, private loginService: LoginService) {}
+  constructor(private http: HttpClient) {}
 
-  private handleSuccess(status: number, message: string) {
-    console.log(`Status: ${status} - ${message}`);
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Erro: ${error.error.message}`;
-    } else {
-      errorMessage = `Código do erro: ${error.status}\nMensagem: ${error.message}`;
-    }
-    console.error(`Status: ${error.status} - ${errorMessage}`);
-    return throwError(() => new Error(errorMessage));
-  }
-
-  listarTodos(): Observable<Pedido[] | null> {
-    const pessoaLogada = this.loginService.usuarioLogado;
-    let url = this.API;
-
-    if (pessoaLogada instanceof PessoaFuncionario) {
-      return this.http.get<Pedido[]>(url, this.httpOptions).pipe(
-        map((response) => {
-          this.handleSuccess(response.status, 'Pedidos listados com sucesso.');
-          return response.body || [];
-        }),
-        catchError((err) => {
-          if (err.status === 404) {
-            this.handleSuccess(404, 'Nenhum pedido encontrado.');
-            return of([]);
-          } else {
-            return this.handleError(err);
-          }
-        })
-      );
-    } else {
-      url += `?clienteId=${pessoaLogada?.id}`;
-      return this.http.get<Pedido[]>(url, this.httpOptions).pipe(
-        map((response) => {
-          this.handleSuccess(response.status, 'Pedidos listados com sucesso.');
-          return response.body || [];
-        }),
-        catchError((err) => {
-          if (err.status === 404) {
-            this.handleSuccess(404, 'Nenhum pedido encontrado.');
-            return of([]);
-          } else {
-            return this.handleError(err);
-          }
-        })
-      );
-    }
-  }
-
-  salvarPedidos(pedidos: Pedido[]): Observable<void> {
-    return this.http.put<void>(this.API, pedidos, this.httpOptions).pipe(
-      map((response) => {
-        this.handleSuccess(response.status, 'Pedidos salvos com sucesso.');
-      }),
-      catchError((err) => {
-        return this.handleError(err);
-      })
+  // Método para listar todos os pedidos
+  listarTodos(): Observable<Pedido[]> {
+    return this.http.get<Pedido[]>(this.API, this.httpOptions).pipe(
+      catchError(this.handleError)
     );
   }
 
-  salvar(pedido: Pedido): Observable<void> {
-    return this.http.post<void>(this.API, pedido, this.httpOptions).pipe(
-      map((response) => {
-        this.handleSuccess(response.status, 'Pedido salvo com sucesso.');
-      }),
-      catchError((err) => {
-        return this.handleError(err);
-      })
-    );
-  }
-
-  inserir(
-    pedido: Pedido,
-    arrayPedidosRoupas: PecaRoupaQuantidade[],
-    valorpedido: number
-  ): Observable<void> {
-    pedido.idpedido = new Date().getTime();
-    pedido.arrayPedidosRoupas = arrayPedidosRoupas;
-    const pessoaLogada = this.loginService.usuarioLogado;
-    pedido.clienteId = pessoaLogada?.id || 0; // Usando 0 como valor padrão
-    pedido.nomecliente = pessoaLogada?.nome || 'Não identificado';
+  // Método para inserir um novo pedido
+  inserir(pedido: Pedido, arrayPedidosRoupas: PecaRoupaQuantidade[], valorpedido: number): Observable<void> {
+    // Atualiza as propriedades do pedido
     pedido.valorpedido = valorpedido;
-    pedido.statuspedido =
-      pedido.statuspedido !== 'REJEITADO' ? 'EM ABERTO' : pedido.statuspedido;
-    return this.salvar(pedido);
-  }
+    pedido.arrayPedidosRoupas = arrayPedidosRoupas; // Use a propriedade correta do modelo Pedido
 
-  buscaPorId(id: number): Observable<Pedido | undefined> {
-    return this.http.get<Pedido>(`${this.API}/${id}`, this.httpOptions).pipe(
-      map((response) => {
-        this.handleSuccess(response.status, 'Pedido encontrado com sucesso.');
-        return response.body || undefined; // Retorna undefined se o corpo for null
-      }),
-      catchError((err) => {
-        if (err.status === 404) {
-          this.handleSuccess(404, 'Pedido não encontrado.');
-          return of(undefined); // Retorna undefined se não encontrado
-        } else {
-          return this.handleError(err);
-        }
-      })
+    return this.http.post<void>(this.API, pedido, this.httpOptions).pipe(
+      catchError(this.handleError)
     );
   }
 
+  // Método para atualizar um pedido existente
   atualizar(pedido: Pedido): Observable<void> {
-    return this.http
-      .put<void>(`${this.API}/${pedido.idpedido}`, pedido, this.httpOptions)
-      .pipe(
-        map((response) => {
-          this.handleSuccess(response.status, 'Pedido atualizado com sucesso.');
-        }),
-        catchError((err) => {
-          if (err.status === 404) {
-            this.handleSuccess(404, 'Pedido não encontrado.');
-          }
-          return this.handleError(err);
-        })
-      );
+    return this.http.put<void>(`${this.API}/${pedido.idpedido}`, pedido, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
+  // Método para remover um pedido
   remover(id: number): Observable<void> {
     return this.http.delete<void>(`${this.API}/${id}`, this.httpOptions).pipe(
-      map((response) => {
-        this.handleSuccess(response.status, 'Pedido removido com sucesso.');
-      }),
-      catchError((err) => {
-        if (err.status === 404) {
-          this.handleSuccess(404, 'Pedido não encontrado.');
-        }
-        return this.handleError(err);
-      })
+      catchError(this.handleError)
     );
   }
 
+  // Método para obter receita total
   obterReceitaTotal(): Observable<number> {
     return this.listarTodos().pipe(
       map((pedidos) => {
         this.handleSuccess(200, 'Receita total calculada com sucesso.');
-        return pedidos
-          ? pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0)
-          : 0;
+        return pedidos ? pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0) : 0;
       }),
       catchError(this.handleError)
     );
   }
 
+  // Método para obter clientes que mais gastaram
   obterClientesQueMaisGastaram(): Observable<
     {
       nome: string;
@@ -221,5 +106,21 @@ export class PedidoService {
       }),
       catchError(this.handleError)
     );
+  }
+
+  // Método para tratar erros de requisição
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Ocorreu um erro';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Erro: ${error.error.message}`;
+    } else {
+      errorMessage = `Código do erro: ${error.status}\nMensagem: ${error.message}`;
+    }
+    return throwError(() => new Error(errorMessage));
+  }
+
+  // Método para tratar sucesso 
+  private handleSuccess(statusCode: number, message: string) {
+    console.log(`Status: ${statusCode}, Mensagem: ${message}`);
   }
 }
