@@ -5,35 +5,22 @@ import java.util.List;
 
 public class Pedido {
   private long idPedido;
-  private Cliente cliente;
+  private Usuario usuario;
   private String status;
   private double valorTotal;
   private int prazo;
   private long dataHoraDoPedido;
   private List<PecaRoupaQnt> pecaRoupaQnt;
 
-  public Pedido() {
-    super();
-  }
-
-  public Pedido(Cliente cliente, long idPedido, String status, double valorTotal, int prazo, long dataHoraDoPedido,
+  public Pedido(long idPedido, Usuario usuario, String status, double valorTotal, int prazo, long dataHoraDoPedido,
       List<PecaRoupaQnt> pecaRoupaQnt) {
-    super();
-    this.idPedido = new Date().getTime();
-    this.cliente = cliente;
+    this.idPedido = idPedido;
+    this.usuario = usuario;
     this.status = status;
     this.valorTotal = valorTotal;
     this.prazo = prazo;
     this.dataHoraDoPedido = dataHoraDoPedido;
     this.pecaRoupaQnt = pecaRoupaQnt;
-  }
-
-  public Cliente getCliente() {
-    return cliente;
-  }
-
-  public void setCliente(Cliente cliente) {
-    this.cliente = cliente;
   }
 
   public long getIdPedido() {
@@ -42,6 +29,14 @@ public class Pedido {
 
   public void setIdPedido(long idPedido) {
     this.idPedido = idPedido;
+  }
+
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
   }
 
   public String getStatus() {

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Pedido } from '../../shared/models/pedido.model';
@@ -14,9 +18,9 @@ export class PedidoService {
   private readonly API = 'http://localhost:8080/pedidos';
   private httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     }),
-    observe: 'response' as 'response'
+    observe: 'response' as 'response',
   };
 
   constructor(private http: HttpClient, private loginService: LoginService) {}
@@ -37,7 +41,7 @@ export class PedidoService {
   }
 
   listarTodos(): Observable<Pedido[] | null> {
-    const pessoaLogada = this.loginService.getPessoaLogada();
+    const pessoaLogada = this.loginService.usuarioLogado;
     let url = this.API;
 
     if (pessoaLogada instanceof PessoaFuncionario) {
@@ -96,14 +100,19 @@ export class PedidoService {
     );
   }
 
-  inserir(pedido: Pedido, arrayPedidosRoupas: PecaRoupaQuantidade[], valorpedido: number): Observable<void> {
+  inserir(
+    pedido: Pedido,
+    arrayPedidosRoupas: PecaRoupaQuantidade[],
+    valorpedido: number
+  ): Observable<void> {
     pedido.idpedido = new Date().getTime();
     pedido.arrayPedidosRoupas = arrayPedidosRoupas;
-    const pessoaLogada = this.loginService.getPessoaLogada();
+    const pessoaLogada = this.loginService.usuarioLogado;
     pedido.clienteId = pessoaLogada?.id || 0; // Usando 0 como valor padrão
     pedido.nomecliente = pessoaLogada?.nome || 'Não identificado';
     pedido.valorpedido = valorpedido;
-    pedido.statuspedido = pedido.statuspedido !== 'REJEITADO' ? 'EM ABERTO' : pedido.statuspedido;
+    pedido.statuspedido =
+      pedido.statuspedido !== 'REJEITADO' ? 'EM ABERTO' : pedido.statuspedido;
     return this.salvar(pedido);
   }
 
@@ -125,17 +134,19 @@ export class PedidoService {
   }
 
   atualizar(pedido: Pedido): Observable<void> {
-    return this.http.put<void>(`${this.API}/${pedido.idpedido}`, pedido, this.httpOptions).pipe(
-      map((response) => {
-        this.handleSuccess(response.status, 'Pedido atualizado com sucesso.');
-      }),
-      catchError((err) => {
-        if (err.status === 404) {
-          this.handleSuccess(404, 'Pedido não encontrado.');
-        }
-        return this.handleError(err);
-      })
-    );
+    return this.http
+      .put<void>(`${this.API}/${pedido.idpedido}`, pedido, this.httpOptions)
+      .pipe(
+        map((response) => {
+          this.handleSuccess(response.status, 'Pedido atualizado com sucesso.');
+        }),
+        catchError((err) => {
+          if (err.status === 404) {
+            this.handleSuccess(404, 'Pedido não encontrado.');
+          }
+          return this.handleError(err);
+        })
+      );
   }
 
   remover(id: number): Observable<void> {
@@ -154,22 +165,33 @@ export class PedidoService {
 
   obterReceitaTotal(): Observable<number> {
     return this.listarTodos().pipe(
-      map(pedidos => {
+      map((pedidos) => {
         this.handleSuccess(200, 'Receita total calculada com sucesso.');
-        return pedidos ? pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0) : 0;
+        return pedidos
+          ? pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0)
+          : 0;
       }),
       catchError(this.handleError)
     );
   }
 
-  obterClientesQueMaisGastaram(): Observable<{ nome: string; totalGasto: number; quantidadePedidos: number; receitaTotal: number }[]> {
+  obterClientesQueMaisGastaram(): Observable<
+    {
+      nome: string;
+      totalGasto: number;
+      quantidadePedidos: number;
+      receitaTotal: number;
+    }[]
+  > {
     return this.listarTodos().pipe(
-      map(pedidos => {
+      map((pedidos) => {
         if (!pedidos) return [];
 
-        const clientes: { [nome: string]: { totalGasto: number; quantidadePedidos: number } } = {};
+        const clientes: {
+          [nome: string]: { totalGasto: number; quantidadePedidos: number };
+        } = {};
 
-        pedidos.forEach(pedido => {
+        pedidos.forEach((pedido) => {
           const nomeCliente = pedido.nomecliente;
           if (clientes[nomeCliente]) {
             clientes[nomeCliente].totalGasto += pedido.valorpedido;
@@ -182,15 +204,20 @@ export class PedidoService {
           }
         });
 
-        const clientesArray = Object.keys(clientes).map(nome => ({
+        const clientesArray = Object.keys(clientes).map((nome) => ({
           nome,
           totalGasto: clientes[nome].totalGasto,
           quantidadePedidos: clientes[nome].quantidadePedidos,
-          receitaTotal: clientes[nome].totalGasto
+          receitaTotal: clientes[nome].totalGasto,
         }));
 
-        this.handleSuccess(200, 'Clientes que mais gastaram obtidos com sucesso.');
-        return clientesArray.sort((a, b) => b.totalGasto - a.totalGasto).slice(0, 3);
+        this.handleSuccess(
+          200,
+          'Clientes que mais gastaram obtidos com sucesso.'
+        );
+        return clientesArray
+          .sort((a, b) => b.totalGasto - a.totalGasto)
+          .slice(0, 3);
       }),
       catchError(this.handleError)
     );
