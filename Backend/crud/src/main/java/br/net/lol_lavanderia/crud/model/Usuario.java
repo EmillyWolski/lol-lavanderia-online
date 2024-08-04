@@ -1,25 +1,33 @@
 package br.net.lol_lavanderia.crud.model;
 
-public class Usuariointerm {
+public class Usuario {
   private long id;
   private String nome;
   private String email;
   private String senha;
   private String cpf;
-  private String endereco;
+  private String cep;
+  private String rua;
+  private String cidade;
+  private String estado;
   private String telefone;
   private String dataNascimento;
+  private String perfil;
 
-  public Usuariointerm(long id, String nome, String email, String senha, String cpf, String endereco, String telefone,
-      String dataNascimento) {
+  public Usuario(long id, String nome, String email, String senha, String cpf, String cep, String rua, String cidade,
+      String estado, String telefone, String dataNascimento, String perfil) {
     this.id = id;
     this.nome = nome;
     this.email = email;
     this.senha = senha;
     this.cpf = cpf;
-    this.endereco = endereco;
+    this.cep = cep;
+    this.rua = rua;
+    this.cidade = cidade;
+    this.estado = estado;
     this.telefone = telefone;
     this.dataNascimento = dataNascimento;
+    this.perfil = perfil;
   }
 
   public long getId() {
@@ -62,12 +70,36 @@ public class Usuariointerm {
     this.cpf = cpf;
   }
 
-  public String getEndereco() {
-    return endereco;
+  public String getCep() {
+    return cep;
   }
 
-  public void setEndereco(String endereco) {
-    this.endereco = endereco;
+  public void setCep(String cep) {
+    this.cep = cep;
+  }
+
+  public String getRua() {
+    return rua;
+  }
+
+  public void setRua(String rua) {
+    this.rua = rua;
+  }
+
+  public String getCidade() {
+    return cidade;
+  }
+
+  public void setCidade(String cidade) {
+    this.cidade = cidade;
+  }
+
+  public String getEstado() {
+    return estado;
+  }
+
+  public void setEstado(String estado) {
+    this.estado = estado;
   }
 
   public String getTelefone() {
@@ -85,4 +117,13 @@ public class Usuariointerm {
   public void setDataNascimento(String dataNascimento) {
     this.dataNascimento = dataNascimento;
   }
+
+  public String getPerfil() {
+    return perfil;
+  }
+
+  public void setPerfil(String perfil) {
+    this.perfil = perfil;
+  }
+
 }

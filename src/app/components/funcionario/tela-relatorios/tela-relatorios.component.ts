@@ -15,11 +15,9 @@ import { Observable } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterModule, RouterLink],
   templateUrl: './tela-relatorios.component.html',
-  styleUrls: ['./tela-relatorios.component.css']
+  styleUrls: ['./tela-relatorios.component.css'],
 })
-
 export class TelaRelatoriosComponent implements OnInit {
-
   pessoaLogada: Pessoa | null = null;
   pessoas: Pessoa[] = [];
 
@@ -27,10 +25,10 @@ export class TelaRelatoriosComponent implements OnInit {
     private loginService: LoginService,
     private autocadastroService: AutocadastroService,
     private pedidoService: PedidoService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.pessoaLogada = this.loginService.getPessoaLogada();
+    this.pessoaLogada = this.loginService.usuarioLogado;
     this.pessoas = this.autocadastroService.listarTodos();
   }
 
@@ -44,7 +42,9 @@ export class TelaRelatoriosComponent implements OnInit {
     // Estilos do título
     doc.setFontSize(18);
     doc.setFont('helvetica', 'normal');
-    doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, { align: 'center' });
+    doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, {
+      align: 'center',
+    });
 
     yPos += 15;
 
@@ -101,18 +101,22 @@ export class TelaRelatoriosComponent implements OnInit {
     const dataFormatada = dataAtual.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
 
     // Obtém a receita total
-    this.pedidoService.obterReceitaTotal().subscribe(receitaTotal => {
+    this.pedidoService.obterReceitaTotal().subscribe((receitaTotal) => {
       // Estilos do título
       doc.setFontSize(18);
       doc.setFont('helvetica', 'normal');
-      doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, { align: 'center' });
+      doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, {
+        align: 'center',
+      });
 
       yPos += 15;
 
       // Estilos do sub-título
       doc.setFontSize(14);
       doc.setFont('helvetica', 'normal');
-      doc.text('Relatório de Receitas', pageWidth / 2, yPos, { align: 'center' });
+      doc.text('Relatório de Receitas', pageWidth / 2, yPos, {
+        align: 'center',
+      });
 
       yPos += 15;
 
@@ -141,19 +145,24 @@ export class TelaRelatoriosComponent implements OnInit {
     let yPos = 20;
 
     // Obtém todos os pedidos
-    this.pedidoService.listarTodos().subscribe(pedidos => {
+    this.pedidoService.listarTodos().subscribe((pedidos) => {
       // Verifica se há pedidos
       if (!pedidos || pedidos.length === 0) {
-        // Caso não haja pedidos, exibe uma mensagem 
+        // Caso não haja pedidos, exibe uma mensagem
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
-        doc.text('Nenhum pedido encontrado.', pageWidth / 2, yPos, { align: 'center' });
+        doc.text('Nenhum pedido encontrado.', pageWidth / 2, yPos, {
+          align: 'center',
+        });
         doc.save('Relatorio_Clientes_Fieis.pdf');
         return;
       }
 
       // Mapeia os clientes e as informações de pedidos e receitas de cada um
-      const clientesDados = new Map<string, { quantidadePedidos: number, receitaTotal: number }>();
+      const clientesDados = new Map<
+        string,
+        { quantidadePedidos: number; receitaTotal: number }
+      >();
       pedidos.forEach((pedido: Pedido) => {
         const nomeCliente = pedido.nomecliente;
 
@@ -162,12 +171,17 @@ export class TelaRelatoriosComponent implements OnInit {
           dados.quantidadePedidos += 1;
           dados.receitaTotal += pedido.valorpedido;
         } else {
-          clientesDados.set(nomeCliente, { quantidadePedidos: 1, receitaTotal: pedido.valorpedido });
+          clientesDados.set(nomeCliente, {
+            quantidadePedidos: 1,
+            receitaTotal: pedido.valorpedido,
+          });
         }
       });
 
       // Ordena os clientes pelos valores da receita total (do maior para o menor)
-      const clientesOrdenados = Array.from(clientesDados.entries()).sort((a, b) => b[1].receitaTotal - a[1].receitaTotal);
+      const clientesOrdenados = Array.from(clientesDados.entries()).sort(
+        (a, b) => b[1].receitaTotal - a[1].receitaTotal
+      );
 
       // Seleciona os três clientes mais fiéis
       const topClientesFieis = clientesOrdenados.slice(0, 3);
@@ -177,7 +191,9 @@ export class TelaRelatoriosComponent implements OnInit {
         // Caso não haja clientes fiéis, exibe uma mensagem
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
-        doc.text('Nenhum cliente fiel encontrado.', pageWidth / 2, yPos, { align: 'center' });
+        doc.text('Nenhum cliente fiel encontrado.', pageWidth / 2, yPos, {
+          align: 'center',
+        });
         doc.save('Relatorio_Clientes_Fieis.pdf');
         return;
       }
@@ -185,14 +201,18 @@ export class TelaRelatoriosComponent implements OnInit {
       // Escreve o título do relatório
       doc.setFontSize(18);
       doc.setFont('helvetica', 'normal');
-      doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, { align: 'center' });
+      doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, {
+        align: 'center',
+      });
 
       yPos += 15;
 
       // Escreve o título do relatório de clientes fiéis
       doc.setFontSize(14);
       doc.setFont('helvetica', 'normal');
-      doc.text('Relatório dos 3 Clientes Mais Fiéis', pageWidth / 2, yPos, { align: 'center' });
+      doc.text('Relatório dos 3 Clientes Mais Fiéis', pageWidth / 2, yPos, {
+        align: 'center',
+      });
 
       yPos += 15;
 
@@ -206,10 +226,18 @@ export class TelaRelatoriosComponent implements OnInit {
         doc.text(`${index + 1}. ${nomeCliente}`, margin, yPos);
         yPos += 10;
 
-        doc.text(`Quantidade de Pedidos: ${dados.quantidadePedidos}`, margin, yPos);
+        doc.text(
+          `Quantidade de Pedidos: ${dados.quantidadePedidos}`,
+          margin,
+          yPos
+        );
         yPos += 10;
 
-        doc.text(`Receita Total: R$ ${dados.receitaTotal.toFixed(2)}`, margin, yPos);
+        doc.text(
+          `Receita Total: R$ ${dados.receitaTotal.toFixed(2)}`,
+          margin,
+          yPos
+        );
         yPos += 20; // Espaçamento adicional entre clientes
       });
 

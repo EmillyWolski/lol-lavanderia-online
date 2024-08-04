@@ -18,9 +18,9 @@ import { FormularioPecaRoupaComponent } from './components/formulario-peca-roupa
 import { EditarPecaRoupaQuantidadeComponent } from './components/editar-peca-roupa-quantidade/editar-peca-roupa-quantidade.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'inicio/login', pathMatch: 'full' },
-  { path: 'inicio/login', component: LoginComponent },
-  { path: 'inicio', redirectTo: 'inicio/login' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'inicio/login', component: LoginComponent }, //provavelmente vai ter q apagar
+  { path: 'inicio', redirectTo: 'inicio/login' }, //provavelmente vai ter q apagar
   { path: 'autocadastro', component: AutocadastroComponent },
   { path: 'inicio-cliente', component: InicialClienteComponent },
   { path: 'consultar-pedido', component: ConsultarPedidoComponent },
@@ -46,5 +46,9 @@ export const routes: Routes = [
   {
     path: 'editar-peca-roupa-quantidade/:id',
     component: EditarPecaRoupaQuantidadeComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 ];

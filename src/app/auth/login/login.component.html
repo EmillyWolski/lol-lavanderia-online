@@ -1,0 +1,36 @@
+<h1>Login</h1>
+<div *ngIf="message" class="alert alert-danger
+alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert”
+aria-label=" Close">
+  </button>
+</div>
+<div class="well">
+  <form #formLogin="ngForm">
+    <div class="form-group">
+      <label for="usuario">E-mail:</label>
+      <input type="text" class="form-control" id="email" name="email" [(ngModel)]="login.email" #email="ngModel" required>
+      <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+        <div [hidden]="!email.errors['required']">
+          Digite o seu Email
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="senha">Senha:</label>
+      <input type="text" class="form-control" id="senha" name="senha" [(ngModel)]="login.senha" #senha="ngModel" required>
+      <div *ngIf="senha.errors && (senha.dirty || senha.touched)" class="alert alert-danger">
+        <div [hidden]="!senha.errors['required']">
+          Digite a senha.
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="logar()" [disabled]="!formLogin.form.valid">
+      <i class="fa fa-save" aria-hidden="true"></i> Logar
+    </button>
+    <a class="btn btn-secondary" [routerLink]="['/autocadastro']">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Registrar
+    </a>
+  </form>
+</div>
