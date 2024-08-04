@@ -4,6 +4,7 @@ public class PecaRoupaQnt {
   private Roupa roupa;
   private int quantidade;
   private Pedido pedido;
+  @SuppressWarnings("unused")
   private int valor;
 
   public PecaRoupaQnt() {

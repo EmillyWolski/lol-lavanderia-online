@@ -3,6 +3,7 @@ package br.net.lol_lavanderia.crud.model;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class Pedido {
   private long idPedido;
   private Usuario usuario;

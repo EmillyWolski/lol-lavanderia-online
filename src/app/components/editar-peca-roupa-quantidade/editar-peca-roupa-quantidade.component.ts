@@ -26,7 +26,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class EditarPecaRoupaQuantidadeComponent implements OnInit {
-  pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade(0, 0, new Roupas(), 0); // Passando os parâmetros do construtor
+  pecaroupaqnt!: PecaRoupaQuantidade; // Mudei para não inicializar com valor padrão
   @ViewChild('formEditarPecaRoupaQnt') formEditarPecaRoupaQnt!: NgForm;
   roupas: Roupas[] = [];
 
@@ -58,11 +58,17 @@ export class EditarPecaRoupaQuantidadeComponent implements OnInit {
     const id = +this.route.snapshot.params['id'];
     this.pecasroupaqntservice.buscarPorId(id).subscribe({
       next: (peca) => {
-        this.pecaroupaqnt = peca;
+        if (peca) { // Verifica se peca não é null
+          this.pecaroupaqnt = peca;
+        } else {
+          console.error('Peça de roupa não encontrada: id =' + id);
+          alert('Peça de roupa não encontrada.');
+          this.router.navigate(['/inserir-pedido']);
+        }
       },
       error: (err) => {
-        console.error('Peça de roupa não encontrada: id =' + id);
-        alert('Peça de roupa não encontrada.');
+        console.error('Erro ao buscar peça de roupa: id =' + id, err);
+        alert('Erro ao buscar peça de roupa.');
         this.router.navigate(['/inserir-pedido']);
       }
     });

@@ -68,7 +68,7 @@ export class FazerPedidoComponent implements OnInit {
       this.pedido.valorpedido = this.calcularValorTotal(); // Calculando o valor total
 
       // Inserir pedido com todas as informações necessárias
-      this.pedidoService.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.pedido.valorpedido).subscribe({
+      this.pedidoService.inserir(this.pedido).subscribe({
         next: () => {
           this.mensagem = 'Pedido realizado com sucesso.';
           form.resetForm();

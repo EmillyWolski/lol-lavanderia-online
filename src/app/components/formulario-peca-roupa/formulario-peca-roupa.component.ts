@@ -18,7 +18,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./formulario-peca-roupa.component.css'],
   schemas: [NO_ERRORS_SCHEMA],
 })
-
 export class FormularioPecaRoupaComponent implements OnInit {
   @ViewChild('formPecaRoupa') formPecaRoupa!: NgForm;
 
@@ -70,3 +69,4 @@ export class FormularioPecaRoupaComponent implements OnInit {
     }
   }
 }
+

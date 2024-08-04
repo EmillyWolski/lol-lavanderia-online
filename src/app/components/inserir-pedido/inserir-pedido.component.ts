@@ -22,12 +22,12 @@ export class InserirPedidoComponent implements OnInit {
   form!: FormGroup;
   roupas: Roupas[] = [];
   arrayPedidosRoupas: PecaRoupaQuantidade[] = [];
-  pedido: Pedido = new Pedido(); // Instância do pedido
-  valorPedido: number = 0; // Valor total do pedido
-  prazoMaximo: number = 0; // Prazo máximo
-  prazosMap: { [id: number]: number } = {}; // Mapa de prazos
+  pedido: Pedido = new Pedido();
+  valorPedido: number = 0;
+  prazoMaximo: number = 0;
+  prazosMap: { [id: number]: number } = {};
 
-  @ViewChild(ModalOrcamentoComponent) modalOrcamento!: ModalOrcamentoComponent; // Referência ao componente da modal
+  @ViewChild(ModalOrcamentoComponent) modalOrcamento!: ModalOrcamentoComponent;
 
   constructor(
     private fb: FormBuilder,
@@ -50,9 +50,8 @@ export class InserirPedidoComponent implements OnInit {
       next: (roupas: Roupas[] | null) => {
         if (roupas) {
           this.roupas = roupas;
-          // Preencher o mapa de prazos
           this.prazosMap = roupas.reduce((map, roupa) => {
-            map[roupa.id] = roupa.prazo; // Assume que roupa.id é o identificador
+            map[roupa.id] = roupa.prazo;
             return map;
           }, {} as { [id: number]: number });
         }
@@ -64,8 +63,13 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   adicionarPecaRoupa(pecaRoupaQuantidade: PecaRoupaQuantidade): void {
-    this.arrayPedidosRoupas.push(pecaRoupaQuantidade);
-    this.atualizarValores();
+    if (pecaRoupaQuantidade && pecaRoupaQuantidade.id) {
+      this.arrayPedidosRoupas.push(pecaRoupaQuantidade);
+      this.atualizarValores();
+      console.log('Peça adicionada:', pecaRoupaQuantidade);
+    } else {
+      console.error('Peça de roupa inválida:', pecaRoupaQuantidade);
+    }
   }
 
   removerPecaRoupa(id: number): void {
@@ -84,7 +88,6 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   calcularPrazoMaximo(): number {
-    // Acessando o prazo da peça de roupa associada através do mapa de prazos
     return Math.max(...this.arrayPedidosRoupas.map(peca => this.prazosMap[peca.pecaroupa.id] || 0), 0);
   }
 
@@ -95,23 +98,40 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   aprovarPedido(): void {
-    this.pedido.idpedido = new Date().getTime();
-    this.pedido.arrayPedidosRoupas = [...this.arrayPedidosRoupas];
-    this.pedido.valorpedido = this.valorPedido;
-    this.pedido.prazo = this.prazoMaximo;
-
-    this.pedidoService.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.valorPedido).subscribe({
-      next: () => {
-        this.pedido = new Pedido(); // Reinicia a instância do pedido
-        this.router.navigateByUrl('/fazer-pedido');
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('Erro ao aprovar pedido:', err.message);
+    if (this.form.valid) {
+      if (this.arrayPedidosRoupas.length === 0) {
+        alert('Adicione pelo menos uma peça ao pedido.');
+        return;
       }
-    });
+
+      // Preencher o pedido antes de enviar
+      this.pedido.nomecliente = ''; 
+      this.pedido.statuspedido = ''; 
+      this.pedido.arrayPedidosRoupas = [...this.arrayPedidosRoupas]; 
+      this.pedido.valorpedido = this.valorPedido; 
+      this.pedido.prazo = this.prazoMaximo; 
+      this.pedido.clienteId = this.form.value.clienteId; // Captura o cliente do formulário
+
+      // Chame o serviço de pedido com um único argumento
+      this.pedidoService.inserir(this.pedido).subscribe({
+        next: () => {
+          console.log('Pedido aprovado com sucesso:', this.pedido);
+          this.pedido = new Pedido(); // Reinicia a instância do pedido
+          this.arrayPedidosRoupas = []; // Limpa o array de peças
+          this.router.navigateByUrl('/fazer-pedido');
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error('Erro ao aprovar pedido:', err.message);
+          alert('Ocorreu um erro ao aprovar o pedido. Tente novamente.');
+        }
+      });
+    } else {
+      alert('Por favor, preencha todos os campos corretamente.');
+    }
   }
 
   onRecusar(): void {
-    this.pedido.recusarPedido(); // Chamando o método de recusa do pedido
+    this.pedido.recusarPedido();
   }
 }
+
