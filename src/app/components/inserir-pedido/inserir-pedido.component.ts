@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { PecaRoupaQntService } from '../../services/peca-roupa-qnt.service';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
 import { Roupas } from '../../shared/models/roupas.model';
@@ -13,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-inserir-pedido',
   standalone: true,
-  imports: [CommonModule, ModalOrcamentoComponent],
+  imports: [CommonModule, ModalOrcamentoComponent, RouterLink],
   templateUrl: './inserir-pedido.component.html',
   styleUrls: ['./inserir-pedido.component.css'],
   providers: [PecaRoupaQntService, PedidoService, RoupasService]
@@ -83,7 +83,7 @@ export class InserirPedidoComponent implements OnInit {
   calcularValorPedido(): number {
     let valorPedido = 0;
     this.pecasroupas.forEach((peca) => {
-      valorPedido += peca.quantidade * peca.pecaroupa.valor; // Acessando valor corretamente
+      valorPedido += peca.quantidade * (peca.pecaroupa?.valor || 0); // Acessando valor corretamente
     });
     return valorPedido;
   }
@@ -91,7 +91,7 @@ export class InserirPedidoComponent implements OnInit {
   calcularPrazoMaximo(): number {
     let prazoMaximo = 0;
     this.pecasroupas.forEach((peca) => {
-      if (peca.pecaroupa.prazo > prazoMaximo) {
+      if (peca.pecaroupa?.prazo && peca.pecaroupa.prazo > prazoMaximo) {
         prazoMaximo = peca.pecaroupa.prazo; // Acessando prazo corretamente
       }
     });
@@ -104,16 +104,25 @@ export class InserirPedidoComponent implements OnInit {
     this.pedido.valorpedido = this.valorPedido;
     this.pedido.prazo = this.prazoMaximo;
 
-    try {
-      this.pedidoservice.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.valorPedido);
-      this.pedido = new Pedido(); // Reinicia o pedido
-      this.router.navigateByUrl('/fazer-pedido');
-    } catch (error: any) {
-      console.error('Erro ao aprovar pedido:', error.message);
-    }
+    this.pedidoservice.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.valorPedido).subscribe({
+      next: () => {
+        this.pedido = new Pedido(); // Reinicia o pedido
+        this.router.navigateByUrl('/fazer-pedido');
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Erro ao aprovar pedido:', err.message);
+      }
+    });
   }
 
   onRecusar(): void {
     this.pedido.recusarPedido(); // Chama o método para recusar o pedido
   }
+
+  remover(event: Event, pecaroupa: PecaRoupaQuantidade): void {
+    event.preventDefault(); // Previne o comportamento padrão do evento
+    this.pecasroupas = this.pecasroupas.filter(pr => pr !== pecaroupa);
+    this.calcularValoresPedido();
+  }
 }
+
