@@ -9,11 +9,12 @@ import { PedidoService } from '../../services/pedido/pedido.service';
 import { ModalOrcamentoComponent } from '../modal-orcamento/modal-orcamento.component';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-inserir-pedido',
   standalone: true,
-  imports: [CommonModule, ModalOrcamentoComponent, RouterLink],
+  imports: [CommonModule, ModalOrcamentoComponent, RouterLink, FormsModule],
   templateUrl: './inserir-pedido.component.html',
   styleUrls: ['./inserir-pedido.component.css'],
   providers: [PecaRoupaQntService, PedidoService, RoupasService]
@@ -22,12 +23,12 @@ export class InserirPedidoComponent implements OnInit {
 
   @ViewChild(ModalOrcamentoComponent) modalOrcamento!: ModalOrcamentoComponent;
 
-  pecasroupas: PecaRoupaQuantidade[] = []; // Array de peças
-  pedido: Pedido = new Pedido(); 
-  roupas: Roupas[] = []; 
-  prazosMap: { [id: number]: number } = {}; // Mapa de prazos
-  valorPedido: number = 0; 
-  prazoMaximo: number = 0; 
+  pecasroupas: PecaRoupaQuantidade[] = [];
+  pedido: Pedido = new Pedido();
+  roupas: Roupas[] = [];
+  prazosMap: { [id: number]: number } = {};
+  valorPedido: number = 0;
+  prazoMaximo: number = 0;
 
   constructor(
     private pecaroupaService: PecaRoupaQntService,
@@ -42,29 +43,25 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   carregarPecasRoupas(): void {
-    try {
-      const pecas = this.pecaroupaService.listarTodos();
-      this.pecasroupas = pecas ?? [];
-      this.calcularValoresPedido();
-    } catch (error: any) {
-      console.error('Erro ao carregar peças de roupas:', error.message);
-    }
+    const pecas = this.pecaroupaService.listarTodos();
+    this.pecasroupas = pecas.length > 0 ? pecas : [];
+    this.calcularValoresPedido();
   }
 
   carregarRoupas(): void {
-    this.roupasService.listarTodasComPrazos().subscribe({
-      next: (data) => {
-        if (data) {
-          this.roupas = data.roupas;
-          this.prazosMap = data.prazosMap;
-          this.calcularValoresPedido();
-        } else {
-          this.roupas = [];
-          this.prazosMap = {};
-        }
+    this.roupasService.listarTodas().subscribe({
+      next: (roupas) => {
+        this.roupas = roupas ?? [];
+        this.prazosMap = {};
+        this.roupas.forEach((roupa: Roupas) => {
+          if (roupa.id !== undefined && roupa.prazo !== undefined) {
+            this.prazosMap[roupa.id] = roupa.prazo; // Definindo prazos para as roupas
+          }
+        });
+        this.calcularValoresPedido();
       },
-      error: (err) => {
-        console.error('Erro ao carregar roupas:', (err as HttpErrorResponse).message);
+      error: (err: HttpErrorResponse) => {
+        console.error('Erro ao carregar roupas:', err.message);
       }
     });
   }
@@ -81,32 +78,22 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   calcularValorPedido(): number {
-    let valorPedido = 0;
-    this.pecasroupas.forEach((peca) => {
-      valorPedido += peca.quantidade * (peca.pecaroupa?.valor || 0); // Acessando valor corretamente
-    });
-    return valorPedido;
+    return this.pecasroupas.reduce((total, peca) => total + (peca.quantidade * (peca.pecaroupa?.valor || 0)), 0);
   }
 
   calcularPrazoMaximo(): number {
-    let prazoMaximo = 0;
-    this.pecasroupas.forEach((peca) => {
-      if (peca.pecaroupa?.prazo && peca.pecaroupa.prazo > prazoMaximo) {
-        prazoMaximo = peca.pecaroupa.prazo; // Acessando prazo corretamente
-      }
-    });
-    return prazoMaximo;
+    return Math.max(...this.pecasroupas.map(peca => peca.pecaroupa?.prazo || 0), 0);
   }
 
   aprovarPedido(): void {
-    this.pedido.idpedido = new Date().getTime(); // Gerando um ID único
-    this.pedido.arrayPedidosRoupas = [...this.pecasroupas]; // Atribuindo as peças ao pedido
+    this.pedido.idpedido = new Date().getTime();
+    this.pedido.arrayPedidosRoupas = [...this.pecasroupas];
     this.pedido.valorpedido = this.valorPedido;
     this.pedido.prazo = this.prazoMaximo;
 
     this.pedidoservice.inserir(this.pedido, this.pedido.arrayPedidosRoupas, this.valorPedido).subscribe({
       next: () => {
-        this.pedido = new Pedido(); // Reinicia o pedido
+        this.pedido = new Pedido();
         this.router.navigateByUrl('/fazer-pedido');
       },
       error: (err: HttpErrorResponse) => {
@@ -116,13 +103,12 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   onRecusar(): void {
-    this.pedido.recusarPedido(); // Chama o método para recusar o pedido
+    this.pedido.recusarPedido();
   }
 
   remover(event: Event, pecaroupa: PecaRoupaQuantidade): void {
-    event.preventDefault(); // Previne o comportamento padrão do evento
+    event.preventDefault();
     this.pecasroupas = this.pecasroupas.filter(pr => pr !== pecaroupa);
     this.calcularValoresPedido();
   }
 }
-
