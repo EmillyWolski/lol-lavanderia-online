@@ -15,23 +15,20 @@
   </div>
 
   <div class="well">
-    <form #formPecaRoupa="ngForm" class="formulario-peca-roupa" (ngSubmit)="inserir()">
+    <form #formPecaRoupa="ngForm" class="formulario-peca-roupa">
       <div class="mb-3 form-group">
-        <label for="pecaroupa" id="titulolabel">Peça de roupa:</label>
-        <ng-select class="itemComboBox" name="pecaroupa" [items]="roupas" bindLabel="nome" bindValue="id" [(ngModel)]="pecaroupaqnt.id" placeholder="Selecione uma Peça" required></ng-select>
-        <div *ngIf="formPecaRoupa.controls['pecaroupa']?.invalid && (formPecaRoupa.controls['pecaroupa'].dirty || formPecaRoupa.controls['pecaroupa'].touched)" class="alert alert-danger">
-          Por favor, selecione uma peça de roupa.
-        </div>
+        <label for="nome" id="titulolabel">Peça de roupa:</label>
+        <ng-select class="itemComboBox" name="pecaroupa" [items]="roupas" bindLabel="nome" [(ngModel)]="pecaroupaqnt.pecaroupa" placeholder="Selecione uma Peça"></ng-select>
       </div>
       <div class="mb-3 form-group">
         <label for="quantidade" id="titulolabel">Quantidade de peças:</label>
         <input type="number" class="form-control" id="quantidade" name="quantidade" [(ngModel)]="pecaroupaqnt.quantidade" #quantidade="ngModel" min="1" required>
         <div *ngIf="quantidade.errors && (quantidade.dirty || quantidade.touched)" class="alert alert-danger">
-          <div [hidden]="!quantidade.errors['min']">Digite a quantidade de peças dessa roupa.</div>
+          <div [hidden]="!quantidade.errors['min']"> Digite a quantidade de peças dessa roupa. </div>
         </div>
       </div>
-      <div class="mb-3 form-group">
-        <button type="submit" class="btn btn-primary" id="salvar" [disabled]="!formPecaRoupa.form.valid">
+      <div class=" mb-3 form-group">
+        <button type="button" class="btn btn-primary" id="salvar" (click)="inserir()" [disabled]="!formPecaRoupa.form.valid">
           <i class="fa fa-save" aria-hidden="true"></i> Salvar
         </button>
         <a class="btn btn-secondary" [routerLink]="['/inserir-pedido']">

@@ -24,27 +24,19 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './cadastrar-peca-roupa.component.html',
   styleUrls: ['./cadastrar-peca-roupa.component.css'],
 })
+
 export class CadastrarPecaRoupaComponent {
   @ViewChild('formRoupa') formRoupa!: NgForm;
 
   roupa: Roupas = new Roupas();
-  isLoading = false;
 
-  constructor(private roupasService: RoupasService, private router: Router) {}
+  constructor(private roupaService: RoupasService, private router: Router) {}
 
   inserir(): void {
     if (this.formRoupa.form.valid) {
-      this.isLoading = true;
-      this.roupasService.inserir(this.roupa).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          alert('Peça adicionada com sucesso!');
-          this.router.navigate(['/manutencao-roupas']);
-        },
-        error: (error) => {
-          this.isLoading = false;
-          alert(`Erro ao adicionar a peça: ${error.message}`);
-        }
+      this.roupaService.inserir(this.roupa).subscribe(() => {
+        alert('Peça adicionada com sucesso!');
+        this.router.navigate(['/manutencao-roupas']);
       });
     }
   }

@@ -1,147 +1,124 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
+import { LoginService } from '../login/login.service';
+import { PessoaFuncionario } from '../../shared/models/pessoa-funcionario.model';
 
-interface HttpResponse<T> {
-  status: number;
-  body: T;
-}
+const LS_CHAVE_PEDIDO = 'pedido';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoService {
-  private readonly API = 'http://localhost:8080/pedidos';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
+  private apiUrl = 'http://localhost:8080/pedidos'; // URL da API REST
 
-  constructor(private http: HttpClient) {}
+  constructor(private loginService: LoginService, private http: HttpClient) {}
 
-  // Método para listar todos os pedidos
-  listarTodos(): Observable<Pedido[] | null> {
-    return this.http.get<HttpResponse<Pedido[]>>(this.API, this.httpOptions).pipe(
-      map((resp) => {
-        if (resp.status === 200) {
-          return resp.body;
-        } else {
-          return null;
-        }
-      }),
-      catchError((err: HttpErrorResponse) => {
-        if (err.status === 404) {
-          return of(null);
-        } else {
-          return throwError(() => err);
-        }
-      })
-    );
+  listarTodos(): Pedido[] {
+    const pedidos = localStorage.getItem(LS_CHAVE_PEDIDO);
+    const pessoaLogada = this.loginService.getPessoaLogada();
+
+    if (pessoaLogada instanceof PessoaFuncionario) {
+      return pedidos ? JSON.parse(pedidos) : [];
+    }
+
+    return pedidos ? JSON.parse(pedidos).filter((pedido: Pedido) => pedido.clienteId === pessoaLogada?.id) : [];
   }
 
-  // Método para inserir um novo pedido
-  inserir(pedido: Pedido): Observable<void | null> {
-    return this.http.post<HttpResponse<void>>(this.API, pedido, this.httpOptions).pipe(
-      map((resp) => {
-        if (resp.status === 201) {
-          return; // Pedido inserido com sucesso
-        } else {
-          return null; // Outro status
-        }
-      }),
-      catchError((err: HttpErrorResponse) => {
-        return throwError(() => err);
-      })
-    );
+  listarTodosPedidos(): Observable<Pedido[]> {
+    return this.http.get<Pedido[]>(this.apiUrl);
   }
 
-  // Método para atualizar um pedido existente
-  atualizar(pedido: Pedido): Observable<void | null> {
-    return this.http.put<HttpResponse<void>>(`${this.API}/${pedido.idpedido}`, pedido, this.httpOptions).pipe(
-      map((resp) => {
-        if (resp.status === 200) {
-          return; // Pedido atualizado com sucesso
-        } else {
-          return null; // Outro status
-        }
-      }),
-      catchError((err: HttpErrorResponse) => {
-        return throwError(() => err);
-      })
-    );
+  salvarPedidos(pedidos: Pedido[]): void {
+    localStorage.setItem(LS_CHAVE_PEDIDO, JSON.stringify(pedidos));
   }
 
-  // Método para remover um pedido
-  remover(id: number): Observable<void | null> {
-    return this.http.delete<HttpResponse<void>>(`${this.API}/${id}`, this.httpOptions).pipe(
-      map((resp) => {
-        if (resp.status === 200) {
-          return; // Pedido removido com sucesso
-        } else {
-          return null; // Outro status
-        }
-      }),
-      catchError((err: HttpErrorResponse) => {
-        return throwError(() => err);
-      })
-    );
+  salvar(pedido: Pedido): void {
+    const pedidos = this.listarTodos();
+    pedidos.push(pedido);
+    this.salvarPedidos(pedidos);
   }
 
-  // Método para obter receita total
-  obterReceitaTotal(): Observable<number | null> {
-    return this.listarTodos().pipe(
-      map((pedidos) => {
-        const receitaTotal = pedidos ? pedidos.reduce((total, pedido) => total + pedido.valorpedido, 0) : 0;
-        return receitaTotal;
-      }),
-      catchError((err: HttpErrorResponse) => {
-        return of(null); // Retorna null em caso de erro
-      })
-    );
+  inserir(
+    pedido: Pedido,
+    arrayPedidosRoupas: PecaRoupaQuantidade[],
+    valorpedido: number
+  ): void {
+    const pedidos = localStorage.getItem(LS_CHAVE_PEDIDO);
+    const listaPedidos = pedidos ? JSON.parse(pedidos) : [];
+
+    pedido.idpedido = new Date().getTime();
+    pedido.arrayPedidosRoupas = arrayPedidosRoupas;
+
+    const pessoaLogada = this.loginService.getPessoaLogada();
+    if (pessoaLogada) {
+      pedido.clienteId = pessoaLogada.id;
+      pedido.nomecliente = pessoaLogada.nome;
+    } else {
+      pedido.nomecliente = 'Não identificado';
+    }
+
+    pedido.valorpedido = valorpedido;
+
+    if (pedido.statuspedido !== 'REJEITADO') {
+      pedido.statuspedido = 'EM ABERTO';
+    }
+
+    listaPedidos.push(pedido);
+    this.salvarPedidos(listaPedidos);
   }
 
-  // Método para obter clientes que mais gastaram
-  obterClientesQueMaisGastaram(): Observable<
-    {
-      nome: string;
-      totalGasto: number;
-      quantidadePedidos: number;
-      receitaTotal: number;
-    }[] | null
-  > {
-    return this.listarTodos().pipe(
-      map((pedidos) => {
-        if (!pedidos) return null;
+  buscaPorId(id: number): Pedido | undefined {
+    const pedidos = this.listarTodos();
+    return pedidos.find((pedido) => pedido.idpedido === id);
+  }
 
-        const clientes: {
-          [nome: string]: { totalGasto: number; quantidadePedidos: number };
-        } = {};
+  buscarPorIdNaApi(id: number): Observable<Pedido> {
+    return this.http.get<Pedido>(`${this.apiUrl}/${id}`);
+  }
 
-        pedidos.forEach((pedido) => {
-          const nomeCliente = pedido.nomecliente;
-          if (clientes[nomeCliente]) {
-            clientes[nomeCliente].totalGasto += pedido.valorpedido;
-            clientes[nomeCliente].quantidadePedidos++;
-          } else {
-            clientes[nomeCliente] = {
-              totalGasto: pedido.valorpedido,
-              quantidadePedidos: 1,
-            };
-          }
-        });
+  atualizar(pedido: Pedido): void {
+    const pedidos = this.listarTodos(); // Obtém pedidos do local storage
 
-        return Object.keys(clientes).map((nome) => ({
-          nome,
-          totalGasto: clientes[nome].totalGasto,
-          quantidadePedidos: clientes[nome].quantidadePedidos,
-          receitaTotal: clientes[nome].totalGasto,
-        })).sort((a, b) => b.totalGasto - a.totalGasto).slice(0, 3);
-      }),
-      catchError((err: HttpErrorResponse) => {
-        return of(null); // Retorna null em caso de erro
-      })
-    );
+    // Atualiza o pedido encontrado
+    pedidos.forEach((obj, index) => {
+      if (pedido.idpedido === obj.idpedido) {
+        pedidos[index] = pedido;
+      }
+    });
+
+    // Salva a lista atualizada no local storage
+    this.salvarPedidos(pedidos);
+  }
+
+  remover(id: number): void {
+    let pedidos = this.listarTodos();
+    pedidos = pedidos.filter((pedido) => pedido.idpedido !== id);
+    this.salvarPedidos(pedidos);
+  }
+
+  obterReceitaTotal(): number {
+    let receitaTotal = 0;
+
+    // Obtém todos os pedidos do local storage
+    const todosOsPedidos = this.listarTodos();
+
+    // Itera sobre cada pedido
+    todosOsPedidos.forEach((pedido) => {
+      receitaTotal += pedido.valorpedido || 0; // Protege contra undefined
+    });
+
+    return receitaTotal;
+  }
+
+  obterClientesQueMaisGastaram(): Observable<{ nome: string; totalGasto: number; quantidadePedidos: number; receitaTotal: number }[]> {
+    return this.http.get<{ nome: string; totalGasto: number; quantidadePedidos: number; receitaTotal: number }[]>(`${this.apiUrl}/clientes-que-mais-gastaram`);
+  }
+
+  inserirNaApi(pedido: Pedido): Observable<Pedido> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<Pedido>(this.apiUrl, pedido, { headers });
   }
 }

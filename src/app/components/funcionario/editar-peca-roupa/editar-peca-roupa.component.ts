@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterModule,
+} from '@angular/router';
 import { Roupas } from '../../../shared/models/roupas.model';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RoupasService } from '../../../services/roupas/roupas.service';
@@ -31,59 +36,38 @@ export class EditarPecaRoupaComponent implements OnInit {
     private roupaService: RoupasService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    const id = +this.route.snapshot.params['id'];
+    let id = +this.route.snapshot.params['id'];
 
-    if (isNaN(id) || id <= 0) {
-      alert('ID inválido');
-      this.router.navigate(['/manutencao-roupas']);
-      return;
-    }
-
-    console.log(`ID recebido: ${id}`);
-
-    this.roupaService.buscarPorId(id).subscribe({
-      next: (res) => {
-        if (res) {
-          this.roupa = res;
-          console.log(`Roupa encontrada: ${JSON.stringify(this.roupa)}`);
-        } else {
-          alert('Roupa não encontrada: id = ' + id);
-          this.router.navigate(['/manutencao-roupas']);
-        }
+    // Com o id, obtém a roupa
+    this.roupaService.buscarPorId(id).subscribe(
+      data => {
+        this.roupa = data;
       },
-      error: (err) => {
-        console.error('Erro ao buscar a roupa:', err.message);
-        alert('Erro ao buscar a roupa.');
-        this.router.navigate(['/manutencao-roupas']);
+      error => {
+        console.error('Erro ao buscar roupa:', error);
+        throw new Error('Roupa não encontrada: id = ' + id);
       }
-    });
+    );
   }
 
   atualizar(): void {
+    // Verifica se o formulário é válido
     if (this.formRoupa.form.valid) {
-
-      // Verifica se o ID está definido corretamente
-      if (!this.roupa.id) {
-        alert('ID da roupa não encontrado. Não é possível atualizar.');
-        return;
-      }
-
-      this.roupaService.atualizar(this.roupa).subscribe({
-        next: () => {
+      // Efetivamente atualiza a roupa
+      this.roupaService.atualizar(this.roupa).subscribe(
+        () => {
           alert('Peça atualizada com sucesso!');
+          // Redireciona para /manutencao-roupas
           this.router.navigate(['/manutencao-roupas']);
         },
-        error: (err) => {
-          console.error('Erro ao atualizar a roupa:', err.message);
-          alert('Erro ao atualizar a roupa.');
+        error => {
+          console.error('Erro ao atualizar roupa:', error);
+          alert('Erro ao atualizar a peça de roupa.');
         }
-      });
-    } else {
-      alert('Por favor, preencha todos os campos obrigatórios.');
+      );
     }
   }
-
 }

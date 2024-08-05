@@ -6,6 +6,7 @@ import { Pedido } from '../../../shared/models/pedido.model';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../../services/login/login.service';
 
+
 @Component({
   selector: 'app-inicial-funcionario',
   standalone: true,
@@ -18,93 +19,90 @@ export class InicialFuncionarioComponent implements OnInit {
   pedidos: Pedido[] = [];
   pedidosFiltrados: Pedido[] = []; // Armazena os pedidos filtrados com base no status selecionado.
   filtroStatus: string = 'em_aberto'; // Inicia com 'em_aberto'
-  mensagem: string | null = null; // Mensagem de erro ou sucesso
-  mensagem_detalhes: string | null = null; // Detalhes da mensagem de erro
 
-  constructor(
-    private pedidoService: PedidoService,
-    private router: Router,
-    private loginService: LoginService
-  ) { }
+  constructor(private pedidoService: PedidoService, private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
-    this.carregarPedidos(); // Inicia o carregamento dos pedidos
+    this.carregarPedidos(); // Carrega os pedidos na inicialização
   }
 
   carregarPedidos(): void {
-    this.pedidoService.listarTodos().subscribe({
-      next: (pedidos) => {
-        this.pedidos = pedidos ?? []; // Garante que pedidos será um array
-        this.filtrarPedidos(); // Filtra de acordo com o filtro atual
+    this.listarTodosPedidos(); // Carrega todos os pedidos
+    this.filtrarPedidos(); // Filtra de acordo com o filtro atual
+  }
+
+  listarTodosPedidos(): void {
+    this.pedidoService.listarTodosPedidos().subscribe(
+      (data: Pedido[]) => {
+        this.pedidos = data; // Atribui os dados recebidos à variável pedidos
+        this.filtrarPedidos(); // Aplica o filtro após a carga dos pedidos
       },
-      error: (err) => {
-        this.mensagem = 'Erro ao carregar pedidos.';
-        this.mensagem_detalhes = `[${err.status}] ${err.message}`;
-        console.error('Erro ao carregar pedidos:', err);
+      (error) => {
+        console.error('Erro ao listar pedidos:', error);
       }
-    });
+    );
   }
 
   recolherPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm('Deseja realmente recolher o pedido ${pedido.idpedido}?')) {
+    if (confirm(`Deseja realmente recolher o pedido ${pedido.idpedido}?`)) {
+      // Alterar o status do pedido para "RECOLHIDO"
       pedido.statuspedido = 'RECOLHIDO';
 
-      this.pedidoService.atualizar(pedido).subscribe({
-        next: () => {
-          alert(`O pedido ${pedido.idpedido} foi recolhido.`);
-          this.carregarPedidos(); // Atualiza a lista de pedidos
-        },
-        error: (err) => {
-          this.mensagem = 'Erro ao atualizar pedido.';
-          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
-          console.error('Erro ao atualizar pedido:', err);
-        }
-      });
+      // Atualizar o pedido no serviço
+      this.pedidoService.atualizar(pedido);
+
+      // Notificar o recolhimento
+      alert(`O pedido ${pedido.idpedido} foi recolhido.`);
+      console.log(`O pedido ${pedido.idpedido} foi recolhido.`);
+
+      // Atualizar a lista de pedidos
+      this.atualizarPedidos();
     }
   }
 
   lavarPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm('Deseja realmente lavar o pedido ${pedido.idpedido}?')) {
-      pedido.statuspedido = 'AGUARDANDO PAGAMENTO';
+    // Alterar o status do pedido para "AGUARDANDO PAGAMENTO"
+    pedido.statuspedido = 'AGUARDANDO PAGAMENTO';
 
-      this.pedidoService.atualizar(pedido).subscribe({
-        next: () => {
-          alert('O pedido ${pedido.idpedido} foi lavado.');
-          this.carregarPedidos(); // Atualiza a lista de pedidos
-        },
-        error: (err) => {
-          this.mensagem = 'Erro ao atualizar pedido.';
-          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
-          console.error('Erro ao atualizar pedido:', err);
-        }
-      });
+    // Atualizar o pedido no serviço
+    this.pedidoService.atualizar(pedido);
+
+    if (confirm(`Deseja realmente lavar o pedido ${pedido.idpedido}?`)) {
+      // Implemente a lógica para lavar o pedido aqui
+
+      // Notificar que o pedido foi lavado
+      alert(`O pedido ${pedido.idpedido} foi lavado.`);
+      console.log(`O pedido ${pedido.idpedido} foi lavado.`);
+
+      // Atualizar a lista de pedidos
+      this.atualizarPedidos();
     }
   }
 
   finalizarPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm('Deseja realmente finalizar o pedido ${pedido.idpedido}?')) {
+    if (confirm(`Deseja realmente finalizar o pedido ${pedido.idpedido}?`)) {
+      // Alterar o status do pedido para "FINALIZADO"
       pedido.statuspedido = 'FINALIZADO';
 
-      this.pedidoService.atualizar(pedido).subscribe({
-        next: () => {
-          alert('O pedido ${pedido.idpedido} foi finalizado.');
-          this.carregarPedidos(); // Atualiza a lista de pedidos
-        },
-        error: (err) => {
-          this.mensagem = 'Erro ao atualizar pedido.';
-          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
-          console.error('Erro ao atualizar pedido:', err);
-        }
-      });
+      // Atualizar o pedido no serviço
+      this.pedidoService.atualizar(pedido);
+
+      // Notificar que o pedido foi finalizado
+      alert(`O pedido ${pedido.idpedido} foi finalizado.`);
+      console.log(`O pedido ${pedido.idpedido} foi finalizado.`);
+
+      // Atualizar a lista de pedidos
+      this.atualizarPedidos();
     }
   }
 
+  // Método para atualizar a lista de pedidos com base no filtro selecionado.
   filtrarPedidos(): void {
     if (this.filtroStatus === 'todos') {
       this.pedidosFiltrados = this.pedidos;
@@ -113,6 +111,7 @@ export class InicialFuncionarioComponent implements OnInit {
     }
   }
 
+  // Método para mapear os valores do filtro para os status dos pedidos.
   mapStatus(status: string): string {
     const statusMap: { [key: string]: string } = {
       'em_aberto': 'EM ABERTO',
@@ -126,6 +125,7 @@ export class InicialFuncionarioComponent implements OnInit {
     return statusMap[status] || status;
   }
 
+  // Método para retornar a classe CSS correspondente ao status do pedido.
   getStatusClass(status: string): string {
     const statusClassMap: { [key: string]: string } = {
       'EM ABERTO': 'status-em-aberto',
@@ -137,6 +137,11 @@ export class InicialFuncionarioComponent implements OnInit {
       'FINALIZADO': 'status-finalizado'
     };
     return statusClassMap[status] || '';
+  }
+
+  // Método para atualizar a lista de pedidos após uma ação ser realizada.
+  private atualizarPedidos(): void {
+    this.listarTodosPedidos(); // Recarrega a lista de pedidos
   }
 
   confirmarLogout(event: Event): void {

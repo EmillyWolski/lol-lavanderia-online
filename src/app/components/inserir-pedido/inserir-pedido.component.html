@@ -14,6 +14,7 @@
     <h2 class="titulo-pagina">Fazer Pedidos</h2>
   </div>
 
+  <!-- Cabeçalho da tabela -->
   <table class="table table-hover">
     <tbody class="cabecalho-tabela">
       <tr>
@@ -22,10 +23,13 @@
         <th class="titulo-coluna">Prazo lavagem</th>
         <th class="titulo-coluna">Opções</th>
       </tr>
-      <tr *ngFor="let pecaroupa of arrayPedidosRoupas" class="align-middle">
-        <td class="info-pecaroupa">{{ pecaroupa.pecaroupa.nome || 'Nome não disponível' }}</td>
-        <td class="info-pecaroupa">{{ pecaroupa.quantidade }}</td>
-        <td class="info-pecaroupa">{{ prazosMap[pecaroupa.pecaroupa.id] || 'Prazo não encontrado' }}</td>
+      <tr *ngFor="let pecaroupa of pecasroupas" class="align-middle">
+        <td class="info-pecaroupa"> {{pecaroupa.pecaroupa.nome}} </td>
+        <td class="info-pecaroupa">{{pecaroupa.quantidade}} </td>
+        <td class="info-pecaroupa">
+          {{ prazosMap[pecaroupa.pecaroupa.id] || 'Prazo não encontrado' }}
+        </td>
+
         <td class="text-center">
           <div class="button-container">
             <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info"
@@ -33,28 +37,27 @@
               <i class="fa fa-edit" aria-hidden="true"></i> Editar
             </a>
             <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger"
-            (click)="removerPecaRoupa(pecaroupa.id)">
-            <i class="fa fa-times" aria-hidden="true"></i> Remover
-          </a>
+              (click)="remover($event, pecaroupa)">
+              <i class="fa fa-times" aria-hidden="true"></i> Remover
+            </a>
           </div>
         </td>
+
       </tr>
+
     </tbody>
   </table>
-  <p *ngIf="arrayPedidosRoupas.length === 0">Nenhuma peça foi adicionada.</p>
+  <p *ngIf="pecasroupas.length===0">Nenhuma peça foi adicionada.</p>
 
   <div>
     <a [routerLink]="['/formulario-peca-roupa']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
       <i class="fa fa-plus" aria-hidden="true"></i> Adicionar item
     </a>
-    <button type="button" class="btn btn-primary" (click)="abrirModal()" *ngIf="arrayPedidosRoupas.length !== 0">
+    <button type="button" class="btn btn-primary" (click)="abrirModal()" *ngIf="pecasroupas.length !== 0">
       <i class="fa fa-save" aria-hidden="true"></i> Concluir pedido
-    </button>
+    </button>    
   </div>
   <app-modal-orcamento [valorPedido]="valorPedido" [prazoMaximo]="prazoMaximo" 
     (aprovar)="aprovarPedido()"
     (recusar)="onRecusar()">
   </app-modal-orcamento>
-</div>
-
-

@@ -33,7 +33,7 @@ public class PedidoREST {
         if (pedido == null || pedido.getPecaRoupaQnt() == null || pedido.getPecaRoupaQnt().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Retorna erro se pedido for nulo ou sem peças
         }
-        // Geração do ID do pedido (pode ser substituído por um gerador de ID mais robusto)
+        // Geração do ID do pedido
         pedido.setIdPedido(System.currentTimeMillis()); // Ou qualquer outro método para gerar IDs únicos
         pedidos.add(pedido);
         return ResponseEntity.status(HttpStatus.CREATED).body(pedido);

@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RouterLink, RouterModule, Router, ActivatedRoute } from '@angular/router';
+import {
+  RouterLink,
+  RouterModule,
+  Router,
+  ActivatedRoute,
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
@@ -8,12 +13,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { Roupas } from '../../shared/models/roupas.model';
 import { RoupasService } from '../../services/roupas/roupas.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-formulario-peca-roupa',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule, FormsModule, NgSelectModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterModule,
+    FormsModule,
+    NgSelectModule
+  ],
   templateUrl: './formulario-peca-roupa.component.html',
   styleUrls: ['./formulario-peca-roupa.component.css'],
   schemas: [NO_ERRORS_SCHEMA],
@@ -21,52 +31,36 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class FormularioPecaRoupaComponent implements OnInit {
   @ViewChild('formPecaRoupa') formPecaRoupa!: NgForm;
 
-  pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade(0, 0, new Roupas(), 0); 
+  pecaroupaqnt: PecaRoupaQuantidade = new PecaRoupaQuantidade();
   roupas: Roupas[] = [];
 
   constructor(
     private pecasroupaqntservice: PecaRoupaQntService,
-    private roupasService: RoupasService,
+    private roupas_service: RoupasService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.carregarRoupas();
+    this.listarTodasRoupas();
   }
 
-  carregarRoupas(): void {
-    this.roupasService.listarTodas().subscribe({
-      next: (roupas) => {
-        this.roupas = roupas ?? [];
+  listarTodasRoupas(): void {
+    this.roupas_service.listarTodas().subscribe(
+      data => {
+        this.roupas = data;
       },
-      error: (err) => {
-        console.error('Erro ao carregar roupas:', (err as HttpErrorResponse).message);
-        alert('Erro ao carregar roupas.');
+      error => {
+        console.error('Erro ao listar roupas:', error);
       }
-    });
+    );
   }
 
   inserir(): void {
     if (this.formPecaRoupa.form.valid) {
-      try {
-        this.pecasroupaqntservice.inserir(this.pecaroupaqnt).subscribe({
-          next: () => {
-            this.router.navigate(['/inserir-pedido']);
-            alert('Peça adicionada com sucesso no pedido.');
-          },
-          error: (error: any) => {
-            console.error('Erro ao adicionar peça de roupa:', error.message);
-            alert('Erro ao adicionar peça de roupa.');
-          }
-        });
-      } catch (error: any) {
-        console.error('Erro ao adicionar peça de roupa:', error.message);
-        alert('Erro ao adicionar peça de roupa.');
-      }
-    } else {
-      alert('Por favor, preencha todos os campos corretamente.');
+      this.pecasroupaqntservice.inserir(this.pecaroupaqnt);
+      this.router.navigate(['/inserir-pedido']);
+      confirm('Peça adicionada com sucesso no pedido.');
     }
   }
 }
-

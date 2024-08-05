@@ -40,3 +40,4 @@ export class ModalOrcamentoComponent {
     alert("O orçamento do pedido foi rejeitado.")
   }
 }
+

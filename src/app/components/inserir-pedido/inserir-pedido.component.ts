@@ -1,137 +1,122 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { PedidoService } from '../../services/pedido/pedido.service';
-import { RoupasService } from '../../services/roupas/roupas.service';
-import { Pedido } from '../../shared/models/pedido.model';
+import { RouterLink, RouterModule, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { PecaRoupaQntService } from '../../services/peca-roupa-qnt.service';
 import { PecaRoupaQuantidade } from '../../shared/models/peca-roupa-quantidade.model';
 import { Roupas } from '../../shared/models/roupas.model';
+import { RoupasService } from '../../services/roupas/roupas.service';
+import { Pedido } from '../../shared/models/pedido.model';
+import { PedidoService } from '../../services/pedido/pedido.service';
 import { ModalOrcamentoComponent } from '../modal-orcamento/modal-orcamento.component';
-import { CommonModule } from '@angular/common';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-inserir-pedido',
   standalone: true,
-  imports: [CommonModule, NgSelectModule, RouterLink, ModalOrcamentoComponent],
+  imports: [CommonModule, RouterLink, RouterModule, ModalOrcamentoComponent],
   templateUrl: './inserir-pedido.component.html',
   styleUrls: ['./inserir-pedido.component.css'],
+  providers: [PecaRoupaQntService, PedidoService], // Certifique-se de que esses serviços estejam exportados
 })
 export class InserirPedidoComponent implements OnInit {
-  form!: FormGroup;
-  roupas: Roupas[] = [];
-  arrayPedidosRoupas: PecaRoupaQuantidade[] = [];
-  pedido: Pedido = new Pedido();
-  valorPedido: number = 0;
-  prazoMaximo: number = 0;
-  prazosMap: { [id: number]: number } = {};
-
+  
   @ViewChild(ModalOrcamentoComponent) modalOrcamento!: ModalOrcamentoComponent;
 
+  pecasroupas: PecaRoupaQuantidade[] = [];
+  pedido: Pedido = new Pedido();
+  roupas: Roupas[] = [];
+  prazosMap: { [id: number]: number } = {};
+  valorPedido: number | undefined;
+  prazoMaximo: number | undefined;
+
   constructor(
-    private fb: FormBuilder,
-    private pedidoService: PedidoService,
+    private pecaroupaService: PecaRoupaQntService,
+    private pedidoservice: PedidoService,
+    private router: Router,
     private roupasService: RoupasService,
-    private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      clienteId: [null, Validators.required],
-      prazo: [null, Validators.required]
-    });
-
+    this.pecasroupas = this.listarTodos();
     this.carregarRoupas();
+    this.calcularValoresPedido();
   }
 
   carregarRoupas(): void {
-    this.roupasService.listarTodas().subscribe({
-      next: (roupas: Roupas[] | null) => {
-        if (roupas) {
-          this.roupas = roupas;
-          this.prazosMap = roupas.reduce((map, roupa) => {
-            map[roupa.id] = roupa.prazo;
-            return map;
-          }, {} as { [id: number]: number });
-        }
+    this.roupasService.listarTodasComPrazos().subscribe(
+      data => {
+        this.roupas = data.roupas;
+        this.prazosMap = data.prazosMap;
       },
-      error: (error: any) => {
+      error => {
         console.error('Erro ao carregar roupas:', error);
       }
-    });
+    );
   }
 
-  adicionarPecaRoupa(pecaRoupaQuantidade: PecaRoupaQuantidade): void {
-    if (pecaRoupaQuantidade && pecaRoupaQuantidade.id) {
-      this.arrayPedidosRoupas.push(pecaRoupaQuantidade);
-      this.atualizarValores();
-      console.log('Peça adicionada:', pecaRoupaQuantidade);
-    } else {
-      console.error('Peça de roupa inválida:', pecaRoupaQuantidade);
+  listarTodos(): PecaRoupaQuantidade[] {
+    return this.pecaroupaService.listarTodos();
+  }
+
+  remover($event: any, pecaroupa: PecaRoupaQuantidade): void {
+    $event.preventDefault();
+    if (confirm(`Deseja realmente remover a Peça de Roupa ${pecaroupa.pecaroupa.nome}?`)) {
+      this.pecaroupaService.remover(pecaroupa.id);
+      this.pecasroupas = this.listarTodos();
     }
   }
 
-  removerPecaRoupa(id: number): void {
-    this.arrayPedidosRoupas = this.arrayPedidosRoupas.filter(peca => peca.id !== id);
-    this.atualizarValores();
-    console.log('Peça de roupa removida com sucesso!');
-  }
-
-  atualizarValores(): void {
-    this.valorPedido = this.calcularValorTotal();
-    this.prazoMaximo = this.calcularPrazoMaximo();
-  }
-
-  calcularValorTotal(): number {
-    return this.arrayPedidosRoupas.reduce((total, peca) => total + (peca.valor || 0), 0);
-  }
-
-  calcularPrazoMaximo(): number {
-    return Math.max(...this.arrayPedidosRoupas.map(peca => this.prazosMap[peca.pecaroupa.id] || 0), 0);
-  }
-
+  // Modal
   abrirModal(): void {
     if (this.modalOrcamento) {
       this.modalOrcamento.open();
     }
   }
 
-  aprovarPedido(): void {
-    if (this.form.valid) {
-      if (this.arrayPedidosRoupas.length === 0) {
-        alert('Adicione pelo menos uma peça ao pedido.');
-        return;
+  // Método para calcular o valor total do pedido e o prazo máximo entre as peças de roupa
+  calcularValoresPedido(): void {
+    this.valorPedido = this.calcularValorPedido();
+    this.prazoMaximo = this.calcularPrazoMaximo();
+  }
+
+  // Método para calcular o valor total do pedido
+  calcularValorPedido(): number {
+    let valorPedido = 0;
+    this.pecasroupas.forEach((peca) => {
+      valorPedido += peca.quantidade * peca.pecaroupa.valor;
+    });
+    return valorPedido;
+  }
+
+  // Método para calcular o prazo máximo entre as peças de roupa
+  calcularPrazoMaximo(): number {
+    let prazoMaximo = 0;
+    this.pecasroupas.forEach((peca) => {
+      if (peca.pecaroupa.prazo > prazoMaximo) {
+        prazoMaximo = peca.pecaroupa.prazo;
       }
+    });
+    return prazoMaximo;
+  }
 
-      // Preencher o pedido antes de enviar
-      this.pedido.nomecliente = ''; 
-      this.pedido.statuspedido = ''; 
-      this.pedido.arrayPedidosRoupas = [...this.arrayPedidosRoupas]; 
-      this.pedido.valorpedido = this.valorPedido; 
-      this.pedido.prazo = this.prazoMaximo; 
-      this.pedido.clienteId = this.form.value.clienteId; // Captura o cliente do formulário
-
-      // Chame o serviço de pedido com um único argumento
-      this.pedidoService.inserir(this.pedido).subscribe({
-        next: () => {
-          console.log('Pedido aprovado com sucesso:', this.pedido);
-          this.pedido = new Pedido(); // Reinicia a instância do pedido
-          this.arrayPedidosRoupas = []; // Limpa o array de peças
-          this.router.navigateByUrl('/fazer-pedido');
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error('Erro ao aprovar pedido:', err.message);
-          alert('Ocorreu um erro ao aprovar o pedido. Tente novamente.');
-        }
-      });
-    } else {
-      alert('Por favor, preencha todos os campos corretamente.');
-    }
+  // Método chamado ao aprovar o pedido no modal
+  aprovarPedido(): void {
+    this.pedidoservice.inserir(this.pedido, this.pecasroupas, this.valorPedido || 0);
+    this.pecaroupaService.removertudo();
+    this.pedido = new Pedido();
+    this.router.navigateByUrl('/fazer-pedido');
   }
 
   onRecusar(): void {
-    this.pedido.recusarPedido();
+    // Marcar o pedido como recusado
+    this.pedido.statuspedido = 'REJEITADO';
+    this.pedidoservice.inserir(this.pedido, this.pecasroupas, this.valorPedido || 0);
+
+    this.pedido.cancelamentoRealizado = true;
+    this.pedido.pagamentoRealizado = true;
+    
+    this.pecaroupaService.removertudo();
+
+    this.pedido = new Pedido(); // Limpar o objeto pedido
+    this.router.navigateByUrl('/fazer-pedido');
   }
 }
-

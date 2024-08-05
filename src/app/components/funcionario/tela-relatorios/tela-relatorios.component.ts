@@ -5,31 +5,38 @@ import { LoginService } from '../../../services/login/login.service';
 import { Pessoa } from '../../../shared/models/pessoa.model';
 import { AutocadastroService } from '../../../services/autocadastro/autocadastro.service';
 import { jsPDF } from 'jspdf';
-import { saveAs } from 'file-saver';
 import { PedidoService } from '../../../services/pedido/pedido.service';
 import { Pedido } from '../../../shared/models/pedido.model';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tela-relatorios',
   standalone: true,
   imports: [CommonModule, RouterModule, RouterLink],
   templateUrl: './tela-relatorios.component.html',
-  styleUrls: ['./tela-relatorios.component.css'],
+  styleUrls: ['./tela-relatorios.component.css']
 })
 export class TelaRelatoriosComponent implements OnInit {
+
   pessoaLogada: Pessoa | null = null;
   pessoas: Pessoa[] = [];
+  pedidos: Pedido[] = []; // Adicionando o array de pedidos
 
   constructor(
     private loginService: LoginService,
     private autocadastroService: AutocadastroService,
     private pedidoService: PedidoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.pessoaLogada = this.loginService.usuarioLogado;
+    this.pessoaLogada = this.loginService.getPessoaLogada();
     this.pessoas = this.autocadastroService.listarTodos();
+    this.carregarPedidos(); // Carregar os pedidos ao iniciar o componente
+  }
+
+  private carregarPedidos(): void {
+    this.pedidoService.listarTodosPedidos().subscribe(pedidos => {
+      this.pedidos = pedidos;
+    });
   }
 
   // Gerar PDF de Relatório de Clientes
@@ -42,9 +49,7 @@ export class TelaRelatoriosComponent implements OnInit {
     // Estilos do título
     doc.setFontSize(18);
     doc.setFont('helvetica', 'normal');
-    doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, {
-      align: 'center',
-    });
+    doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, { align: 'center' });
 
     yPos += 15;
 
@@ -55,7 +60,7 @@ export class TelaRelatoriosComponent implements OnInit {
 
     yPos += 15;
 
-    this.pessoas.forEach((pessoa) => {
+    this.pessoas.forEach((pessoa, index) => {
       doc.setDrawColor(200, 200, 200); // Cor para a linha
       doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
 
@@ -101,49 +106,35 @@ export class TelaRelatoriosComponent implements OnInit {
     const dataFormatada = dataAtual.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
 
     // Obtém a receita total
-    this.pedidoService.obterReceitaTotal().subscribe({
-      next: (receitaTotal: number | null) => { // Defina o tipo aqui
-        // Estilos do título
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'normal');
-        doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, {
-          align: 'center',
-        });
+    const receitaTotal = this.pedidoService.obterReceitaTotal();
 
-        yPos += 15;
+    // Estilos do título
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'normal');
+    doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, { align: 'center' });
 
-        // Estilos do sub-título
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Relatório de Receitas', pageWidth / 2, yPos, {
-          align: 'center',
-        });
+    yPos += 15;
 
-        yPos += 15;
+    // Estilos do sub-título
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Relatório de Receitas', pageWidth / 2, yPos, { align: 'center' });
 
-        doc.setDrawColor(200, 200, 200); // Cor para a linha
-        doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
+    yPos += 15;
 
-        // Adiciona a data da extração do relatório
-        doc.setFontSize(12);
-        doc.text(`Data de Extração: ${dataFormatada}`, margin, yPos);
+    doc.setDrawColor(200, 200, 200); // Cor para a linha
+    doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
 
-        yPos += 10;
+    // Adiciona a data da extração do relatório
+    doc.setFontSize(12);
+    doc.text(`Data de Extração: ${dataFormatada}`, margin, yPos);
+    yPos += 10;
 
-        // Verifica se a receitaTotal é null e define uma receita padrão
-        const receitaFinal = receitaTotal !== null ? receitaTotal : 0;
+    // Escreve a receita total
+    doc.setFontSize(12);
+    doc.text(`Receita Total: R$ ${receitaTotal.toFixed(2)}`, margin, yPos);
 
-        // Escreve a receita total
-        doc.setFontSize(12);
-        doc.text(`Receita Total: R$ ${receitaFinal.toFixed(2)}`, margin, yPos);
-
-        doc.save('Relatorio_Receitas.pdf');
-      },
-      error: (err) => {
-        console.error('Erro ao obter receita total:', err);
-        alert('Ocorreu um erro ao obter a receita total. Tente novamente.');
-      }
-    });
+    doc.save('Relatorio_Receitas.pdf');
   }
 
   // Método para gerar relatório de clientes fiéis
@@ -153,104 +144,78 @@ export class TelaRelatoriosComponent implements OnInit {
     const margin = 10;
     let yPos = 20;
 
-    // Obtém todos os pedidos
-    this.pedidoService.listarTodos().subscribe((pedidos) => {
-      // Verifica se há pedidos
-      if (!pedidos || pedidos.length === 0) {
-        // Caso não haja pedidos, exibe uma mensagem
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Nenhum pedido encontrado.', pageWidth / 2, yPos, {
-          align: 'center',
-        });
-        doc.save('Relatorio_Clientes_Fieis.pdf');
-        return;
-      }
-
-      // Mapeia os clientes e as informações de pedidos e receitas de cada um
-      const clientesDados = new Map<
-        string,
-        { quantidadePedidos: number; receitaTotal: number }
-      >();
-      pedidos.forEach((pedido: Pedido) => {
-        const nomeCliente = pedido.nomecliente;
-
-        if (clientesDados.has(nomeCliente)) {
-          const dados = clientesDados.get(nomeCliente)!;
-          dados.quantidadePedidos += 1;
-          dados.receitaTotal += pedido.valorpedido;
-        } else {
-          clientesDados.set(nomeCliente, {
-            quantidadePedidos: 1,
-            receitaTotal: pedido.valorpedido,
-          });
-        }
-      });
-
-      // Ordena os clientes pelos valores da receita total (do maior para o menor)
-      const clientesOrdenados = Array.from(clientesDados.entries()).sort(
-        (a, b) => b[1].receitaTotal - a[1].receitaTotal
-      );
-
-      // Seleciona os três clientes mais fiéis
-      const topClientesFieis = clientesOrdenados.slice(0, 3);
-
-      // Verifica se há clientes fiéis
-      if (topClientesFieis.length === 0) {
-        // Caso não haja clientes fiéis, exibe uma mensagem
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Nenhum cliente fiel encontrado.', pageWidth / 2, yPos, {
-          align: 'center',
-        });
-        doc.save('Relatorio_Clientes_Fieis.pdf');
-        return;
-      }
-
-      // Escreve o título do relatório
-      doc.setFontSize(18);
+    // Verifica se há pedidos carregados
+    if (!this.pedidos || this.pedidos.length === 0) {
+      // Caso não haja pedidos, exibe uma mensagem 
+      doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, {
-        align: 'center',
-      });
-
-      yPos += 15;
-
-      // Escreve o título do relatório de clientes fiéis
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Relatório dos 3 Clientes Mais Fiéis', pageWidth / 2, yPos, {
-        align: 'center',
-      });
-
-      yPos += 15;
-
-      // Escreve a lista dos três clientes mais fiéis com quantidade de pedidos e receita total
-      topClientesFieis.forEach((cliente, index) => {
-        doc.setDrawColor(200, 200, 200); // Cor para a linha
-        doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
-
-        const [nomeCliente, dados] = cliente;
-        doc.setFontSize(12);
-        doc.text(`${index + 1}. ${nomeCliente}`, margin, yPos);
-        yPos += 10;
-
-        doc.text(
-          `Quantidade de Pedidos: ${dados.quantidadePedidos}`,
-          margin,
-          yPos
-        );
-        yPos += 10;
-
-        doc.text(
-          `Receita Total: R$ ${dados.receitaTotal.toFixed(2)}`,
-          margin,
-          yPos
-        );
-        yPos += 20; // Espaçamento adicional entre clientes
-      });
-
+      doc.text('Nenhum pedido encontrado.', pageWidth / 2, yPos, { align: 'center' });
       doc.save('Relatorio_Clientes_Fieis.pdf');
+      return;
+    }
+
+    // Mapeia os clientes e as informações de pedidos e receitas de cada um
+    const clientesDados = new Map<string, { quantidadePedidos: number, receitaTotal: number }>();
+    this.pedidos.forEach((pedido) => {
+      const nomeCliente = pedido.nomecliente;
+
+      if (clientesDados.has(nomeCliente)) {
+        const dados = clientesDados.get(nomeCliente)!;
+        dados.quantidadePedidos += 1;
+        dados.receitaTotal += pedido.valorpedido || 0; // Protege contra undefined
+      } else {
+        clientesDados.set(nomeCliente, { quantidadePedidos: 1, receitaTotal: pedido.valorpedido || 0 }); // Protege contra undefined
+      }
     });
+
+    // Ordena os clientes pelos valores da receita total (do maior para o menor)
+    const clientesOrdenados = Array.from(clientesDados.entries()).sort((a, b) => b[1].receitaTotal - a[1].receitaTotal);
+
+    // Seleciona os três clientes mais fiéis
+    const topClientesFieis = clientesOrdenados.slice(0, 3);
+
+    // Verifica se há clientes fiéis
+    if (topClientesFieis.length === 0) {
+      // Caso não haja clientes fiéis, exibe uma mensagem
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Nenhum cliente fiel encontrado.', pageWidth / 2, yPos, { align: 'center' });
+      doc.save('Relatorio_Clientes_Fieis.pdf');
+      return;
+    }
+
+    // Escreve o título do relatório
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'normal');
+    doc.text('LOL - Lavanderia Online', pageWidth / 2, yPos, { align: 'center' });
+
+    yPos += 15;
+
+    // Escreve o título do relatório de clientes fiéis
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Relatório dos 3 Clientes Mais Fiéis', pageWidth / 2, yPos, { align: 'center' });
+
+    yPos += 15;
+
+    // Escreve a lista dos três clientes mais fiéis com quantidade de pedidos e receita total
+    topClientesFieis.forEach((cliente, index) => {
+      doc.setDrawColor(200, 200, 200); // Cor para a linha
+      doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
+
+      const [nomeCliente, dados] = cliente;
+      doc.setFontSize(12);
+      doc.text(`${index + 1}. ${nomeCliente}`, margin, yPos);
+      yPos += 10;
+
+      doc.text(`Quantidade de Pedidos: ${dados.quantidadePedidos}`, margin, yPos);
+      yPos += 10;
+
+      doc.text(`Receita Total: R$ ${dados.receitaTotal.toFixed(2)}`, margin, yPos);
+      yPos += 20; // Espaçamento adicional entre clientes
+    });
+
+    doc.save('Relatorio_Clientes_Fieis.pdf');
   }
 }
+
