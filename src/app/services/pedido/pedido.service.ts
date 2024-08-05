@@ -48,10 +48,10 @@ export class PedidoService {
   ): void {
     const pedidos = localStorage.getItem(LS_CHAVE_PEDIDO);
     const listaPedidos = pedidos ? JSON.parse(pedidos) : [];
-
+  
     pedido.idpedido = new Date().getTime();
     pedido.arrayPedidosRoupas = arrayPedidosRoupas;
-
+  
     const pessoaLogada = this.loginService.getPessoaLogada();
     if (pessoaLogada) {
       pedido.clienteId = pessoaLogada.id;
@@ -59,15 +59,25 @@ export class PedidoService {
     } else {
       pedido.nomecliente = 'Não identificado';
     }
-
+  
     pedido.valorpedido = valorpedido;
-
+  
     if (pedido.statuspedido !== 'REJEITADO') {
       pedido.statuspedido = 'EM ABERTO';
     }
-
+  
     listaPedidos.push(pedido);
     this.salvarPedidos(listaPedidos);
+    
+    // Envia o pedido para a API
+    this.inserirNaApi(pedido).subscribe(
+      (response) => {
+        console.log('Pedido inserido na API:', response);
+      },
+      (error) => {
+        console.error('Erro ao inserir pedido na API:', error);
+      }
+    );
   }
 
   buscaPorId(id: number): Pedido | undefined {
@@ -81,22 +91,50 @@ export class PedidoService {
 
   atualizar(pedido: Pedido): void {
     const pedidos = this.listarTodos(); // Obtém pedidos do local storage
-
+  
     // Atualiza o pedido encontrado
     pedidos.forEach((obj, index) => {
       if (pedido.idpedido === obj.idpedido) {
         pedidos[index] = pedido;
       }
     });
-
+  
     // Salva a lista atualizada no local storage
     this.salvarPedidos(pedidos);
+  
+    // Atualiza o pedido na API
+    this.atualizarNaApi(pedido).subscribe(
+      (response) => {
+        console.log('Pedido atualizado com sucesso na API:', response);
+      },
+      (error) => {
+        console.error('Erro ao atualizar pedido na API:', error);
+      }
+    );
+  }
+  
+  atualizarNaApi(pedido: Pedido): Observable<Pedido> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<Pedido>(`${this.apiUrl}/${pedido.idpedido}`, pedido, { headers });
   }
 
   remover(id: number): void {
-    let pedidos = this.listarTodos();
-    pedidos = pedidos.filter((pedido) => pedido.idpedido !== id);
-    this.salvarPedidos(pedidos);
+    // Remover da API
+    this.removerNaApi(id).subscribe(
+      () => {
+        console.log(`Pedido ${id} removido da API com sucesso.`);
+        let pedidos = this.listarTodos();
+        pedidos = pedidos.filter((pedido) => pedido.idpedido !== id);
+        this.salvarPedidos(pedidos); // Atualiza o local storage
+      },
+      (error) => {
+        console.error(`Erro ao remover pedido ${id} da API:`, error);
+      }
+    );
+  }
+  
+  removerNaApi(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   obterReceitaTotal(): number {

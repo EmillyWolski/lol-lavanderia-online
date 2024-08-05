@@ -32,14 +32,16 @@ export class FazerPedidoComponent implements OnInit {
       pedido.statuspedido = 'CANCELADO';
       pedido.pagamentoRealizado = true;
       pedido.cancelamentoRealizado = true; // Define a propriedade como true após o cancelamento
-
+  
+      // Atualizar o pedido na API
+      this.pedidoService.atualizar(pedido);
+      
+      // Remover o pedido do local storage
       this.pedidoService.remover(pedido.idpedido!);
       alert(`O pedido ${pedido.idpedido} foi cancelado.`);
-
-      // Atualizar o pedido no serviço
-      this.pedidoService.atualizar(pedido);
+  
+      // Atualizar a lista de pedidos
       this.pedidos = this.listarTodos();
-
     }
   }
 }
