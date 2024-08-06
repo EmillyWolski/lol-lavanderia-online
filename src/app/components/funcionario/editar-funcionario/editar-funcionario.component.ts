@@ -6,9 +6,9 @@ import {
   RouterModule,
   RouterLink,
 } from '@angular/router';
-import { PessoaFuncionario } from '../../../shared/models/pessoa-funcionario.model';
+import { Usuario } from '../../../shared/models/usuario.model';
 import { FormsModule, NgForm } from '@angular/forms';
-import { PessoaFuncionarioService } from '../../../services/pessoa-funcionario/pessoa-funcionario.service';
+import { UsuarioService } from '../../../services/usuario.service';
 import { LoginService } from '../../../services/login/login.service';
 
 @Component({
@@ -20,48 +20,57 @@ import { LoginService } from '../../../services/login/login.service';
 })
 export class EditarFuncionarioComponent implements OnInit {
   @ViewChild('formFuncionario') formFuncionario!: NgForm;
-
-  funcionario: PessoaFuncionario = new PessoaFuncionario();
+  confirmarSenha: string = '';
+  funcionario: Usuario = new Usuario();
 
   constructor(
-    private funcionarioService: PessoaFuncionarioService,
+    private usuarioService: UsuarioService,
     private route: ActivatedRoute,
     private router: Router,
     private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
-    let id = +this.route.snapshot.params['id']; // Aqui verifico se o id esta correto
-    console.log('ID recebido:', id); // Imprimi o id no consolee
-    this.funcionarioService.buscarPorId(id).subscribe(
-      (res) => {
-        if (res !== undefined) {
+    const id = +this.route.snapshot.params['id']; // Verifica se o id está correto
+    console.log('ID recebido:', id); // Imprime o id no console
+    this.usuarioService.buscarPorId(id).subscribe({
+      next: (res) => {
+        if (res) {
           this.funcionario = res;
         } else {
-          throw new Error('Funcionário não encontrado: id = ' + id);
+          console.error('Funcionário não encontrado: id = ' + id);
+          alert('Funcionário não encontrado.');
+          this.router.navigate(['/listar-funcionario']);
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Erro ao buscar funcionário', error);
-      }
-    );
+        alert('Erro ao buscar funcionário. Por favor, tente novamente.');
+        this.router.navigate(['/listar-funcionario']);
+      },
+    });
   }
 
   editarFuncionario(): void {
     // Verifica se o formulário é válido
-    if (this.formFuncionario.form.valid) {
+    if (
+      this.formFuncionario.form.valid &&
+      this.funcionario.senha === this.confirmarSenha
+    ) {
       // Efetivamente atualiza o funcionário
-      this.funcionarioService.editarFuncionario(this.funcionario).subscribe(
-        (response) => {
+      this.usuarioService.alterar(this.funcionario).subscribe({
+        next: (response) => {
           alert('Funcionário atualizado com sucesso!');
           // Redireciona
           this.router.navigate(['/listar-funcionario']);
         },
-        (error) => {
+        error: (error) => {
           console.error('Erro ao atualizar funcionário', error);
           alert('Erro ao atualizar funcionário. Por favor, tente novamente.');
-        }
-      );
+        },
+      });
+    } else {
+      alert('Por favor, preencha todos os campos corretamente.');
     }
   }
 

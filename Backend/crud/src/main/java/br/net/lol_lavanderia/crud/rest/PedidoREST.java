@@ -70,7 +70,7 @@ public class PedidoREST {
 
     if (p != null) {
       p.setUsuario(pedido.getUsuario());
-      p.setStatus(pedido.getStatus());
+      p.setStatusPedido(pedido.getStatusPedido());
       p.setValorPedido(pedido.getValorPedido());
       p.setPrazo(pedido.getPrazo());
       p.setPecaRoupaQnt(pedido.getPecaRoupaQnt());

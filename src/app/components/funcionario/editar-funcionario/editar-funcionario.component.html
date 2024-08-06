@@ -5,10 +5,9 @@
 <nav class="menu">
   <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
   <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
-  <a [routerLink]="['/editar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
   <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
   <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
-
 </nav>
 
 <div class="conteudo-principal">
@@ -27,13 +26,14 @@
 
     <div class="mb-3 form-group">
       <label for="email" class="form-label">E-mail</label>
-      <input type="text" class="form-control" id="email" name="email" [(ngModel)]="funcionario.email" #email="ngModel" required>
+      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="funcionario.email" #email="ngModel" required>
     </div>
 
     <div class="mb-3 form-group">
       <label for="dataNascimento" class="form-label">Data Nascimento</label>
       <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" [(ngModel)]="funcionario.dataNascimento" #dataNascimento="ngModel" required>
     </div>
+
     <div class="mb-3 form-group">
       <label for="senha" class="form-label">Senha</label>
       <input type="password" class="form-control" id="senha" name="senha" pattern="[0-9]{8}" [(ngModel)]="funcionario.senha" #senha="ngModel" required>
@@ -41,9 +41,10 @@
         <div *ngIf="senha?.errors?.['pattern']">Senha deve conter 8 dígitos numéricos.</div>
       </div>
     </div>
+
     <div class="mb-3 form-group">
       <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
-      <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required [(ngModel)]="funcionario.confirmarSenha" #confirmarSenha="ngModel">
+      <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required [(ngModel)]="confirmarSenha" #confirmarSenha="ngModel">
       <div *ngIf="confirmarSenha?.invalid && (confirmarSenha?.dirty || confirmarSenha?.touched)" class="alert alert-danger">
         <div *ngIf="confirmarSenha?.errors?.['required']">Confirmação de senha é obrigatória.</div>
         <div *ngIf="funcionario.senha !== confirmarSenha?.value">As senhas não coincidem.</div>

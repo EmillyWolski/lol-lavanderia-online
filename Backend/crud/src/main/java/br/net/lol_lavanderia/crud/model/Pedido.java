@@ -39,12 +39,12 @@ public class Pedido {
     this.usuario = usuario;
   }
 
-  public String getStatus() {
+  public String getStatusPedido() {
     return statusPedido;
   }
 
-  public void setStatus(String status) {
-    this.statusPedido = status;
+  public void setStatusPedido(String statusPedido) {
+    this.statusPedido = statusPedido;
   }
 
   public double getValorPedido() {

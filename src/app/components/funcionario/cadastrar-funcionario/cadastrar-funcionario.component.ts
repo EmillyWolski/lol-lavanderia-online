@@ -39,6 +39,7 @@ export class CadastrarFuncionarioComponent {
       this.funcionario.cidade = '';
       this.funcionario.estado = '';
       this.funcionario.telefone = '';
+      this.funcionario.perfil = 'FUNCIONARIO';
 
       this.usuarioService.inserir(this.funcionario).subscribe({
         next: (response) => {
