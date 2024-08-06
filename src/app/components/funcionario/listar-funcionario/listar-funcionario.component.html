@@ -1,0 +1,51 @@
+<head>
+  <link rel="stylesheet" href="listar-funcionario.component.css">
+</head>
+
+<nav>
+  <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+  <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+  <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+  <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
+</nav>
+
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Listar Funcionários</h2>
+  </div>
+
+  <table class="table table-hover">
+    <tbody class="cabecalho-tabela">
+      <tr>
+        <th class="titulo-coluna">Nome</th>
+        <th class="titulo-coluna">Email</th>
+        <th class="titulo-coluna">Data Nascimento</th>
+
+        <th class="text-center">
+          <a [routerLink]="['/cadastrar-funcionario']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
+            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
+          </a>
+        </th>
+      </tr>
+
+      <!-- LISTA DE FUNCIONÁRIOS-->
+      <tr *ngFor="let funcionario of funcionarios">
+        <td class="info-funcionario info-nome-funcionario"> {{funcionario.nome}} </td>
+        <td class="info-funcionario"> {{ funcionario.email}} </td>
+        <td class="info-funcionario"> {{ funcionario.dataNascimento | date: 'dd/MM/yyyy'}} </td>
+
+        <td class="text-center" style="width: 300px">
+          <a [routerLink]="['/editar-funcionario', funcionario.id]" href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info">
+            <i class="fa fa-edit" aria-hidden="true"></i> Editar
+          </a>
+
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="removerFuncionario($event, funcionario)">
+            <i class="fa fa-times" aria-hidden="true"></i> Remover
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="funcionarios.length===0">Nenhum funcionário(a) cadastrado.</p>
+</div>

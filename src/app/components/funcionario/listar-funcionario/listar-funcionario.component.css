@@ -1,0 +1,105 @@
+/* Estilo para o corpo da página */
+
+nav {
+    position: absolute;
+    left: 0;
+    top: 92px;
+    width: 15%;
+    height: calc(100% - 100px);
+    background-color: #FFFFFF;
+    box-shadow: inset -1px 0px 0px #D7DBEC;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #2c3e50;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #3498db;
+    color: #FFFFFF;
+}
+
+.conteudo-principal {
+    flex: 1;
+    margin-left: 15%;
+    margin-top: -18px;
+    padding: 20px;
+}
+
+.cabecalho {
+    height: 45px;
+    margin-top: 14px;
+    position: relative;
+}
+
+.cabecalho-tabela th {
+    /* Define a largura desejada para cada coluna */
+    width: 15%;
+}
+
+.cabecalho .titulo-pagina {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.titulo-pagina {
+    margin-bottom: 20px;
+    background-color: #FFFFFF;
+    box-shadow: inset -1px 0px 0px #D7DBEC;
+    padding: 10px;
+    color: #2c3e50;
+}
+
+.titulo-coluna {
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.info-funcionario {
+    padding: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.info-nome-funcionario {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+p {
+    font-size: 14px;
+    margin-left: 11px;
+}
+
+/* Estilo para os botões de ação */
+.btn {
+    margin-left: 10px;
+    font-size: 14px;
+    border: none;
+}
+
+.btn-info {
+    background-color: #3498db;
+    color: #FFFFFF;
+    border: none;
+}
+
+.btn .btn-xs .btn-success {
+    right: 90%;
+}
+
+.titulo-acoes {
+    text-align: center;
+}
+
+
+

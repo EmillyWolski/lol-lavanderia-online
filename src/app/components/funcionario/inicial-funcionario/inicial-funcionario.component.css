@@ -1,0 +1,160 @@
+/* Estilo para o corpo da página */
+
+nav {
+    position: absolute;
+    left: 0;
+    top: 92px;
+    width: 15%;
+    height: calc(100% - 100px);
+    background-color: #ffffff;
+    box-shadow: inset -1px 0px 0px #d7dbec;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #2c3e50;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #3498db;
+    color: #ffffff;
+}
+
+.conteudo-principal {
+    flex: 1;
+    margin-left: 15%;
+    margin-top: -18px;
+    padding: 20px;
+}
+
+.cabecalho {
+    height: 45px;
+    margin-top: 14px;
+    position: relative;
+}
+
+.cabecalho .titulo-pagina {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.titulo-pagina {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    box-shadow: inset -1px 0px 0px #d7dbec;
+    padding: 10px;
+    color: #2c3e50;
+}
+
+.titulo-coluna {
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.cabecalho-tabela th {
+    width: 15%;
+    /* Define a largura desejada para cada coluna */
+}
+
+.info-pedido {
+    padding: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+
+p {
+    font-size: 14px;
+    margin-left: 11px;
+}
+
+
+/* Estilo para os status e filtro */
+
+.titulo-filtro {
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+#filtro-status {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 12px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    color: #2c3e50;
+    outline: none;
+}
+
+.status-em-aberto {
+    color: #FFD700;
+    font-weight: bold;
+}
+
+.status-cancelado, .status-rejeitado {
+    color: red;
+    font-weight: bold;
+}
+
+.status-recolhido {
+    color: gray;
+    font-weight: bold;
+}
+
+.status-aguardando-pagamento {
+    color: #166092;
+    font-weight: bold;
+}
+
+.status-pago {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-finalizado {
+    color: #198754;
+    font-weight: bold;
+}
+
+
+/* Estilo para os botões de ação */
+
+.btn {
+    font-size: 14px;
+    border: none;
+    margin-right: 10px;
+}
+
+
+/* Estilo para os botões de ação */
+
+.btn-recolher,
+.btn-lavar,
+.btn-finalizar,
+.btn-visualizar-pedido {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 160px;
+    text-align: center;
+    display: inline-block;
+    padding: 7px;
+    text-decoration: none;
+}
+
+.btn-recolher:hover,
+.btn-lavar:hover,
+.btn-finalizar:hover,
+.btn-visualizar-pedido:hover {
+    background-color: #166092;
+}

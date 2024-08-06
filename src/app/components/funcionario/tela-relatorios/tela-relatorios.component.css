@@ -1,0 +1,83 @@
+/* Estilo para o corpo da página */
+h2 {
+    font-size: 12px;
+}
+
+nav {
+    position: absolute;
+    left: 0;
+    top: 92px;
+    width: 15%;
+    height: calc(100% - 100px);
+    background-color: #FFFFFF;
+    box-shadow: inset -1px 0px 0px #D7DBEC;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #2c3e50;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #3498db;
+    color: #FFFFFF;
+}
+
+.conteudo-principal {
+    flex: 1;
+    margin-left: 15%;
+    margin-top: -18px;
+    padding: 20px;
+}
+
+.cabecalho {
+    height: 45px;
+    margin-top: 14px;
+    position: relative;
+}
+
+.cabecalho .titulo-pagina {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.titulo-pagina {
+    margin-bottom: 20px;
+    background-color: #FFFFFF;
+    box-shadow: inset -1px 0px 0px #D7DBEC;
+    padding: 10px;
+    color: #2c3e50;
+}
+
+
+/* Estilo para os botões de ação */
+.button-container {
+    margin-bottom: 25px; /* Espaçamento entre botões */
+}
+
+.btn {
+    font-size: 14px;
+    border: 0;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 15%;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+
+/* Estilo para os parágrafos */
+p{
+    margin-top: 5px;
+    font-size: 14px;
+}

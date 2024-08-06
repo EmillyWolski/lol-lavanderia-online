@@ -1,0 +1,118 @@
+/* Estilo para o corpo da página */
+
+.header-base {
+  width: 100%;
+  height: 76px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+
+nav {
+  position: absolute;
+  left: 0;
+  top: 92px;
+  width: 15%;
+  height: calc(100% - 100px);
+  background-color: #ffffff;
+  box-shadow: inset -1px 0px 0px #d7dbec;
+}
+
+.nav-item {
+  padding: 15px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #2c3e50;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.conteudo-principal {
+  flex: 1;
+  margin-left: 15%;
+  margin-top: -18px;
+  padding: 20px;
+}
+
+.cabecalho {
+  height: 45px;
+  margin-top: 14px;
+  position: relative;
+}
+
+.cabecalho .titulo-pagina {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.titulo-pagina {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  box-shadow: inset -1px 0px 0px #d7dbec;
+ 
+  color: #2c3e50;
+}
+
+.titulo-coluna {
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+/* Estilos do Formulário */
+.formulario-peca-roupa {
+  max-width: 400px; /* Tamanho máximo desejado para o formulário */
+}
+
+.form-control {
+  height: 36px;
+  font-size: 14px;
+}
+.peca-roupa{
+  font-size: 14px;
+}
+
+.form-label {
+  font-size: 14px;
+}
+
+.btn {
+  width: 48%;
+  height: 30px;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.btn-danger {
+  margin-left: 14px;
+}
+
+.alert {
+  font-size: 12px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #dc3545;
+  background-color: #fff3f4;
+}
+
+#salvar {
+  margin-right: 10px;
+}
+
+#titulolabel {
+  font-size: 14px;
+}

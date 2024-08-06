@@ -1,0 +1,73 @@
+<!-- consultar-pedido.component.html -->
+
+<head>
+  <link rel="stylesheet" href="consultar-pedido.component.css">
+</head>
+
+<!-- Menu -->
+<nav>
+  <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
+  <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
+  <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
+  <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
+</nav>
+
+<!-- Conteúdo principal -->
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Consultar Pedido</h2>
+  </div>
+
+  <!-- Input para o código -->
+  <div class="box-busca">
+    <div class="input-wrapper">
+      <form (ngSubmit)="onSubmit()" #buscaForm="ngForm">
+        <input type="text" class="search-box-input" name="busca" [(ngModel)]="codigoPedido" placeholder="Digite o código" required>
+        <button type="submit" class="search-box-button"><i class="search-box-icone icon icon-search"></i>Buscar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabela dos pedidos -->
+  <table class="itens-pedido" *ngIf="pedido && itensPedido.length > 0">
+    <thead class="cabecalho-tabela">
+      <tr>
+        <th>Item do pedido</th>
+        <th>Quantidade</th>
+        <th>Preço Unitário</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of itensPedido" class="linha-tabela">
+        <td>{{ item.nome }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td>{{ item.preco | currency:'BRL' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Resumo do pedido -->
+  <table class="itens-pedido resumo" *ngIf="pedido">
+    <thead class="cabecalho-tabela">
+      <tr>
+        <th>Prazo Previsto</th>
+        <th>Situação</th>
+        <th>Total do Pedido</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr class="linha-tabela resumo">
+        <td>{{ prazoMaximo }}</td>
+        <td class="situacao-pedido">{{ pedido.statusPedido}}</td>
+        <td class="preco-itens">{{ pedido.valorPedido | currency:'BRL' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Mensagem de pedido não encontrado -->
+  <div class="mensagem" *ngIf="!pedido && buscaForm.submitted">
+    <p><br>Pedido não encontrado. Verifique o código e tente novamente.</p>
+  </div>
+</div>

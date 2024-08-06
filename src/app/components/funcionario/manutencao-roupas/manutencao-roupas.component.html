@@ -1,0 +1,52 @@
+<head>
+  <link rel="stylesheet" href="manutencao-roupas.component.css">
+</head>
+
+<nav>
+  <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+  <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+  <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+  <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
+</nav>
+
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Manutenção Roupas</h2>
+  </div>
+
+  <table class="table table-hover">
+    <tbody class="cabecalho-tabela">
+      <tr>
+        <th class="titulo-coluna">Nome</th>
+        <th class="titulo-coluna">Prazo para lavagem (dias)</th>
+        <th class="titulo-coluna">Preço (individual)</th>
+
+        <th class="text-center">
+          <a [routerLink]="['/cadastrar-peca-roupa']" href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
+            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
+          </a>
+        </th>
+      </tr>
+
+      <!-- LISTA DE ROUPAS -->
+      <tr *ngFor="let roupa of roupas">
+        <td class="info-roupa"> {{ roupa.nome }} </td>
+        <td class="info-roupa"> {{ roupa.prazo }} </td>
+        <td class="info-roupa"> {{ roupa.valor | currency:'BRL':'symbol':'1.2-2' }} </td>
+
+        <td class="text-center" style="width: 300px">
+
+          <a [routerLink]="['/editar-peca-roupa', roupa.id]" title="Editar" alt="Editar" class="btn btn-xs btn-info">
+            <i class="fa fa-edit" aria-hidden="true"></i> Editar
+          </a>
+
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, roupa)">
+            <i class="fa fa-times" aria-hidden="true"></i> Remover
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="roupas.length===0">Nenhuma roupa cadastrada.</p>
+</div>

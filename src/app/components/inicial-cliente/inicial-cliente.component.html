@@ -1,0 +1,66 @@
+<head>
+  <link rel="stylesheet" href="inicial-cliente.component.css">
+</head>
+
+<nav>
+  <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
+  <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
+  <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
+  <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
+</nav>
+
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Pedidos do Cliente</h2>
+  </div>
+
+  <!-- Filtro de pedidos -->
+  <div class="filtro-pedidos">
+    <label for="filtro-status" class="titulo-filtro">Filtrar por status:</label>
+    <select id="filtro-status" [(ngModel)]="filtroStatus" (change)="filtrarPedidos()">
+      <option value="todos">Todos</option>
+      <option value="em_aberto">Em Aberto</option>
+      <option value="cancelado">Cancelado</option>
+      <option value="rejeitado">Rejeitado</option>
+      <option value="recolhido">Recolhido</option>
+      <option value="aguardando_pagamento">Aguardando Pagamento</option>
+      <option value="pago">Pago</option>
+      <option value="finalizado">Finalizado</option>
+    </select>
+  </div>
+
+  <!-- Tabela de pedidos -->
+  <br>
+  <table class="table table-hover">
+    <tbody class="cabecalho-tabela">
+      <tr>
+        <th class="titulo-coluna">ID do pedido</th>
+        <th class="titulo-coluna">Data</th>
+        <th class="titulo-coluna">Nome do cliente</th>
+        <th class="titulo-coluna">Status do pedido</th>
+        <th class="titulo-coluna">Total</th>
+      </tr>
+
+      <tr *ngFor="let pedido of pedidosFiltrados">
+
+        <td class="info-pedido">{{pedido.idPedido}}</td>
+        <td class="info-pedido">{{pedido.dataDoPedido | date:'dd/MM/yyyy'}}</td>
+        <td class="info-pedido">{{pedido.usuario.nome}}</td>
+        <td class="info-pedido" [ngClass]="getStatusClass(pedido.statusPedido)">{{pedido.statusPedido}}</td>
+        <td class="info-pedido">{{pedido.valorPedido | currency:'BRL':'symbol':'1.2-2'}}</td>
+
+        <td class="text-center" style="width: 300px">
+          <a href="#" title="Pagar" alt="Pagar" class="btn btn-xs btn-success" (click)="pagar($event, pedido)" [ngClass]="{'disabled-link': pedido.pagamentoRealizado || pedido.statusPedido === 'REJEITADO'}">
+            <i class="fa fa-credit-card" aria-hidden="true"></i> Pagar
+          </a>
+          <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido)" [ngClass]="{'disabled-link': pedido.cancelamentoRealizado}" [ngClass]="{'disabled-link': pedido.pagamentoRealizado || pedido.statusPedido === 'REJEITADO'}">
+            <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+          </a>
+        </td>
+
+      </tr>
+
+    </tbody>
+  </table>
+  <p *ngIf="pedidosFiltrados.length === 0">Nenhum pedido encontrado.</p>
+</div>

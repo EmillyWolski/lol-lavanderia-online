@@ -1,0 +1,42 @@
+<head>
+  <link rel="stylesheet" href="editar-peca-roupa-quantidade.component.css">
+</head>
+
+<nav>
+  <a [routerLink]="['/inicio-cliente']" class="nav-item">Início</a>
+  <a [routerLink]="['/consultar-pedido']" class="nav-item">Consultar Pedido</a>
+  <a [routerLink]="['/fazer-pedido']" class="nav-item">Fazer pedido</a>
+  <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
+</nav>
+
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Editar</h2>
+  </div>
+
+  <div class="well">
+    <form #formEditarPecaRoupaQnt="ngForm" class="formulario-peca-roupa">
+      <div class="mb-3 form-group">
+        <label for="nome" id="titulolabel">Peça de roupa:</label>
+        <ng-select class="peca-roupa" name="pecaroupa" [items]="roupas" bindLabel="nome" [(ngModel)]="pecaroupaqnt.pecaroupa" placeholder="Selecione uma Peça" required></ng-select>
+        <div *ngIf="formEditarPecaRoupaQnt.form.controls['pecaroupa']?.invalid && (formEditarPecaRoupaQnt.form.controls['pecaroupa']?.dirty || formEditarPecaRoupaQnt.form.controls['pecaroupa']?.touched)" class="alert alert-danger">
+          <div *ngIf="formEditarPecaRoupaQnt.form.controls['pecaroupa']?.errors?.['required']">Selecione uma peça de roupa.</div>
+        </div>
+      </div>
+      <div class="mb-3 form-group">
+        <label for="quantidade" id="titulolabel">Quantidade de peças:</label>
+        <input type="number" class="form-control" id="quantidade" name="quantidade" [(ngModel)]="pecaroupaqnt.quantidade" #quantidade="ngModel" min="1" required>
+        <div *ngIf="quantidade.errors && (quantidade.dirty || quantidade.touched)" class="alert alert-danger">
+          <div [hidden]="!quantidade.errors['min']"> Digite a quantidade de peças dessa roupa. </div>
+        </div>
+      </div>
+      <div class=" mb-3 form-group">
+        <button type="button" class="btn btn-primary" id="salvar" (click)="atualizar()" [disabled]="!formEditarPecaRoupaQnt.form.valid">
+          <i class="fa fa-save" aria-hidden="true"></i> Atualizar
+        </button>
+        <a class="btn btn-secondary" [routerLink]="['/inserir-pedido']">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+        </a>
+      </div>
+    </form>
+  </div>

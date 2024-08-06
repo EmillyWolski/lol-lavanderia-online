@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal para Aprovar ou Recusar Orçamento</title>
+
+    <link rel="stylesheet" href="modal-orcamento.component.css">
+</head>
+
+<body>
+    <!-- Modal -->
+    <div #modal class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Detalhes do Orçamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p><b>Valor: </b>R$ {{ valorPedido }} reais</p>
+                    <hr> <!-- Linha horizontal -->
+                    <p><b>Prazo: </b>{{ prazoMaximo }} dia(s)</p>
+                </div>
+                <div class="modal-footer justify-content-center"> 
+                    <button type="button" class="btn btn-success" (click)="onAprovar()">Aprovar</button>
+                    <button type="button" class="btn btn-danger" (click)="onRecusar()">Recusar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

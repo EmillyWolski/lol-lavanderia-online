@@ -1,0 +1,103 @@
+/* Estilo para o corpo da página */
+
+nav {
+  position: absolute;
+  left: 0;
+  top: 92px;
+  width: 15%;
+  height: calc(100% - 100px);
+  background-color: #ffffff;
+  box-shadow: inset -1px 0px 0px #d7dbec;
+}
+
+.nav-item {
+  padding: 15px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #2c3e50;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.conteudo-principal {
+  flex: 1;
+  margin-left: 15%;
+  margin-top: -18px;
+  padding: 20px;
+}
+
+.cabecalho {
+  height: 45px;
+  margin-top: 16px;
+  position: relative;
+}
+
+.cabecalho .titulo-pagina {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.titulo-pagina {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  box-shadow: inset -1px 0px 0px #d7dbec;
+  padding: 10px;
+  color: #2c3e50;
+}
+
+.titulo-coluna {
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.cabecalho-tabela th {
+  width: 15%;
+  /* Define a largura desejada para cada coluna */
+}
+
+.info-pedido {
+  padding: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+
+p {
+  font-size: 14px;
+  margin-left: 11px;
+}
+
+/* Estilo para os botões de ação */
+
+.btn {
+  margin-left: 10px;
+  font-size: 14px;
+  border: none;
+}
+
+.btn-info {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+}
+
+.btn .btn-xs .btn-success {
+  right: 90%;
+}
+
+.disabled-link {
+  pointer-events: none;
+  /* Desabilita eventos de clique */
+  color: rgb(179, 177, 177);
+  /* Altera a cor do texto para indicar que está desabilitado */
+  text-decoration: none;
+  /* Remove sublinhado */
+  cursor: default;
+  /* Altera o cursor */
+}

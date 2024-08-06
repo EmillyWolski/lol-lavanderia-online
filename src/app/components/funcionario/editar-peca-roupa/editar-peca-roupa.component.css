@@ -1,0 +1,94 @@
+/* Estilo para o corpo da página */
+
+.container {
+  display: flex;
+  margin: 0;
+}
+
+.menu {
+  position: absolute;
+  left: 0;
+  top: 92px;
+  width: 15%;
+  height: calc(100% - 100px);
+  background-color: #ffffff;
+  box-shadow: inset -1px 0px 0px #d7dbec;
+}
+
+.menu a {
+  font-size: 16px;
+}
+
+.nav-item {
+  padding: 15px 20px;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #2c3e50;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.nav-item:hover {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.conteudo-principal {
+  flex: 1;
+  margin-left: 15%;
+  margin-top: -3px; /* Altura do cabeçalho */
+  margin-bottom: 8px;
+  padding: 20px;
+  height: calc(
+    100vh - 84px
+  ); /* 100% da altura da janela menos altura do cabeçalho e menu */
+}
+
+.cabecalho {
+  height: 45px;
+}
+
+.cabecalho .titulo-pagina {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.titulo-pagina {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  box-shadow: inset -1px 0px 0px #d7dbec;
+  color: #2c3e50;
+}
+
+/* Estilos do Formulário */
+.formulario-funcionario {
+  max-width: 400px; /* Tamanho máximo desejado para o formulário */
+}
+
+.form-control {
+  height: 28px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.form-label {
+  font-size: 14px;
+}
+
+#InputDataNascimento {
+  font-size: 10px;
+}
+
+.btn {
+  width: 48%;
+  height: 30px;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.btn-danger {
+  margin-left: 14px;
+}

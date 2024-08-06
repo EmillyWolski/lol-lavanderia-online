@@ -1,0 +1,50 @@
+<head>
+  <link rel="stylesheet" href="./cadastrar-peca-roupa.component.css">
+</head>
+
+<nav class="menu">
+  <a [routerLink]="['/inicio-funcionario']" class="nav-item">Início</a>
+  <a [routerLink]="['/manutencao-roupas']" class="nav-item">Manutenção<br>roupas</a>
+  <a [routerLink]="['/listar-funcionario']" class="nav-item">Manutenção<br>funcionários</a>
+  <a [routerLink]="['/relatorios']" class="nav-item">Relatórios</a>
+  <a href="#" (click)="confirmarLogout($event)" class="nav-item">Sair</a>
+
+</nav>
+
+<div class="conteudo-principal">
+  <div class="cabecalho">
+    <h2 class="titulo-pagina">Cadastro de Peça</h2>
+  </div>
+
+  <form #formRoupa="ngForm" class="formulario-funcionario form-group">
+    <div class="mb-3">
+      <label for="InputNome" class="form-label">Nome da peça</label>
+      <input type="text" class="form-control" id="InputNome" name="InputNome" [(ngModel)]="roupa.nome" #InputNome="ngModel" minlength="3" required>
+    </div>
+    <div *ngIf="InputNome.errors && (InputNome.dirty || InputNome.touched)" class="alert alert-danger">
+      <div [hidden]="!InputNome.errors['minlength']">
+        O nome deve conter ao menos 3 caracteres.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="InputPrazo" class="form-label">Prazo da lavagem em dias</label>
+      <input type="number" class="form-control" id="InputPrazo" name="InputPrazo" [(ngModel)]="roupa.prazo" #InputPrazo="ngModel" required>
+    </div>
+    <div *ngIf="InputPrazo.errors && (InputPrazo.dirty || InputPrazo.touched)" class="alert alert-danger">
+      <div [hidden]="!InputPrazo.errors['required']"> Digite o prazo de lavagem. </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="InputValor" class="form-label">Preço por lavagem unitária</label>
+      <input type="text" class="form-control currency-prefix" id="InputValor" name="InputValor" [(ngModel)]="roupa.valor" #InputValor="ngModel" required currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+    </div>
+    <div *ngIf="InputValor.errors && (InputValor.dirty || InputValor.touched)" class="alert alert-danger">
+      <div [hidden]="!InputValor.errors['required']"> Digite o preço por lavagem. </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formRoupa.form.valid">Cadastrar</button>
+    <a [routerLink]="['/manutencao-roupas']" class="btn btn-secondary btn-danger">Cancelar</a>
+  </form>
+
+</div>
