@@ -24,7 +24,13 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  ngOnDestroy(): void {
+    document.body.classList.remove('hide-header');
+  }
+
   ngOnInit(): void {
+    document.body.classList.add('hide-header');
+    
     const usuarioLogado = this.loginService.usuarioLogado;
     if (usuarioLogado) {
       if (usuarioLogado.perfil === 'FUNCIONARIO') {

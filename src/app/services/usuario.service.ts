@@ -112,4 +112,9 @@ export class UsuarioService {
         })
       );
   }
+
+  listarFuncionarios(): Observable<Usuario[]> {
+    return this.httpClient.get<Usuario[]>(`${this.BASE_URL}/funcionarios`);
+  }
+
 }

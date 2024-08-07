@@ -1,4 +1,7 @@
-<h1>Login</h1>
+<head>
+  <link rel="stylesheet" href="./login.component.css">
+</head>
+
 <div *ngIf="message" class="alert alert-danger
 alert-dismissible fade show" role="alert">
   {{message}}
@@ -7,6 +10,9 @@ aria-label=" Close></button>
 </div>
 <div class="well">
   <form #formLogin="ngForm">
+
+    <h1>LOL - Lavanderia Online</h1>
+    
     <div class="form-group">
       <label for="usuario">E-mail:</label>
       <input type="text" class="form-control" id="email" name="email" [(ngModel)]="login.email" #email="ngModel" required>
@@ -18,7 +24,7 @@ aria-label=" Close></button>
     </div>
     <div class="form-group">
       <label for="senha">Senha:</label>
-      <input type="text" class="form-control" id="senha" name="senha" [(ngModel)]="login.senha" #senha="ngModel" required>
+      <input type="password" class="form-control" id="senha" name="senha" [(ngModel)]="login.senha" #senha="ngModel" required>
       <div *ngIf="senha.errors && (senha.dirty || senha.touched)" class="alert alert-danger">
         <div [hidden]="!senha.errors['required']">
           Digite a senha.

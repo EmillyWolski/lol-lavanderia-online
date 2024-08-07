@@ -5,6 +5,7 @@ import { PedidoService } from '../../../services/pedido/pedido.service';
 import { Pedido } from '../../../shared/models/pedido.model';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../../services/login/login.service';
+import { Usuario } from '../../../shared/models/usuario.model';
 
 @Component({
   selector: 'app-inicial-funcionario',
@@ -13,17 +14,19 @@ import { LoginService } from '../../../services/login/login.service';
   templateUrl: './inicial-funcionario.component.html',
   styleUrls: ['./inicial-funcionario.component.css'],
 })
+
 export class InicialFuncionarioComponent implements OnInit {
   pedidos: Pedido[] = [];
   pedidosFiltrados: Pedido[] = []; // Armazena os pedidos filtrados com base no status selecionado.
   filtroStatus: string = 'em_aberto'; // Inicia com 'em_aberto'
   mensagem: string | null = null; // Mensagem de erro ou sucesso
   mensagem_detalhes: string | null = null; // Detalhes da mensagem de erro
+  funcionarios: Usuario[] = []; // Lista de funcionários
 
   constructor(
     private pedidoService: PedidoService,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +50,7 @@ export class InicialFuncionarioComponent implements OnInit {
   recolherPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm('Deseja realmente recolher o pedido ${pedido.idpedido}?')) {
+    if (confirm(`Deseja realmente recolher o pedido ${pedido.idPedido}?`)) {
       pedido.statusPedido = 'RECOLHIDO';
 
       this.pedidoService.alterar(pedido).subscribe({
@@ -67,12 +70,12 @@ export class InicialFuncionarioComponent implements OnInit {
   lavarPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm('Deseja realmente lavar o pedido ${pedido.idpedido}?')) {
+    if (confirm(`Deseja realmente lavar o pedido ${pedido.idPedido}?`)) {
       pedido.statusPedido = 'AGUARDANDO PAGAMENTO';
 
       this.pedidoService.alterar(pedido).subscribe({
         next: () => {
-          alert('O pedido ${pedido.idpedido} foi lavado.');
+          alert(`O pedido ${pedido.idPedido} foi lavado.`);
           this.carregarPedidos(); // Atualiza a lista de pedidos
         },
         error: (err) => {
@@ -87,12 +90,12 @@ export class InicialFuncionarioComponent implements OnInit {
   finalizarPedido($event: any, pedido: Pedido): void {
     $event.preventDefault();
 
-    if (confirm('Deseja realmente finalizar o pedido ${pedido.idpedido}?')) {
+    if (confirm(`Deseja realmente finalizar o pedido ${pedido.idPedido}?`)) {
       pedido.statusPedido = 'FINALIZADO';
 
       this.pedidoService.alterar(pedido).subscribe({
         next: () => {
-          alert('O pedido ${pedido.idpedido} foi finalizado.');
+          alert(`O pedido ${pedido.idPedido} foi finalizado.`);
           this.carregarPedidos(); // Atualiza a lista de pedidos
         },
         error: (err) => {
@@ -149,4 +152,5 @@ export class InicialFuncionarioComponent implements OnInit {
       this.router.navigate(['/login']); // Redireciona para a tela de login após o logout
     }
   }
+
 }

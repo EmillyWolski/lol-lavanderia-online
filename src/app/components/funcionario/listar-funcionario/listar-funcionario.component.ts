@@ -3,65 +3,62 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { LoginService } from '../../../services/login/login.service';
 import { PessoaFuncionarioService } from '../../../services/pessoa-funcionario/pessoa-funcionario.service';
-import { PessoaFuncionario } from '../../../shared/models/pessoa-funcionario.model';
+import { UsuarioService } from '../../../services/usuario.service';
+import { Usuario } from '../../../shared/models/usuario.model';
 
 @Component({
   selector: 'app-listar-funcionario',
   standalone: true,
   imports: [CommonModule, RouterModule, RouterLink],
   templateUrl: './listar-funcionario.component.html',
-  styleUrl: './listar-funcionario.component.css',
+  styleUrls: ['./listar-funcionario.component.css'],
 })
 export class ListarFuncionarioComponent implements OnInit {
-  funcionarios: PessoaFuncionario[] = [];
+  funcionarios: Usuario[] = []; // Lista de funcionários
+  mensagem: string | null = null; // Mensagem de erro ou sucesso
+  mensagem_detalhes: string | null = null; // Detalhes da mensagem de erro
 
   constructor(
     private pessoaFuncionarioService: PessoaFuncionarioService,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit(): void {
-    this.listarFuncionarios();
+    this.listarFuncionarios(); // Carrega os funcionários ao iniciar o componente
   }
 
   listarFuncionarios(): void {
-    this.pessoaFuncionarioService.listarFuncionarios().subscribe(
+    this.usuarioService.listarFuncionarios().subscribe(
       (response) => {
         this.funcionarios = response;
       },
       (error) => {
-        console.error('Erro ao listar funcionários', error);
+        this.mensagem = 'Erro ao listar funcionários.';
+        this.mensagem_detalhes = `[${error.status}] ${error.message}`;
+        console.error('Erro ao listar funcionários:', error);
       }
     );
   }
 
-  removerFuncionario($event: any, funcionario: PessoaFuncionario): void {
+  removerFuncionario($event: any, funcionario: Usuario): void {
     $event.preventDefault();
-    if (
-      confirm(
-        `Deseja realmente remover o(a) funcionário(a) ${funcionario.nome}?`
-      )
-    ) {
-      this.pessoaFuncionarioService
-        .removerFuncionario(funcionario.id!)
-        .subscribe(
-          (response) => {
-            this.funcionarios = this.funcionarios.filter(
-              (f) => f.id !== funcionario.id
-            );
-            console.log('Funcionário removido com sucesso', response);
-          },
-          (error) => {
-            console.error('Erro ao remover funcionário', error);
-          }
-        );
+    if (confirm(`Deseja realmente remover o(a) funcionário(a) ${funcionario.nome}?`)) {
+      this.pessoaFuncionarioService.removerFuncionario(funcionario.id!).subscribe(
+        (response) => {
+          this.funcionarios = this.funcionarios.filter((f) => f.id !== funcionario.id);
+          console.log('Funcionário removido com sucesso', response);
+        },
+        (error) => {
+          console.error('Erro ao remover funcionário', error);
+        }
+      );
     }
   }
 
   confirmarLogout(event: Event): void {
     event.preventDefault();
-
     const confirmed = window.confirm('Você realmente deseja sair?');
     if (confirmed) {
       this.loginService.logout();
