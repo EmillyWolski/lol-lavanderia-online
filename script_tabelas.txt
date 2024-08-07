@@ -1,0 +1,40 @@
+CREATE TABLE Usuario (
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    cep VARCHAR(20),
+    rua VARCHAR(255),
+    cidade VARCHAR(100),
+    estado VARCHAR(50),
+    telefone VARCHAR(20),
+    dataNascimento VARCHAR(20),
+    perfil VARCHAR(50)
+);
+
+CREATE TABLE Roupa (
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    nome VARCHAR(255) NOT NULL,
+    valor DOUBLE PRECISION NOT NULL,
+    prazo INT NOT NULL
+);
+
+CREATE TABLE Pedido (
+    idPedido BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    usuario_id BIGINT,
+    statusPedido VARCHAR(50),
+    valorPedido DOUBLE PRECISION,
+    prazo INT,
+    dataDoPedido VARCHAR(20),
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+CREATE TABLE PecaRoupaQnt (
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    quantidade INT NOT NULL,
+    roupa_id BIGINT,
+    pedido_id BIGINT,
+    FOREIGN KEY (roupa_id) REFERENCES Roupa(id),
+    FOREIGN KEY (pedido_id) REFERENCES Pedido(idPedido)
+);
