@@ -3,6 +3,7 @@ package br.net.lol_lavanderia.crud.rest;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -114,6 +115,22 @@ public class UsuarioREST {
           .build();
     else
       return ResponseEntity.ok(usuario);
+  }
+
+  @GetMapping("/usuarios/funcionarios")
+  public ResponseEntity<List<Usuario>> listarFuncionarios() {
+    List<Usuario> funcionarios = lista.stream()
+                                      .filter(usuario -> "FUNCIONARIO".equals(usuario.getPerfil()))
+                                      .collect(Collectors.toList());
+    return ResponseEntity.ok(funcionarios);
+  }
+
+  @GetMapping("/usuarios/clientes")
+  public ResponseEntity<List<Usuario>> listarClientes() {
+    List<Usuario> clientes = lista.stream()
+                                  .filter(usuario -> "CLIENTE".equals(usuario.getPerfil()))
+                                  .collect(Collectors.toList());
+    return ResponseEntity.ok(clientes);
   }
 
 }

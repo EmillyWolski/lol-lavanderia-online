@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Pedido } from '../../shared/models/pedido.model';
-import { ConsultarPedidoService } from '../../services/consultar-pedido/consultar-pedido.service';
+import { PedidoService } from '../../services/pedido/pedido.service';
 import { LoginService } from '../../services/login/login.service';
 
 @Component({
@@ -14,15 +14,15 @@ import { LoginService } from '../../services/login/login.service';
   styleUrls: ['./consultar-pedido.component.css'],
 })
 export class ConsultarPedidoComponent implements OnInit {
-  codigoPedido!: number; // Código do pedido inserido pelo usuário
-  pedido: Pedido | null = null; // Objeto que irá armazenar os detalhes do pedido
+  codigoPedido!: number;
+  pedido: Pedido | null = null;
   prazoMaximo: number | undefined;
-  itensPedido: { nome: string; quantidade: number; preco: number }[] = []; // Lista de itens do pedido
-  mensagem: string | null = null; // Mensagem de erro a ser exibida
-  mensagem_detalhes: string | null = null; // Detalhes da mensagem de erro
+  itensPedido: { nome: string; quantidade: number; preco: number }[] = [];
+  mensagem: string | null = null;
+  mensagem_detalhes: string | null = null;
 
   constructor(
-    private consultarPedidoService: ConsultarPedidoService,
+    private pedidoService: PedidoService,
     private router: Router,
     private loginService: LoginService
   ) {}
@@ -33,16 +33,13 @@ export class ConsultarPedidoComponent implements OnInit {
     this.mensagem = null;
     this.mensagem_detalhes = null;
 
-    // Converte o código do pedido para número e verifica se é válido
     const pedidoId = Number(this.codigoPedido);
     if (!isNaN(pedidoId)) {
-      // Consulta a API de pedidos pelo ID
-      this.consultarPedidoService.buscarPedidoPorId(pedidoId).subscribe({
+      this.pedidoService.buscarPorId(pedidoId).subscribe({
         next: (pedido) => {
           if (pedido === null) {
             this.pedido = null;
-            this.mensagem =
-              'Pedido não encontrado. Por favor, verifique o código e tente novamente.';
+            this.mensagem = 'Pedido não encontrado. Por favor, verifique o código e tente novamente.';
           } else {
             this.pedido = pedido;
             this.calcularPrazoMaximo();
@@ -51,8 +48,7 @@ export class ConsultarPedidoComponent implements OnInit {
         },
         error: (err) => {
           this.pedido = null;
-          this.mensagem =
-            'Erro ao buscar o pedido. Por favor, tente novamente.';
+          this.mensagem = 'Erro ao buscar o pedido. Por favor, tente novamente.';
           this.mensagem_detalhes = `[${err.status}] ${err.message}`;
         },
       });
@@ -62,9 +58,7 @@ export class ConsultarPedidoComponent implements OnInit {
   }
 
   calcularPrazoMaximo(): void {
-    // Verifica se o pedido e a lista de itens do pedido existem
     if (this.pedido && this.pedido.pecaRoupaQnt.length > 0) {
-      // Calcula o prazo máximo baseado no prazo de cada item do pedido
       this.prazoMaximo = this.pedido.pecaRoupaQnt.reduce((maxPrazo, item) => {
         return Math.max(maxPrazo, item.pecaroupa.prazo);
       }, 0);
@@ -74,9 +68,7 @@ export class ConsultarPedidoComponent implements OnInit {
   }
 
   carregarItensPedido(): void {
-    // Verifica se o pedido e a lista de itens do pedido existem
     if (this.pedido && this.pedido.pecaRoupaQnt) {
-      // Mapeia os itens do pedido para um formato mais legível
       this.itensPedido = this.pedido.pecaRoupaQnt.map((item) => {
         return {
           nome: item.pecaroupa.nome,
@@ -91,11 +83,10 @@ export class ConsultarPedidoComponent implements OnInit {
 
   confirmarLogout(event: Event): void {
     event.preventDefault();
-
     const confirmed = window.confirm('Você realmente deseja sair?');
     if (confirmed) {
       this.loginService.logout();
-      this.router.navigate(['/login']); // Redireciona para a tela de login após o logout
+      this.router.navigate(['/login']);
     }
   }
 }

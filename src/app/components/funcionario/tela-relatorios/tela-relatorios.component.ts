@@ -9,6 +9,8 @@ import { saveAs } from 'file-saver';
 import { PedidoService } from '../../../services/pedido/pedido.service';
 import { Pedido } from '../../../shared/models/pedido.model';
 import { Observable } from 'rxjs';
+import { UsuarioService } from '../../../services/usuario.service';
+import { Usuario } from '../../../shared/models/usuario.model';
 
 @Component({
   selector: 'app-tela-relatorios',
@@ -18,19 +20,29 @@ import { Observable } from 'rxjs';
   styleUrls: ['./tela-relatorios.component.css'],
 })
 export class TelaRelatoriosComponent implements OnInit {
-  pessoaLogada: Pessoa | null = null;
-  pessoas: Pessoa[] = [];
+  pessoaLogada: any; // ou defina o tipo correto
+  usuarios: Usuario[] = [];
 
   constructor(
     private loginService: LoginService,
-    private autocadastroService: AutocadastroService,
-    private pedidoService: PedidoService,
+    private pedidoService :PedidoService,
+    private usuarioService: UsuarioService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.pessoaLogada = this.loginService.usuarioLogado;
-    this.pessoas = this.autocadastroService.listarTodos();
+    this.listarClientes();
+  }
+
+  listarClientes(): void {
+    this.usuarioService.listarTodos().subscribe((usuarios) => {
+      if (usuarios) { // Verifica se usuarios não é null
+        this.usuarios = usuarios.filter(usuario => usuario.perfil === 'CLIENTE');
+      } else {
+        this.usuarios = []; // Se for null, inicializa como um array vazio
+      }
+    });
   }
 
   // Gerar PDF de Relatório de Clientes
@@ -56,28 +68,28 @@ export class TelaRelatoriosComponent implements OnInit {
 
     yPos += 15;
 
-    this.pessoas.forEach((pessoa) => {
+    this.usuarios.forEach((usuario) => {
       doc.setDrawColor(200, 200, 200); // Cor para a linha
       doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha superior
 
       doc.setFontSize(12);
-      doc.text(`ID: ${pessoa.id}`, margin, yPos);
+      doc.text(`ID: ${usuario.id}`, margin, yPos);
       yPos += 10;
-      doc.text(`Nome: ${pessoa.nome}`, margin, yPos);
+      doc.text(`Nome: ${usuario.nome}`, margin, yPos);
       yPos += 10;
-      doc.text(`CPF: ${pessoa.cpf}`, margin, yPos);
+      doc.text(`CPF: ${usuario.cpf}`, margin, yPos);
       yPos += 10;
-      doc.text(`Email: ${pessoa.email}`, margin, yPos);
+      doc.text(`Email: ${usuario.email}`, margin, yPos);
       yPos += 10;
-      doc.text(`CEP: ${pessoa.cep}`, margin, yPos);
+      doc.text(`CEP: ${usuario.cep}`, margin, yPos);
       yPos += 10;
-      doc.text(`Rua: ${pessoa.rua}`, margin, yPos);
+      doc.text(`Rua: ${usuario.rua}`, margin, yPos);
       yPos += 10;
-      doc.text(`Cidade: ${pessoa.cidade}`, margin, yPos);
+      doc.text(`Cidade: ${usuario.cidade}`, margin, yPos);
       yPos += 10;
-      doc.text(`Estado: ${pessoa.estado}`, margin, yPos);
+      doc.text(`Estado: ${usuario.estado}`, margin, yPos);
       yPos += 10;
-      doc.text(`Telefone: ${pessoa.telefone}`, margin, yPos);
+      doc.text(`Telefone: ${usuario.telefone}`, margin, yPos);
       yPos += 20; // Espaçamento adicional entre clientes
       doc.line(margin, yPos - 10, pageWidth - margin, yPos - 10); // Linha inferior
 

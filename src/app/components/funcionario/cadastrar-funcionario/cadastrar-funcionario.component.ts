@@ -18,8 +18,6 @@ import { LoginService } from '../../../services/login/login.service';
 export class CadastrarFuncionarioComponent {
   @ViewChild('formFuncionario') formFuncionario!: NgForm;
   funcionario: Usuario = new Usuario();
-  confirmarSenha: string = '';
-  funcionarioCadastrado: Usuario | null = null; // Variável para armazenar o funcionário
 
   constructor(
     private usuarioService: UsuarioService,
@@ -29,16 +27,8 @@ export class CadastrarFuncionarioComponent {
 
   cadastrarFuncionario(): void {
     console.log('Método cadastrarFuncionario() chamado.');
-    if (
-      this.formFuncionario.form.valid &&
-      this.funcionario.senha === this.confirmarSenha
-    ) {
-      this.funcionario.cpf = '';
-      this.funcionario.cep = '';
-      this.funcionario.rua = '';
-      this.funcionario.cidade = '';
-      this.funcionario.estado = '';
-      this.funcionario.telefone = '';
+    if (this.formFuncionario.form.valid) {
+      // Definindo o perfil do funcionário
       this.funcionario.perfil = 'FUNCIONARIO';
 
       this.usuarioService.inserir(this.funcionario).subscribe({
@@ -56,6 +46,8 @@ export class CadastrarFuncionarioComponent {
           }
         },
       });
+    } else {
+      alert('Por favor, preencha todos os campos corretamente.');
     }
   }
 

@@ -20,7 +20,6 @@ import { LoginService } from '../../../services/login/login.service';
 })
 export class EditarFuncionarioComponent implements OnInit {
   @ViewChild('formFuncionario') formFuncionario!: NgForm;
-  confirmarSenha: string = '';
   funcionario: Usuario = new Usuario();
 
   constructor(
@@ -31,14 +30,12 @@ export class EditarFuncionarioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = +this.route.snapshot.params['id']; // Verifica se o id está correto
-    console.log('ID recebido:', id); // Imprime o id no console
+    const id = +this.route.snapshot.params['id'];
     this.usuarioService.buscarPorId(id).subscribe({
       next: (res) => {
         if (res) {
-          this.funcionario = res;
+          this.funcionario = res; // A senha deve ser atualizada diretamente aqui
         } else {
-          console.error('Funcionário não encontrado: id = ' + id);
           alert('Funcionário não encontrado.');
           this.router.navigate(['/listar-funcionario']);
         }
@@ -52,16 +49,15 @@ export class EditarFuncionarioComponent implements OnInit {
   }
 
   editarFuncionario(): void {
-    // Verifica se o formulário é válido
-    if (
-      this.formFuncionario.form.valid &&
-      this.funcionario.senha === this.confirmarSenha
-    ) {
-      // Efetivamente atualiza o funcionário
+    if (this.formFuncionario.valid) {
+      // Usando trim para evitar problemas de espaços em branco
+      const senhaValida = this.funcionario.senha?.trim();  // Verifique se senha não é undefined
+
+      console.log('Senha:', senhaValida);
+
       this.usuarioService.alterar(this.funcionario).subscribe({
         next: (response) => {
           alert('Funcionário atualizado com sucesso!');
-          // Redireciona
           this.router.navigate(['/listar-funcionario']);
         },
         error: (error) => {
@@ -74,14 +70,12 @@ export class EditarFuncionarioComponent implements OnInit {
     }
   }
 
-  // Confirma o logout do usuário
   confirmarLogout(event: Event): void {
     event.preventDefault();
-
     const confirmed = window.confirm('Você realmente deseja sair?');
     if (confirmed) {
       this.loginService.logout();
-      this.router.navigate(['/login']); // Redireciona para a tela de login após o logout
+      this.router.navigate(['/login']);
     }
   }
 }

@@ -57,7 +57,7 @@ export class InicialClienteComponent implements OnInit {
   // Remove o pedido e atualiza a lista
   remover($event: any, pedido: Pedido): void {
     $event.preventDefault();
-    if (confirm('Deseja realmente cancelar o pedido ${pedido.idpedido}?')) {
+    if (confirm(`Deseja realmente cancelar o pedido ${pedido.idPedido}?`)) {
       pedido.statusPedido = 'CANCELADO';
       pedido.cancelamentoRealizado = true;
       pedido.pagamentoRealizado = true;
@@ -65,11 +65,11 @@ export class InicialClienteComponent implements OnInit {
       this.pedidoService.alterar(pedido).subscribe({
         next: () => {
           this.carregarPedidos(); // Atualiza a lista de pedidos após remoção
-          alert('O pedido ${pedido.idpedido} foi cancelado.');
+          alert(`O pedido ${pedido.idPedido} foi cancelado.`);
         },
         error: (err: HttpErrorResponse) => {
           this.mensagem = 'Erro ao atualizar pedido.';
-          this.mensagem_detalhes = '[${err.status}] ${err.message}';
+          this.mensagem_detalhes = `[${err.status}] ${err.message}`;
           console.error('Erro ao atualizar pedido:', err.message);
         },
       });
@@ -81,7 +81,7 @@ export class InicialClienteComponent implements OnInit {
     $event.preventDefault();
     if (
       pedido.statusPedido === 'AGUARDANDO PAGAMENTO' &&
-      confirm('Deseja realmente pagar o pedido ${pedido.idpedido}?')
+      confirm(`Deseja realmente pagar o pedido ${pedido.idPedido}?`)
     ) {
       pedido.statusPedido = 'PAGO';
       pedido.pagamentoRealizado = true;
@@ -89,7 +89,7 @@ export class InicialClienteComponent implements OnInit {
       this.pedidoService.alterar(pedido).subscribe({
         next: () => {
           this.carregarPedidos(); // Atualiza a lista de pedidos após pagamento
-          alert('Pagamento realizado para o pedido ${pedido.idpedido}.');
+          alert(`Pagamento realizado para o pedido ${pedido.idPedido}.`);
         },
         error: (err: HttpErrorResponse) => {
           this.mensagem = 'Erro ao atualizar pedido.';
@@ -99,7 +99,7 @@ export class InicialClienteComponent implements OnInit {
       });
     } else {
       alert(
-        'O pedido ${pedido.idpedido} ainda não foi lavado, aguarde para efetuar o pagamento!'
+        `O pedido ${pedido.idPedido} ainda não foi lavado, aguarde para efetuar o pagamento!`
       );
     }
   }

@@ -35,17 +35,9 @@
     </div>
     <div class="mb-3 form-group">
       <label for="senha" class="form-label">Senha</label>
-      <input type="password" class="form-control" id="senha" name="senha" pattern="[0-9]{8}" [(ngModel)]="funcionario.senha" #senha="ngModel" required>
+      <input type="password" class="form-control" id="senha" name="senha" pattern="[0-9]{4}" [(ngModel)]="funcionario.senha" #senha="ngModel" required>
       <div *ngIf="senha?.invalid && (senha?.dirty || senha?.touched)" class="alert alert-danger">
-        <div *ngIf="senha?.errors?.['pattern']">Senha deve conter 8 dígitos numéricos.</div>
-      </div>
-    </div>
-    <div class="mb-3 form-group">
-      <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
-      <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required [(ngModel)]="confirmarSenha" #confirmarSenha="ngModel">
-      <div *ngIf="confirmarSenha?.invalid && (confirmarSenha?.dirty || confirmarSenha?.touched)" class="alert alert-danger">
-        <div *ngIf="confirmarSenha?.errors?.['required']">Confirmação de senha é obrigatória.</div>
-        <div *ngIf="funcionario.senha !== confirmarSenha?.value">As senhas não coincidem.</div>
+        <div *ngIf="senha?.errors?.['pattern']">Senha deve conter 4 dígitos numéricos.</div>
       </div>
     </div>
 
