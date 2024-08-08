@@ -1,18 +1,24 @@
 package br.net.lol_lavanderia.crud.model;
 
-public class Roupa {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
+public class Roupa {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+
   private String nome;
   private double valor;
   private int prazo;
 
   public Roupa() {
-    super();
   }
 
   public Roupa(int id, String nome, double valor, int prazo) {
-    super();
     this.id = id;
     this.nome = nome;
     this.valor = valor;

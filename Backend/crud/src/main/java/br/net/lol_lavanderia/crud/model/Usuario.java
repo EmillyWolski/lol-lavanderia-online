@@ -1,5 +1,6 @@
 package br.net.lol_lavanderia.crud.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Usuario {
   private String cidade;
   private String estado;
   private String telefone;
+  @Column(name = "datanascimento")
   private String dataNascimento;
   private String perfil;
 

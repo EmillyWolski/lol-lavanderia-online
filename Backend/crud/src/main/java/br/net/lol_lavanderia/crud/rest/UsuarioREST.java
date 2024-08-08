@@ -3,8 +3,10 @@ package br.net.lol_lavanderia.crud.rest;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,49 +20,39 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.net.lol_lavanderia.crud.model.Login;
 import br.net.lol_lavanderia.crud.model.Usuario;
+import br.net.lol_lavanderia.crud.repository.UsuarioRepository;
 
 @CrossOrigin
 @RestController
 public class UsuarioREST {
   public static List<Usuario> lista = new ArrayList<>();
 
+  @Autowired
+  private UsuarioRepository usuarioRepository;
+
   @GetMapping("/usuarios")
   public ResponseEntity<List<Usuario>> obterTodosUsuarios() {
+    List<Usuario> lista = usuarioRepository.findAll();
     return ResponseEntity.ok(lista);
   }
 
   @GetMapping("/usuarios/{id}")
-  public ResponseEntity<Usuario> obterUsuarioPorId(
-      @PathVariable("id") int id) {
-    Usuario u = lista.stream().filter(
-        usu -> usu.getId() == id).findAny().orElse(null);
-    if (u == null)
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .build();
-    else
-      return ResponseEntity.ok(u);
+  public ResponseEntity<Usuario> obterUsuarioPorId(@PathVariable("id") int id) {
+    Optional<Usuario> op = usuarioRepository.findById(Integer.valueOf(id));
+    if (op.isPresent()) {
+      return ResponseEntity.ok(op.get());
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
   }
 
   @PostMapping("/usuarios")
   public ResponseEntity<Usuario> inserirUsuario(@RequestBody Usuario usuario) {
-    // Verifica se já existe um usuário com o mesmo email ou CPF
-    Usuario u = lista.stream()
-        .filter(usu -> usu.getEmail().equals(usuario.getEmail()) || usu.getCpf().equals(usuario.getCpf()))
-        .findAny()
-        .orElse(null);
-    if (u != null) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
 
-    // Determina o ID do novo usuário
-    u = lista.stream()
-        .max(Comparator.comparing(Usuario::getId))
-        .orElse(null);
-    if (u == null) {
-      usuario.setId(1);
-    } else {
-      usuario.setId(u.getId() + 1);
-    }
+    // Verifica se já existe um usuário com o mesmo email ou CPF
+    Optional<Usuario> op = usuarioRepository.findByEmail(usuario.getEmail());
+    Optional<Usuario> op2 = usuarioRepository.findByCpf(usuario.getCpf());
 
     // Valida o email e define o perfil
     if (usuario.getEmail().contains("@lol_lavanderia")) {
@@ -69,38 +61,34 @@ public class UsuarioREST {
       usuario.setPerfil("CLIENTE");
     }
 
-    // Adiciona o usuário à lista e retorna a resposta
-    lista.add(usuario);
-    return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+    if (op.isPresent() || op2.isPresent()) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(op.get());
+    } else {
+      usuario.setId(-1);
+      usuarioRepository.save(usuario);
+      return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+    }
   }
 
   // Vai ser usado apenas quando tiver que alterar um funcionario
   @PutMapping("/usuarios/{id}")
-  public ResponseEntity<Usuario> alterarUsuario(
-      @PathVariable("id") int id,
-      @RequestBody Usuario usuario) {
-    Usuario u = lista.stream().filter(
-        usu -> usu.getId() == id).findAny().orElse(null);
-    if (u != null) {
-      u.setNome(usuario.getNome());
-      u.setEmail(usuario.getEmail());
-      u.setSenha(usuario.getSenha());
-      u.setDataNascimento(usuario.getDataNascimento());
-      return ResponseEntity.ok(u);
-    } else
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .build();
+  public ResponseEntity<Usuario> alterarUsuario(@PathVariable("id") int id, @RequestBody Usuario usuario) {
+    Optional<Usuario> op = usuarioRepository.findById(Integer.valueOf(id));
+    if (op.isPresent()) {
+      usuario.setId(id);
+      usuarioRepository.save(usuario);
+      return ResponseEntity.ok(usuario);
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
   }
 
   @DeleteMapping("/usuarios/{id}")
   public ResponseEntity<Usuario> remover(@PathVariable("id") int id) {
-    Usuario usuario = lista.stream()
-        .filter(usu -> usu.getId() == id)
-        .findAny()
-        .orElse(null);
-    if (usuario != null) {
-      lista.removeIf(u -> u.getId() == id);
-      return ResponseEntity.ok(usuario);
+    Optional<Usuario> op = usuarioRepository.findById(Integer.valueOf(id));
+    if (op.isPresent()) {
+      usuarioRepository.delete(op.get());
+      return ResponseEntity.ok(op.get());
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
@@ -108,29 +96,24 @@ public class UsuarioREST {
 
   @PostMapping("/login")
   public ResponseEntity<Usuario> login(@RequestBody Login login) {
-    Usuario usuario = lista.stream().filter(usu -> usu.getEmail().equals(login.getEmail()) &&
-        usu.getSenha().equals(login.getSenha())).findAny().orElse(null);
-    if (usuario == null)
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-          .build();
-    else
-      return ResponseEntity.ok(usuario);
+    Optional<Usuario> op = usuarioRepository.findByEmailAndSenha(login.getEmail(), login.getSenha());
+    if (op.isPresent()) {
+      return ResponseEntity.ok(op.get());
+    } else {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
   }
 
   @GetMapping("/usuarios/funcionarios")
   public ResponseEntity<List<Usuario>> listarFuncionarios() {
-    List<Usuario> funcionarios = lista.stream()
-                                      .filter(usuario -> "FUNCIONARIO".equals(usuario.getPerfil()))
-                                      .collect(Collectors.toList());
-    return ResponseEntity.ok(funcionarios);
+    List<Usuario> lista = usuarioRepository.findByPerfil("FUNCIONARIO");
+    return ResponseEntity.ok(lista);
   }
 
   @GetMapping("/usuarios/clientes")
   public ResponseEntity<List<Usuario>> listarClientes() {
-    List<Usuario> clientes = lista.stream()
-                                  .filter(usuario -> "CLIENTE".equals(usuario.getPerfil()))
-                                  .collect(Collectors.toList());
-    return ResponseEntity.ok(clientes);
+    List<Usuario> lista = usuarioRepository.findByPerfil("CLIENTE");
+    return ResponseEntity.ok(lista);
   }
 
 }

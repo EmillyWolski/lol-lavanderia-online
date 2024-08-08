@@ -1,16 +1,49 @@
 package br.net.lol_lavanderia.crud.model;
 
-import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Pedido {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "idpedido")
   private long idPedido;
+
+  @ManyToOne
+  @JoinColumn(name = "usuario_id")
   private Usuario usuario;
+
+  @Column(name = "statuspedido")
   private String statusPedido;
+
+  @Column(name = "valorpedido")
   private double valorPedido;
+
   private int prazo;
+
+  @Column(name = "datadopedido")
   private String dataDoPedido;
+
+  @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonManagedReference
   private List<PecaRoupaQnt> pecaRoupaQnt;
+
+  public Pedido() {
+  }
 
   public Pedido(long idPedido, Usuario usuario, String statusPedido, double valorPedido, int prazo, String dataDoPedido,
       List<PecaRoupaQnt> pecaRoupaQnt) {

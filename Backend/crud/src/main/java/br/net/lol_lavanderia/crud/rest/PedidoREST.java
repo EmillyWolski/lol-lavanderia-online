@@ -2,7 +2,9 @@ package br.net.lol_lavanderia.crud.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,63 +20,73 @@ import br.net.lol_lavanderia.crud.model.Cliente;
 import br.net.lol_lavanderia.crud.model.PecaRoupaQnt;
 import br.net.lol_lavanderia.crud.model.Pedido;
 import br.net.lol_lavanderia.crud.model.Roupa;
+import br.net.lol_lavanderia.crud.repository.PedidoRepository;
 
 @CrossOrigin
 @RestController
 public class PedidoREST {
 
-  // instancia de cliente para teste
-  public static Cliente cliente = new Cliente(1, "Julio", "julioyamaguchi99@gmail.com", "1234", "10756274940",
-      "Rua das peras", "9999999");
-
-  // instancias de roupas para teste
-  public static Roupa calca = new Roupa(1, "calca", 4.00, 2);
-  public static Roupa camisa = new Roupa(2, "camisa", 5.00, 3);
-
-  // Lista de pedidos para teste
-  public static List<Pedido> pedidos = new ArrayList<>();
-
-  // instancia de pedido para teste
+  @Autowired
+  private PedidoRepository pedidoRepository;
 
   @GetMapping("/pedidos")
   public ResponseEntity<List<Pedido>> obterTodosPedidos() {
-    return ResponseEntity.ok(pedidos);
+    List<Pedido> lista = pedidoRepository.findAll();
+    return ResponseEntity.ok(lista);
   }
 
   @GetMapping("/pedidos/{id}")
-  public ResponseEntity<Pedido> obterPedidoPorId(
-      @PathVariable("id") long id) {
-    Pedido p = pedidos.stream().filter(
-        usu -> usu.getIdPedido() == id).findAny().orElse(null);
-    if (p == null)
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .build();
-    else
-      return ResponseEntity.ok(p);
+  public ResponseEntity<Pedido> obterPedidoPorId(@PathVariable("id") String id) {
+    Optional<Pedido> op = pedidoRepository.findById(Long.valueOf(id));
+    if (op.isPresent()) {
+      return ResponseEntity.ok(op.get());
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
   }
 
   @PostMapping("/pedidos")
   public ResponseEntity<Pedido> inserirPedido(@RequestBody Pedido pedido) {
-    Pedido p = pedidos.stream().filter(usu -> usu.getIdPedido() == pedido.getIdPedido()).findAny().orElse(null);
-    if (p != null) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    } else {
-      pedidos.add(pedido);
-      return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+    if (pedido.getPecaRoupaQnt() != null) {
+      for (PecaRoupaQnt pecaRoupaQnt : pedido.getPecaRoupaQnt()) {
+        pecaRoupaQnt.setPedido(pedido);
+      }
     }
+
+    Pedido novoPedido = pedidoRepository.save(pedido);
+    return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
   }
+  // public ResponseEntity<Pedido> inserirPedido(@RequestBody Pedido pedido) {
+  // Optional<Pedido> op = pedidoRepository.findById(pedido.getIdPedido());
+  // if (op.isPresent()) {
+  // return ResponseEntity.status(HttpStatus.CONFLICT).body(op.get());
+  // } else {
+  // pedido.setIdPedido(-1);
+  // pedidoRepository.save(pedido);
+  // return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+  // }
+  // }
+
+  // public ResponseEntity<Pedido> inserirPedido(@RequestBody Pedido pedido) {
+  // // Certifique-se de que cada PecaRoupaQnt está associada ao Pedido
+  // if (pedido.getPecaRoupaQnt() != null) {
+  // for (PecaRoupaQnt pecaRoupaQnt : pedido.getPecaRoupaQnt()) {
+  // pecaRoupaQnt.setPedido(pedido);
+  // }
+  // }
+
+  // // Salva o pedido (o ID será gerado automaticamente)
+  // Pedido novoPedido = pedidoRepository.save(pedido);
+  // return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
+  // }
 
   @PutMapping("/pedidos/{id}")
   public ResponseEntity<Pedido> alterarPedido(@PathVariable("id") long id, @RequestBody Pedido pedido) {
-    Pedido p = pedidos.stream().filter(usu -> usu.getIdPedido() == id).findAny().orElse(null);
-
-    if (p != null) {
-      p.setUsuario(pedido.getUsuario());
-      p.setStatusPedido(pedido.getStatusPedido());
-      p.setValorPedido(pedido.getValorPedido());
-      p.setPrazo(pedido.getPrazo());
-      p.setPecaRoupaQnt(pedido.getPecaRoupaQnt());
-      return ResponseEntity.ok(p);
+    Optional<Pedido> op = pedidoRepository.findById(Long.valueOf(id));
+    if (op.isPresent()) {
+      pedido.setIdPedido(id);
+      pedidoRepository.save(pedido);
+      return ResponseEntity.ok(pedido);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
@@ -82,13 +94,13 @@ public class PedidoREST {
 
   @DeleteMapping("/pedidos/{id}")
   public ResponseEntity<Pedido> removerPedido(@PathVariable("id") long id) {
-    Pedido pedido = pedidos.stream().filter(ped -> ped.getIdPedido() == id)
-        .findAny().orElse(null);
-    if (pedido != null) {
-      pedidos.removeIf(p -> p.getIdPedido() == id);
-      return ResponseEntity.ok(pedido);
+    Optional<Pedido> op = pedidoRepository.findById(Long.valueOf(id));
+    if (op.isPresent()) {
+      pedidoRepository.delete(op.get());
+      return ResponseEntity.ok(op.get());
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
+
 }
